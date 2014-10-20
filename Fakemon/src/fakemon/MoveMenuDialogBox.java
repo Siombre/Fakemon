@@ -1,6 +1,7 @@
 package fakemon;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glColor3d;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glVertex2d;
 
@@ -49,6 +50,8 @@ public class MoveMenuDialogBox extends DialogBox {
 		double y1 = screen.mapY(bounds.getMinY());
 		double y2 = screen.mapY(bounds.getMinY() + bounds.getHeight());
 		
+		glColor3d(.2, .2, .2);
+
 		glVertex2d(x1, y1);
 		glVertex2d(x2, y1);
 		glVertex2d(x2, y2);

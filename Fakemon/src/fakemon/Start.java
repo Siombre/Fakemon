@@ -91,7 +91,7 @@ public class Start {
 				osName = "solaris";
 			}
 			base = new File(Start.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParent();
-			System.setProperty("org.lwjgl.librarypath", base + "/lwjgl/natives/"+osName);
+			System.setProperty("org.lwjgl.librarypath", base + "/libs/lwjgl-2.8.4/native/"+osName);
 			new Fast();
 			new MediumFast();
 			new MediumSlow();
