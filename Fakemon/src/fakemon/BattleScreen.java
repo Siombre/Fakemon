@@ -13,15 +13,14 @@ import org.newdawn.slick.TrueTypeFont;
 
 import static org.lwjgl.opengl.GL11.*;
 
-public class BattleScreen {
+public class BattleScreen extends Screen {
 	Trainer[] trainers;
 	Pokemon[][] acPokemon;
 	double[][] hpRatio;
 	TrueTypeFont font;
 	TrueTypeFont smallFont;
 	
-	private int width;
-	private int height;
+
 	DialogBox dialog;
 	DialogBox dialog2;
 
@@ -30,6 +29,8 @@ public class BattleScreen {
 	Rectangle2D dialog2Loc = new Rectangle2D.Float(.69f, .7f, .28f, .29f);
 
 	BattleScreen(Trainer[] trainers, boolean wild, int[] pokemonOut) {
+		super.init();
+		
 		this.trainers = trainers;
 		
 		Font awtFont = new Font("Times New Roman", Font.BOLD, 18); // name, style (PLAIN, BOLD, or ITALIC), size
@@ -38,8 +39,7 @@ public class BattleScreen {
 		Font awtFont2 = new Font("Times New Roman", Font.BOLD, 12); // name, style (PLAIN, BOLD, or ITALIC), size
 		smallFont = new TrueTypeFont(awtFont2, true);
 		
-		width = Display.getDisplayMode().getWidth();
-		height = Display.getDisplayMode().getHeight();
+
 		acPokemon = new Pokemon[trainers.length][];
 		hpRatio = new double[trainers.length][];
 
@@ -60,29 +60,6 @@ public class BattleScreen {
 		//dialog = box;
 
 	}
-	public static void initGL() throws LWJGLException {
-		Display.setDisplayMode(new DisplayMode(640, 480));
-		Display.setTitle("Fakemon");
-		Display.create();
-
-		int width = Display.getDisplayMode().getWidth();
-		int height = Display.getDisplayMode().getHeight();
-		glViewport(0, 0, width, height); // Reset The Current Viewport
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity(); // Resets any previous projection matrices
-		glOrtho(0, 640, 480, 0, 1, -1);
-		glMatrixMode(GL_MODELVIEW);
-		glEnable(GL_LINE_SMOOTH);
-		glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-		//glEnable(GL_POLYGON_SMOOTH);
-		glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
-		glEnable(GL_BLEND);
-
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	}
 
 	public void render() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear The Screen And The Depth Buffer
@@ -92,10 +69,10 @@ public class BattleScreen {
 		glColor3d(.99, .99, .99);
 		glVertex2d(0, 0);
 		glColor3d(.85, .85, .85);
-		glVertex2d(0, height);
-		glVertex2d(width, height);
+		glVertex2d(0, mapY(1));
+		glVertex2d(mapX(1), mapY(1));
 		glColor3d(.99, .99, .99);
-		glVertex2d(width, 0);
+		glVertex2d(mapX(1), 0);
 		
 		if(dialog != null)
 			dialog.render(this);
@@ -105,49 +82,6 @@ public class BattleScreen {
 		
 		renderInfo(1, 0, .015, .01, true);
 		renderInfo(0, 0, .685, .54, true);
-	}
-	public void renderBorder(double x, double y, double width, double height) {
-		renderBorder((float) x, (float) y, (float) width, (float) height);
-	}
-	public void renderBorder(float x, float y, float width, float height){
-		
-		x = mapX(x);
-		y = mapY(y);
-		
-		width = this.width * width;
-		height = this.height * height;
-		float xThick = .005f * this.width;
-		float yThick = .005f * this.height;
-		glBegin(GL_QUADS);
-
-		glColor3d(.99, .99, .99);
-
-		glVertex2d(x, y);
-		glVertex2d(x, y + height);
-		glVertex2d(x + width, y + height);
-		glVertex2d(x + width, y);
-
-		glColor3d(.2, .2, .2);
-		glVertex2d(x, y);
-		glVertex2d(x, y + height);
-		glVertex2d(x + xThick, y + height);
-		glVertex2d(x + xThick, y);
-
-		glVertex2d(x, y);
-		glVertex2d(x, y + yThick);
-		glVertex2d(x + width, y + yThick);
-		glVertex2d(x + width, y);
-
-		glVertex2d(x, y + height - yThick);
-		glVertex2d(x, y + height);
-		glVertex2d(x + width, y + height);
-		glVertex2d(x + width, y + height - yThick);
-
-		glVertex2d(x + width - xThick, y);
-		glVertex2d(x + width - xThick, y + height);
-		glVertex2d(x + width, y + height);
-		glVertex2d(x + width, y);
-		glEnd();
 	}
 	public void renderInfo(int t, int p, double x, double y, boolean renderXP) {
 		Pokemon pm = acPokemon[t][p];
@@ -302,15 +236,10 @@ public class BattleScreen {
 		dialog.go();
 	}
 
-	float mapX(double x) {
-		return (float) (x * width);
-	}
-	float mapY(double y) {
-		return (float) (y * height);
-	}
-	void processMouseEvent(){
-		double x = (double)Mouse.getEventX()/width;
-		double y = 1-(double)Mouse.getEventY()/height;
+
+	
+	
+	public void processMouseEvent(double x, double y){
 		if (dialogLoc.contains(x, y))
 		{
 			if (dialog != null)

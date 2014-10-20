@@ -1,4 +1,5 @@
 package fakemon;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,6 +8,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URLConnection;
@@ -24,9 +26,6 @@ public class Start {
 	public static void main(String[] args) {
 		try {
 			init();
-
-
-			System.out.println(Type.getByName("normal").getEffectiveness(Type.getByName("bug")));
 			PokemonInfo[] pokedex = PokemonInfo.getList();
 			System.out.println(pokedex.length + " Pokemon loaded.");
 			MoveInfo[] moves = MoveInfo.getList();
@@ -51,7 +50,7 @@ public class Start {
 			}.start();
 			while (!Display.isCloseRequested()) {
 				screen.render();
-				while(Mouse.next()) screen.processMouseEvent();
+				while(Mouse.next()) screen.mouseEvent();
 				Display.update();
 				Display.sync(60);
 			}
@@ -78,16 +77,35 @@ public class Start {
 		return yours;
 	}
 	public static void init(){
-		new Fast();
-		new MediumFast();
-		new MediumSlow();
+		String base;
+		try {
+			String os = System.getProperty("os.name").toLowerCase();
+			String osName = "";
+			if(os.startsWith("linux")){
+				osName = "linux";
+			} else if(os.startsWith("windows")){
+				osName = "windows";
+			}else if(os.startsWith("mac")|| os.startsWith("darwin")){
+				osName = "macosx";
+			} else if (os.startsWith("sunos")) {
+				osName = "solaris";
+			}
+			base = new File(Start.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParent();
+			System.setProperty("org.lwjgl.librarypath", base + "/lwjgl/natives/"+osName);
+			new Fast();
+			new MediumFast();
+			new MediumSlow();
 
-		double[] mods = {1,1,1,1,1,1}; 
-		new Nature("Default",mods);
+			double[] mods = {1,1,1,1,1,1}; 
+			new Nature("Default",mods);
+			
+			loadTypes(base + "/res/Types.csv");	
+			loadPokemon(base + "/res/Pokemon/Test Dex.csv");
+			loadMoves(base + "/res/Moves");
 		
-		loadTypes("res/Types.csv");	
-		loadPokemon("res/Pokemon/Test Dex.csv");
-		loadMoves("res/Moves");
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
 	}
 	public static void loadTypes(String path){
 		try {
