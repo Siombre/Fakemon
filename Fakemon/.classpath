@@ -3,11 +3,7 @@
 	<classpathentry kind="src" output="res/Moves" path="Moves"/>
 	<classpathentry excluding="examples/" kind="src" path="src"/>
 	<classpathentry kind="lib" path="libs/lwjgl-2.8.4/jar/lwjgl_util.jar"/>
-	<classpathentry kind="lib" path="libs/lwjgl-2.8.4/jar/lwjgl.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Fakemon/libs/lwjgl-2.8.4/native/linux"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="libs/lwjgl-2.8.4/jar/lwjgl.jar"/>
 	<classpathentry kind="lib" path="libs/slick-util.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
