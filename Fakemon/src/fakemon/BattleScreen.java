@@ -2,6 +2,7 @@ package fakemon;
 import java.awt.Font;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
@@ -124,19 +125,19 @@ public class BattleScreen extends Screen {
 			
 			
 			try {
-				if(actions.get(0).validate())
+				//TODO Sort by speed and priority
+				
+				sortActions(actions);
+				
+				
+				for(BattleAction ba : actions)
 				{
-					actions.get(0).doAction(this);
-					checkFainted();
-					while(dialog.isActive())
-						Thread.sleep(5);
-				}
-				if(actions.get(1).validate())
-				{
-					actions.get(1).doAction(this);
-					checkFainted();
-					while(dialog.isActive())
-						Thread.sleep(5);
+					if(ba.validate()){
+						ba.doAction(this);
+						checkFainted();
+						while(dialog.isActive())
+							Thread.sleep(5);
+					}
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -144,6 +145,58 @@ public class BattleScreen extends Screen {
 		}
 
 	}
+	private void sortActions(ArrayList<BattleAction> actions){
+		//Insertion sort by priority then speed
+		
+		for(int i = 0;i<actions.size();i++)
+		{
+			int p = actions.get(i).getPriority();
+			int s = actions.get(i).getSpeed();
+			int i2;
+			for(i2 = 0;i2< i;i2++)
+			{
+				int p2 = actions.get(i2).getPriority();
+				int s2 = actions.get(i2).getSpeed();
+				if(p>p2)
+					break;
+				if(p == p2 && s>s2)
+					break;
+			}
+			if(i != i2)
+			{
+				actions.add(i2, actions.remove(i));
+			}
+		}
+		
+		//Shuffle sets of actions of the same priority and speed
+		int start = 0;
+		int pPrev = actions.get(0).getPriority();
+		int sPrev = actions.get(0).getSpeed();
+		
+		for(int i = 1;i<actions.size();i++)
+		{
+			int p = actions.get(i).getPriority();
+			int s = actions.get(i).getSpeed();
+			
+			if(p != pPrev || s != sPrev && i - start > 1){
+				//shuffle
+				
+				for(int i2 = start;i < i;i2++)
+				{
+					BattleAction temp = actions.get(i2);
+					int r = Util.rand(i2+1, i-1);
+					actions.set(i2, actions.get(r));
+					actions.set(r, temp);		
+				}
+				
+				start = i;
+				pPrev = p;
+				sPrev = s;
+			}
+		}
+		
+	}
+	
 	private void checkFainted(){
 		for (int t = 0; t < trainers.length; t++) {
 			for (int p = 0; p < acPokemon[t].length; p++) {

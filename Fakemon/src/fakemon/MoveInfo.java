@@ -15,6 +15,7 @@ public abstract class MoveInfo {
 	private int power;
 	private boolean contact;
 	private Category cat;
+	protected int priority;
 	
 	protected void init(String name, int basePP, int maxPP, int accuracy, int power, boolean contact, Category cat, Type... types)
 	{
@@ -104,5 +105,8 @@ public abstract class MoveInfo {
 	}
 	public boolean isValid() {
 		return true;
+	}
+	public int getPriority() {
+		return priority;
 	}
 }

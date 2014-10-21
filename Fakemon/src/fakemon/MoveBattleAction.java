@@ -10,13 +10,16 @@ public class MoveBattleAction extends BattleAction {
 		user = p;
 		this.targets = targets;
 	}
-	public float getSpeed() {
+	public int getSpeed() {
 		return user.getStats()[PokemonInfo.SPEED];
 	}
 	
 	public void doAction(BattleScreen bsc) {
 		for(Pokemon target : targets)
 			m.onUse(user, target, bsc);
+	}
+	public int getPriority(){
+		return m.getInfo().getPriority();
 	}
 	@Override
 	public boolean validate() {
