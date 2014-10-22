@@ -55,10 +55,6 @@ public class BattleScreen extends Screen {
 		}
 		
 		fillPokemon();
-		//MoveMenuDialogBox box = new MoveMenuDialogBox(dialog2Loc,this);
-		//box.moveInit(trainers[0], acPokemon[0][0]);
-		//dialog2 = box;
-		//dialog = box;
 
 	}
 
