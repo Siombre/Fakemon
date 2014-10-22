@@ -119,13 +119,16 @@ public class BattleScreen extends Screen {
 			// For each Pokemon, check to see if a next move has been
 			// registered, and is valid (For multi-turn moves)
 			// For each trainer, get an action
+			
 			ArrayList<BattleAction> actions = new ArrayList<BattleAction>();
-			for(int i = 0; i< 2;i++)
-				actions.add(trainers[i].getBattleAI().getAction(this, i, 0));
+			for (int t = 0; t < trainers.length; t++) {
+				for (int p = 0; p < acPokemon[t].length; p++) {
+					actions.add(trainers[t].getBattleAI().getAction(this, t, p));
+				}
+			}
 			
 			
 			try {
-				//TODO Sort by speed and priority
 				
 				sortActions(actions);
 				
