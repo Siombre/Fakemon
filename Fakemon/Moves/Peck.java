@@ -9,3 +9,5 @@ public class Peck extends MoveInfo{
 		init("Peck", 35, 56, 100, 35, true, Category.PHYSICAL, Type.getByName("flying"));
 	}
 }
+
+//.....Peck.

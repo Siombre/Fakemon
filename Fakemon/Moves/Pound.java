@@ -8,3 +8,6 @@ public class Pound extends MoveInfo{
 		init("Pound", 35, 56, 100, 40, true, Category.PHYSICAL,Type.getByName("normal"));
 	}
 }
+
+
+//...Pound.

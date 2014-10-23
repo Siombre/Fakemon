@@ -1,21 +1,36 @@
-,,,,,,,,,,,,,,,,,
 Dex Number,Species,Primary Type,Secondary Type ,Gender Ratio,Ability 1,Ability 2,Hidden Ability,Experience Type,Hit Points,Attack,Defense,Sp. Attack,Sp. Defense,Speed,Stat Total,Base Exp,LEVEL UP MOVES
-#1,Enorm,Normal,Bug,50/50/0,None,None,None,Medium_Slow,128,86,49,36,151,46,496,101,"1_Pound,4_Acid,8_Leech Life,15_Lick,21_Mud Shot,26_Bulldoze,33_Rock Throw,40_Signal Beam,44_Rock Slide"
 ,,,,,,,,,,,,,,,,,
-2,Wreckit,Fighting,Steel,50/50/0,None,None,None,Medium_Slow,78,138,112,60,80,50,518,101,"1_Pound,4_Double Kick,8_Rock Throw,15_Bullet Punch,21_Karate Chop,26_Mud Shot,33_Bulldoze,40_Submission,44_Rock Slide"
 ,,,,,,,,,,,,,,,,,
-3,Bamboom,Flying,Fighting,50/50/0,None,None,None,Medium_Fast,95,92,63,91,80,94,515,101,"1_Pound,4_Gust,8_Lick,15_Karate Chop,21_Double Kick,26_Mirror Shot,33_Bullet Punch,40_Mega Punch,44_Shadow Ball"
+500,Igaken,Normal,None,50/50/0,Healer,Immunity,Physician,Medium_Fast,115,30,60,45,65,45,360,91,
 ,,,,,,,,,,,,,,,,,
-4,Masslime,Poison,None,50/50/0,None,None,None,Medium_Fast,105,105,75,65,100,50,500,101,"1_Pound,4_Acid,8_Bullet Punch,15_Rock Throw,21_Mud Shot,26_Poison Tail,33_Bulldoze,40_Mega Punch,44_Rock Slide"
+501,Bugpag,Bug,None,50/50/0,Pickup,Overcoat,Storage Space,Fast,55,75,80,30,85,55,360,91,
 ,,,,,,,,,,,,,,,,,
-5,Asphalarge,Ground,Steel,50/50/0,None,None,None,Medium_Fast,68,50,138,47,122,57,482,101,"1_Pound,4_Double Kick,8_Rock Throw,15_Acid,21_Mud Shot,26_Mirror Shot,33_Bulldoze,40_Signal Beam,44_Rock Slide"
+1,Tytumn,Grass,None,87.5/12.5/0,Overgrow,None,Keen Eye,Medium_Slow,42,40,40,54,54,70,300,133,
 ,,,,,,,,,,,,,,,,,
-6,Cragarren,Rock,Dark,0/0/100,None,None,None,Medium_Slow,52,80,127,145,80,33,518,101,"1_Pound,4_Shadow Sneak,8_Rock Throw,15_Lick,21_Mud Shot,26_Acid,33_Bulldoze,40_Shadow Ball,44_Rock Slide"
+2,Tyturnumn,Grass,Dark,87.5/12.5/0,Overgrow,None,Keen Eye,Medium_Slow,60,60,59,72,72,85,408,188,
 ,,,,,,,,,,,,,,,,,
-7,Pixue,Bug,Flying,50/50/0,None,None,None,Medium_Fast,72,45,50,104,43,99,413,101,"1_Leech Life,4_Pound,8_Gust,15_Lick,21_Acid,26_Shadow Sneak,33_Wing Attack,40_Shadow Ball,44_Signal Beam"
+3,Auturnal,Grass,Dark,87.5/12.5/0,Overgrow,None,Inner Focus,Medium_Slow,70,90,68,98,90,112,528,239,
 ,,,,,,,,,,,,,,,,,
-#8,Dehedra,Ghost,Poison,50/50/0,None,None,None,Medium_Slow,62,109,66,80,80,113,520,111,"1_Lick,4_Double Kick,8_Acid,15_Gust,21_Shadow Sneak,26_Poison Tail,33_Mud Shot,40_Shadow Ball,44_Submission"
+4,Nepo,Water,None,87.5/12.5/0,Torrent,None,Damp,Medium_Slow,54,54,70,40,42,40,300,133,
 ,,,,,,,,,,,,,,,,,
-9,Tryamid,Steel,Psychic,0/0/100,None,None,None,Medium_Fast,60,70,70,130,105,93,518,111,"1_Pound,4_Acid,8_Leech Life,15_Mirror Shot,21_Mud Shot,26_Shadow Sneak,33_Signal Beam,40_Shadow Ball,44_Rock Slide"
+5,Gorgopo,Water,Rock,87.5/12.5/0,Torrent,None,Strong Jaw,Medium_Slow,80,72,86,62,58,50,408,188,
 ,,,,,,,,,,,,,,,,,
-10,Skulldune,Ground,Dark,50/50/0,None,None,None,Medium_Slow,91,60,128,118,70,51,518,111,
+6,Neslagapo,Water,Rock,87.5/12.5/0,Torrent,None,Strong Jaw,Medium_Slow,100,90,113,88,80,59,528,239,
+,,,,,,,,,,,,,,,,,
+7,Chyro,Fire,None,87.5/12.5/0,Blaze,None,Snow Coat,Medium_Slow,40,70,40,42,54,54,300,133,
+,,,,,,,,,,,,,,,,,
+8,Fleetah,Fire,None,87.5/12.5/0,Blaze,None,Snow Coat,Medium_Slow,60,85,59,60,72,72,408,188,
+,,,,,,,,,,,,,,,,,
+9,Tundraicha,Fire,Ice,87.5/12.5/0,Blaze,None,Snow Coat,Medium_Slow,70,112,68,82,90,114,528,239,
+,,,,,,,,,,,,,,,,,
+10,Larveral,Bug,None,50/50/0,Shield Dust,None,Runaway,Fast,30,20,50,40,35,20,195,41,
+,,,,,,,,,,,,,,,,,
+11,Cacoulder,Bug,Rock,50/50/0,Weak Armor,None,Rock Head,Fast,30,15,70,35,35,10,195,101,
+,,,,,,,,,,,,,,,,,
+12,Petrifly,Bug,Rock,50/50/0,Weak Armor,None,Rock Head,Fast,55,55,100,72,72,44,398,159,
+,,,,,,,,,,,,,,,,,
+13,Mulbiki,Bug,None,50/50/0,Swarm,Unnerve,Moody,Fast,20,20,30,35,40,50,195,41,
+,,,,,,,,,,,,,,,,,
+14,Mulegant,Bug,None,50/50/0,Swarm,Unnerve,Moody,Fast,20,15,55,30,35,40,195,101,
+,,,,,,,,,,,,,,,,,
+15,Mulmoryx,Bug,None,50/50/0,Swarm,Unnerve,Moody,Fast,55,44,72,72,55,100,398,159,

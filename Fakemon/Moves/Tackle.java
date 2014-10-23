@@ -10,3 +10,6 @@ public class Tackle extends MoveInfo{
 	}
 
 }
+
+
+//.........tackle.
