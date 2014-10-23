@@ -47,7 +47,8 @@ public class PokemonInfo {
 			//String[] typeList = tokens[2].split("(\\\\|/)");
 			String[] typeList = {tokens[2],tokens[3]};
 			for(String t:typeList)
-				types.add(Type.getByName(t));
+				if(!t.equalsIgnoreCase("None"))
+					types.add(Type.getByName(t));
 			
 			baseExp = Integer.parseInt(tokens[16]);
 
