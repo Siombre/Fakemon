@@ -1,25 +1,29 @@
 package fakemon;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glColor3d;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glVertex2d;
+
 import java.awt.Font;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.Random;
 
-import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
-
-import static org.lwjgl.opengl.GL11.*;
 
 public class BattleScreen extends Screen {
 	Trainer[] trainers;
 	Pokemon[][] acPokemon;
 	double[][] hpRatio;
-	TrueTypeFont font;
-	TrueTypeFont smallFont;
+	TrueTypeFont font = Fakemon.font;
+	TrueTypeFont smallFont = Fakemon.smallFont;
 	
 
 	DialogBox dialog;
@@ -31,14 +35,9 @@ public class BattleScreen extends Screen {
 
 	BattleScreen(Trainer[] trainers, boolean wild, int[] pokemonOut) {
 		super.init();
-		
 		this.trainers = trainers;
 		
-		Font awtFont = new Font("Times New Roman", Font.BOLD, 18); // name, style (PLAIN, BOLD, or ITALIC), size
-		font = new TrueTypeFont(awtFont, true); // base Font, anti-aliasing true/false
-		
-		Font awtFont2 = new Font("Times New Roman", Font.BOLD, 12); // name, style (PLAIN, BOLD, or ITALIC), size
-		smallFont = new TrueTypeFont(awtFont2, true);
+
 		
 
 		acPokemon = new Pokemon[trainers.length][];
@@ -106,11 +105,12 @@ public class BattleScreen extends Screen {
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 	}
 
-	void battleLogic() {
+	public int start() {
 		boolean finished = false;
 
 		fillPokemon();
-		while (!Display.isCloseRequested()) {
+		
+		while (!Display.isCloseRequested() && !finished) {
 
 			// For each Pokemon, check to see if a next move has been
 			// registered, and is valid (For multi-turn moves)
@@ -119,7 +119,8 @@ public class BattleScreen extends Screen {
 			ArrayList<BattleAction> actions = new ArrayList<BattleAction>();
 			for (int t = 0; t < trainers.length; t++) {
 				for (int p = 0; p < acPokemon[t].length; p++) {
-					actions.add(trainers[t].getBattleAI().getAction(this, t, p));
+					if(acPokemon[t][p] != null)
+						actions.add(trainers[t].getBattleAI().getAction(this, t, p));
 				}
 			}
 			
@@ -141,8 +142,39 @@ public class BattleScreen extends Screen {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			
+			int battlers = 0;
+			for (int t = 0; t < trainers.length; t++) {
+				boolean alive = false;
+				for (int p = 0; p < acPokemon[t].length; p++) {
+					if(acPokemon[t][p] != null)
+						alive = true;
+				}
+				if(alive)
+					battlers++;
+			}
+			finished = battlers <= 1;
+			
 		}
+		int winner = 0;
+		for (int t = 1; t < trainers.length; t++) {
+			boolean alive = false;
+			for (int p = 0; p < acPokemon[t].length; p++) {
+				if(acPokemon[t][p] != null)
+					alive = true;
+			}
+			if(alive)
+			{
+				winner = t;
+				break;
+			}
+		}
+		if(winner == 0)
+			displayMessage("You win!");
+		else
+			displayMessage("You lose!");
 
+		return winner;
 	}
 	private void sortActions(ArrayList<BattleAction> actions){
 		//Insertion sort by priority then speed
@@ -203,19 +235,24 @@ public class BattleScreen extends Screen {
 					Pokemon pm = acPokemon[t][p];
 					if(pm.getHealth() == 0)
 					{
-						displayMessage(pm.getName() + " fainted!");
-						acPokemon[t][p] = Start.generatePokemon();
-						hpRatio[t][p] = (double) acPokemon[t][p].getHealth() / acPokemon[t][p].getStats()[PokemonInfo.MAX_HP];
-						fainted++;
-						
+						displayMessage(pm.getName() + " fainted!");	
 						for (int t2 = 0; t2 < trainers.length; t2++) {
 							for (int p2 = 0; p2 < acPokemon[t2].length; p2++) {
-								if(t2 == t) continue;
+								if(t2 == t  || acPokemon[t2][p2] == null) continue;
 								int exp = (int) (pm.getLevel()*pm.getInfo().baseExp/5.0*Math.pow(2*pm.getLevel()+10,2.5)/Math.pow(pm.getLevel()+acPokemon[t2][p2].getLevel()+10,2.5));
 								displayMessage(String.format("%s gained %d exp.", acPokemon[t2][p2].getName(),exp));
 								acPokemon[t2][p2].addExp(exp);
 							}
 						}
+						
+						acPokemon[t][p] = trainers[t].getBattleAI().getNextPokemon(this);
+						
+						if(acPokemon[t][p] != null)
+						{
+							displayMessage(String.format("%s sent out %s!", trainers[t].getName(),acPokemon[t][p].getName()));
+							hpRatio[t][p] = (double) acPokemon[t][p].getHealth() / acPokemon[t][p].getStats()[PokemonInfo.MAX_HP];
+						}
+						fainted++;
 					}
 				}
 

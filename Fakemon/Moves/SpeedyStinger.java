@@ -6,6 +6,7 @@ import fakemon.Type;
 public class SpeedyStinger extends MoveInfo {
 	public SpeedyStinger (){
 		init("Speedy Stinger", 15, 25, 100, 55, true, Category.SPECIAL, Type.getByName("bug"));
+		this.priority = 1;
 	}
 
 }

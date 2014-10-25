@@ -3,6 +3,10 @@ import java.util.ArrayList;
 
 
 public class TrainerAI implements BattleAI{
+	Trainer trainer;
+	public TrainerAI(Trainer t){
+		trainer = t;
+	}
 	public BattleAction getAction(BattleScreen battle, int trainer, int pokemon){
 		Pokemon p = battle.acPokemon[trainer][pokemon];
 		Pokemon t = battle.acPokemon[1-trainer][0];
@@ -17,5 +21,14 @@ public class TrainerAI implements BattleAI{
 		
 		
 		return ba;
+	}
+
+	@Override
+	public Pokemon getNextPokemon(BattleScreen b) {
+		for(Pokemon p : trainer.getPokemon()){
+			if(p == null) continue;
+			
+		}
+		return null;
 	}
 }

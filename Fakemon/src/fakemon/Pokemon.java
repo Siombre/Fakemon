@@ -65,7 +65,10 @@ public class Pokemon {
 
 	public void levelUp() {
 		level++;
+		double healthRatio = (double)hp/stats[PokemonInfo.MAX_HP];
 		stats = info.getStatsForLevel(level, this);
+		
+		hp = (int) (healthRatio * stats[PokemonInfo.MAX_HP]+.5);
 	//	this.damage(-999999);
 		
 	}
@@ -107,7 +110,15 @@ public class Pokemon {
 		}
 		return false;
 	}
-
+	public void fullHeal(){
+		for(Move m: moves)
+		{
+			if(m!= null)
+				m.curPP = m.maxPP;
+		}
+		hp = stats[PokemonInfo.MAX_HP];
+		statEffect = null;
+	}
 	public String getName() {
 		return name;
 	}

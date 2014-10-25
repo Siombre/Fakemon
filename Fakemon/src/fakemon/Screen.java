@@ -113,5 +113,7 @@ public abstract class Screen {
 		processMouseEvent(x,y);
 	}	
 	public abstract void processMouseEvent(double x, double y);
-	
+	public abstract void render();
+	public abstract int start();
+
 }

@@ -39,6 +39,8 @@ public abstract class MoveInfo {
 	}
 	public void hit(Pokemon user, Pokemon target, BattleScreen battle){
 		
+		if(target == null || user == null) return;
+		
 		double stabBonus = 1;
 		for(Type t : types)
 			if(user.getTypes().contains(t))
@@ -60,7 +62,6 @@ public abstract class MoveInfo {
 		
 		if(typeBonus < 0.00001)
 			battle.displayMessage(String.format("But it had no effect . (%.2fx)",typeBonus));
-		
 		if(cat == Category.PHYSICAL){
 			int attack = user.getStats()[PokemonInfo.ATTACK];
 			int defense = target.getStats()[PokemonInfo.DEFENSE];
@@ -74,11 +75,17 @@ public abstract class MoveInfo {
 			int damage = (int) (((((2.0*user.getLevel()/5+2)*attack*power/defense)/50.0)+2)*stabBonus*typeBonus*(Math.random()*.15 + .85));
 			battle.damage(target, damage);
 		}
+		
 	}
 	
 	public void onUse(Pokemon user, Pokemon target, BattleScreen battle){
 		battle.displayMessage(user.getName() + " used " + getName() + ".");
-		hit(user, target, battle);
+		if(Util.rand(1, 100) <= accuracy)
+			hit(user, target, battle);
+		else
+			battle.displayMessage("But it missed...");
+
+			
 	}
 	public String getName()
 	{

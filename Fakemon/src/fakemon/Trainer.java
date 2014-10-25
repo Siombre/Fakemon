@@ -10,7 +10,7 @@ public class Trainer {
 	public Trainer(String name)
 	{
 		this.name = name;
-		battleAI = new TrainerAI();
+		battleAI = new TrainerAI(this);
 	}
 	public boolean addPokemon(Pokemon p)
 	{

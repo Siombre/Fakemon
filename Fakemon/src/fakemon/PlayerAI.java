@@ -12,5 +12,11 @@ public class PlayerAI implements BattleAI{
 		
 		return box.getMove();
 	}
+	@Override
+	public Pokemon getNextPokemon(BattleScreen battle) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	
 }
