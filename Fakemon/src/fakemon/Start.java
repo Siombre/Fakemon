@@ -149,7 +149,11 @@ public class Start {
 				if(line.replace(',', ' ').trim().isEmpty())
 					continue;
 				//System.out.println(line);
-				new PokemonInfo(line);
+				try{
+					new PokemonInfo(line);
+				}catch(Exception e){
+					System.err.println(e.getLocalizedMessage());
+				}
 			}
 
 			scan.close();
