@@ -8,7 +8,7 @@ import org.newdawn.slick.TrueTypeFont;
 
 
 public class Fakemon {
-	Screen currentScreen;
+	static Screen currentScreen;
 	static TrueTypeFont font;
 	static TrueTypeFont smallFont;
 	private boolean started;
@@ -21,27 +21,27 @@ public class Fakemon {
 		MoveInfo[] moves = MoveInfo.getList();
 		System.out.println(moves.length + " Moves loaded.");
 
-		Trainer enemy = new Trainer("Shut up, Fool");
+		Trainer enemy = new Trainer("Opponent");
+		enemy.addPokemon(generatePokemon(10));
 		enemy.addPokemon(generatePokemon(10));
 
-		Trainer you = new Trainer("Sully");
-		you.addPokemon(generatePokemon(100));
+
+		Trainer you = new Trainer("Player");
+		you.addPokemon(generatePokemon(10));
 		you.battleAI = new PlayerAI();
 		Trainer[] t = { you, enemy };
 		int[] is = { 1 , 1 };
-		you.getPokemon()[0].damage(50);
-		currentScreen =  new BattleScreen(t, false, is);
-		int win = currentScreen.start();
+		int win = new BattleScreen(t, false, is).start();
 		
 		while(true){
 			if(win != 0)
 				you.getPokemon()[0].fullHeal();
-			System.out.println(you.getPokemon()[0].getHealth());
-			enemy = new Trainer("Shut up, Fool");
+			enemy = new Trainer("Opponent");
 			enemy.addPokemon(generatePokemon(10));
+			enemy.addPokemon(generatePokemon(10));
+
 			t[1] = enemy ;
-			currentScreen =  new BattleScreen(t, false, is);
-			win = currentScreen.start();
+			win = new BattleScreen(t, false, is).start();
 		}
 	}
 	
@@ -51,9 +51,10 @@ public class Fakemon {
 		PokemonInfo[] pokedex = PokemonInfo.getList();
 		MoveInfo[] moves = MoveInfo.getList();
 		PokemonInfo s = pokedex[rand.nextInt(pokedex.length)];
-		Pokemon p = new Pokemon(s.name, s, s.levelingType.getExperience(level)-1, level-1, false, -1);
+		Pokemon p = new Pokemon(s.name, s, s.levelingType.getExperience(level), level, false, -1);
 		p.addMove(new Move(moves[rand.nextInt(moves.length)]));
 		p.addMove(new Move(moves[rand.nextInt(moves.length)]));
+		p.addMove(new Move(MoveInfo.getByName("Seabed Slam")));
 
 		return p;
 	}
@@ -78,5 +79,13 @@ public class Fakemon {
 		
 		Font awtFont2 = new Font("Times New Roman", Font.BOLD, 12); // name, style (PLAIN, BOLD, or ITALIC), size
 		smallFont = new TrueTypeFont(awtFont2, true);
+	}
+
+	public static Screen getCurrentScreen() {
+		return currentScreen;
+	}
+
+	public static void setCurrentScreen(Screen screen) {
+		currentScreen = screen;
 	}
 }

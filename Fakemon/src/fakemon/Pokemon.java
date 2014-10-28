@@ -68,9 +68,7 @@ public class Pokemon {
 		double healthRatio = (double)hp/stats[PokemonInfo.MAX_HP];
 		stats = info.getStatsForLevel(level, this);
 		
-		hp = (int) (healthRatio * stats[PokemonInfo.MAX_HP]+.5);
-	//	this.damage(-999999);
-		
+		hp = (int) (healthRatio * stats[PokemonInfo.MAX_HP]+.5);		
 	}
 
 	public void addExp(int amt) {
@@ -114,7 +112,7 @@ public class Pokemon {
 		for(Move m: moves)
 		{
 			if(m!= null)
-				m.curPP = m.maxPP;
+				m.setCurPP(m.getMaxPP());
 		}
 		hp = stats[PokemonInfo.MAX_HP];
 		statEffect = null;

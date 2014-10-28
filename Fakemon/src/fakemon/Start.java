@@ -34,11 +34,9 @@ public class Start {
 		new Thread() {
 			public void run() {
 				game.start();
-
 			}
 		}.start();
-
-
+		
 		while (!Display.isCloseRequested()) {
 			game.render();
 			while(Mouse.next()) game.mouseEvent();
@@ -79,12 +77,6 @@ public class Start {
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
-	}
-	private void initGL(){
-
-
-
-
 	}
 	public static void loadTypes(String path){
 		try {
@@ -148,7 +140,6 @@ public class Start {
 
 				if(line.replace(',', ' ').trim().isEmpty())
 					continue;
-				//System.out.println(line);
 				try{
 					new PokemonInfo(line);
 				}catch(Exception e){

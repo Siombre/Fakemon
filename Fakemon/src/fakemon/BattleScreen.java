@@ -105,7 +105,7 @@ public class BattleScreen extends Screen {
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 	}
 
-	public int start() {
+	public int doLogic() {
 		boolean finished = false;
 
 		fillPokemon();

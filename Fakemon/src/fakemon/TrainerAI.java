@@ -13,7 +13,7 @@ public class TrainerAI implements BattleAI{
 		ArrayList<Move> possibleMoves = new ArrayList<Move>();
 		Move[] moves = p.getMoves();
 		for(Move m: moves)
-			if(m != null && m.curPP > 0 )
+			if(m != null && m.getCurPP() > 0 )
 				possibleMoves.add(m);
 		if(possibleMoves.size() == 0)
 			return null;
@@ -26,8 +26,16 @@ public class TrainerAI implements BattleAI{
 	@Override
 	public Pokemon getNextPokemon(BattleScreen b) {
 		for(Pokemon p : trainer.getPokemon()){
+			boolean found = false;
 			if(p == null) continue;
-			
+			for(Pokemon[] t: b.acPokemon)
+				for(Pokemon p2 : t)
+				{
+					if(p == p2)
+						found = true;
+				}
+			if(!found)
+				return p;
 		}
 		return null;
 	}

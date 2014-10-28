@@ -114,6 +114,14 @@ public abstract class Screen {
 	}	
 	public abstract void processMouseEvent(double x, double y);
 	public abstract void render();
-	public abstract int start();
+	public abstract int doLogic();
+
+	public final int start(){
+		Screen s = Fakemon.getCurrentScreen();
+		Fakemon.setCurrentScreen(this);
+		int r = doLogic();
+		Fakemon.setCurrentScreen(s);
+		return r;
+	}
 
 }
