@@ -1,3 +1,4 @@
+package Moves;
 import effects.Effect;
 import effects.StatModEffect;
 import fakemon.BattleScreen;
