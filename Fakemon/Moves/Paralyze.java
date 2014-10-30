@@ -8,16 +8,16 @@ import fakemon.Pokemon;
 import fakemon.Type;
 
 
-public class SandAttack extends MoveInfo{
+public class Paralyze extends MoveInfo{
 
-	public SandAttack (){
-		init("Sand Attack", 10, 16, 100, 0, false, Category.STATUS, Type.getByName("ground"));
+	public Paralyze (){
+		init("Paralyze", 10, 16, 100, 0, false, Category.STATUS, Type.getByName("electric"));
 		
 		
 	}
 	@Override
 	public boolean onHit(Pokemon user, Pokemon target, BattleScreen battle){
-		target.addEffect(new StatModEffect(Effect.ACCURACY,-1),user,battle);
+		target.addEffect(new ParalyzeEffect(),user,battle);
 		return true;	
 	}
 

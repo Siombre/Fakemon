@@ -130,7 +130,7 @@ public class BattleScreen extends Screen {
 				
 				for(BattleAction ba : actions)
 				{
-					if(ba.validate()){
+					if(ba.validate(this)){
 						ba.doAction(this);
 						checkFainted();
 						while(dialog.isActive())
@@ -140,7 +140,16 @@ public class BattleScreen extends Screen {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
+			for (int t = 0; t < trainers.length; t++) {
+				for (int p = 0; p < acPokemon[t].length; p++) {
+					if(acPokemon[t][p] != null)
+					{
+						acPokemon[t][p].onTurnEnd(this);
+						checkFainted();
+
+					}
+				}
+			}
 			int battlers = 0;
 			for (int t = 0; t < trainers.length; t++) {
 				boolean alive = false;
@@ -281,7 +290,7 @@ public class BattleScreen extends Screen {
 		}
 	}
 
-	void damage(Pokemon poke, int damage) {
+	public void damage(Pokemon poke, int damage) {
 		int t = 0;
 		int p = 0;
 		boolean found = false;

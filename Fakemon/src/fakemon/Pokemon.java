@@ -161,11 +161,15 @@ public class Pokemon {
 		return shiny;
 	}
 
-	public boolean canAttack() {
+	public boolean canAttack(Screen screen) {
 		boolean canAttack = true;
 		for(Effect e : statEffects)
-			if(!e.canAttack())
+			if(!e.canAttack(screen))
 				canAttack = false;
 		return canAttack;
+	}
+	public void onTurnEnd(BattleScreen screen){
+		for(Effect e : statEffects)
+			e.onTurnEnd(screen);
 	}
 }

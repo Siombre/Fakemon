@@ -34,9 +34,9 @@ public class MoveBattleAction extends BattleAction {
 		return m.getInfo().getPriority();
 	}
 	@Override
-	public boolean validate() {
+	public boolean validate(BattleScreen screen) {
 		
-		return user.getHealth() > 0 && m.isValid() && user.canAttack();
+		return user.getHealth() > 0 && m.isValid() && user.canAttack(screen);
 	}
 
 }

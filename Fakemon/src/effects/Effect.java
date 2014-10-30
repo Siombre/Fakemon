@@ -21,7 +21,8 @@ public abstract class Effect {
 	public void onDefend(){}
 	public void onAttack(){}
 	public void onBattleEnd(){}
-	public boolean canAttack(){
+	public void onTurnEnd(BattleScreen screen){}
+	public boolean canAttack(Screen screen){
 		return true;
 	}
 	public boolean canBeAttacked(Move m,BattleScreen screen){

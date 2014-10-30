@@ -70,7 +70,9 @@ public abstract class MoveInfo {
 		return priority;
 	}
 	public void hit(Pokemon user, Pokemon target, BattleScreen battle){
-
+		if(cat == Category.PHYSICAL){
+			return;
+		}
 		double critBonus;
 		if(isCritical()){
 			critBonus = getCritDamMod();
