@@ -1,9 +1,14 @@
 package effects;
 
+import fakemon.BattleScreen;
 import fakemon.Move;
+import fakemon.Pokemon;
+import fakemon.Screen;
 import fakemon.Type;
 
 public abstract class Effect {
+	Pokemon user;
+	Pokemon target;
 	public final static int ATTACK = 1;
 	public final static int DEFENSE = 2;
 	public final static int SPECIAL_ATTACK = 3;
@@ -11,14 +16,15 @@ public abstract class Effect {
 	public final static int SPEED = 5;
 	public final static int EVASION = 6;
 	public final static int ACCURACY = 7;
+	public final static String[] statNames = {"Health","Attack","Defense","Special Attack","Special Defense","Speed","Evasion","Accuracy"};
 	private boolean done;
 	public void onDefend(){}
 	public void onAttack(){}
 	public void onBattleEnd(){}
-	public boolean canAttack(Move m){
+	public boolean canAttack(){
 		return true;
 	}
-	public boolean canBeAttacked(Move m){
+	public boolean canBeAttacked(Move m,BattleScreen screen){
 		return true;
 	}
 	public Type getTypeMod(){
@@ -27,19 +33,24 @@ public abstract class Effect {
 	public float getStatMod(int stat){
 		return 1;
 	}
-	public boolean prevents(Effect e)
+	public boolean prevents(Effect e,Screen screen)
 	{
 		return false;
 	}
-	public boolean canSwap(){
+	public boolean canSwap(BattleScreen screen){
 		return true;
 	}
-	public abstract boolean add(Effect e);
-	public abstract boolean conflicts(Effect e);
+	public abstract boolean add(Effect e,Screen screen);
+	public abstract boolean conflicts(Effect e,Screen screen);
 	public final boolean isOver(){
 		return done;
 	}
 	public final void end(){
 		done = true;
+	}
+	public void onRemove(Screen screen){}
+	public void onNewApply(Screen screen,Pokemon user, Pokemon target){
+		this.user = user;
+		this.target = target;
 	}
 }

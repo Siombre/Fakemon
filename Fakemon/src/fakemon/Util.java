@@ -10,4 +10,9 @@ public class Util {
 	public static boolean flip(float odds){
 		return rand.nextFloat() < odds;
 	}
+	public static String possessive(String name){
+		if(name.endsWith("s"))
+			return name + '\'';
+		return name + "\'s";
+	}
 }

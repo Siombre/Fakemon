@@ -6,6 +6,7 @@ public class Trainer {
 	private ArrayList<Item> bag = new ArrayList<Item>();
 	private Pokemon[] pokemon = new Pokemon[6];
 	private String name;
+	private int id;
 	BattleAI battleAI;
 	public Trainer(String name)
 	{

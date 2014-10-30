@@ -1,5 +1,6 @@
 
 import effects.Effect;
+import effects.ParalyzeEffect;
 import effects.StatModEffect;
 import fakemon.BattleScreen;
 import fakemon.MoveInfo;
@@ -19,8 +20,7 @@ public class SandAttack extends MoveInfo{
 		return 4.0f;
 	}
 	public boolean onHit(Pokemon user, Pokemon target, BattleScreen battle){
-		//super.onHit(user, target, battle);
-		target.addEffect(new StatModEffect(Effect.ACCURACY,-1));
+		target.addEffect(new StatModEffect(Effect.ACCURACY,-1),user,battle);
 		return true;	
 	}
 

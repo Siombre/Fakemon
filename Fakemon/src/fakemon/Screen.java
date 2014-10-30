@@ -114,6 +114,8 @@ public abstract class Screen {
 	}	
 	public abstract void processMouseEvent(double x, double y);
 	public abstract void render();
+	public abstract void displayMessage(String s);
+
 	public abstract int doLogic();
 
 	public final int start(){

@@ -47,13 +47,17 @@ public class Pokemon {
 		statEffects = new ArrayList<Effect>();
 	}
 
-	public boolean addEffect(Effect statEffect) {
-		
+	public boolean addEffect(Effect statEffect,Pokemon user,Screen screen) {
 		for(Effect e : statEffects){
-			if(e.add(e))
+			if(e.prevents(statEffect, screen))
+				return false;
+		}
+		for(Effect e : statEffects){
+			if(e.add(e, screen))
 				return true;
 		}
 		statEffects.add(statEffect);
+		statEffect.onNewApply(screen,null,this);
 		return true;
 	}
 
@@ -155,5 +159,13 @@ public class Pokemon {
 	}
 	public boolean isShiny(){
 		return shiny;
+	}
+
+	public boolean canAttack() {
+		boolean canAttack = true;
+		for(Effect e : statEffects)
+			if(!e.canAttack())
+				canAttack = false;
+		return canAttack;
 	}
 }

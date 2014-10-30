@@ -130,7 +130,7 @@ public abstract class MoveInfo {
 
 	public boolean onHit(Pokemon user, Pokemon target, BattleScreen battle){
 		hit(user, target, battle);
-		return true;	
+		return true;
 	}
 
 	public void onMiss(Pokemon user, Pokemon target2, BattleScreen battle){}

@@ -35,8 +35,8 @@ public class MoveBattleAction extends BattleAction {
 	}
 	@Override
 	public boolean validate() {
-			
-		return user.getHealth() > 0 && m.isValid();
+		
+		return user.getHealth() > 0 && m.isValid() && user.canAttack();
 	}
 
 }
