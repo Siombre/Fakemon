@@ -1,4 +1,4 @@
-package Moves;
+
 
 import fakemon.MoveInfo;
 import fakemon.Type;

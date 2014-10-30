@@ -1,4 +1,4 @@
-package Moves;
+
 import fakemon.BattleScreen;
 import fakemon.MoveInfo;
 import fakemon.Pokemon;
