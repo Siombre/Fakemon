@@ -12,8 +12,8 @@ public class MoveBattleAction extends BattleAction {
 		user = p;
 		this.targets = targets;
 	}
-	public int getSpeed() {
-		return user.getStats()[PokemonInfo.SPEED];
+	public float getSpeed() {
+		return user.getStat(PokemonInfo.SPEED);
 	}
 	
 	public void doAction(BattleScreen bsc) {
@@ -36,7 +36,7 @@ public class MoveBattleAction extends BattleAction {
 	@Override
 	public boolean validate() {
 			
-		return user.getHealth() > 0;
+		return user.getHealth() > 0 && m.isValid();
 	}
 
 }

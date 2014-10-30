@@ -13,12 +13,12 @@ public class TrainerAI implements BattleAI{
 		ArrayList<Move> possibleMoves = new ArrayList<Move>();
 		Move[] moves = p.getMoves();
 		for(Move m: moves)
-			if(m != null && m.getCurPP() > 0 )
+			if(m != null && m.isValid())
 				possibleMoves.add(m);
 		if(possibleMoves.size() == 0)
 			return null;
-		BattleAction ba = new MoveBattleAction(possibleMoves.get(Util.rand(0, possibleMoves.size()-1)),p,t);
 		
+		BattleAction ba = new MoveBattleAction(possibleMoves.get(Util.rand(0, possibleMoves.size()-1)),p,t);
 		
 		return ba;
 	}

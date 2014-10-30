@@ -54,7 +54,7 @@ public class Fakemon {
 		Pokemon p = new Pokemon(s.name, s, s.levelingType.getExperience(level), level, false, -1);
 		p.addMove(new Move(moves[rand.nextInt(moves.length)]));
 		p.addMove(new Move(moves[rand.nextInt(moves.length)]));
-		p.addMove(new Move(MoveInfo.getByName("Seabed Slam")));
+		p.addMove(new Move(MoveInfo.getByName("Sand Attack")));
 
 		return p;
 	}

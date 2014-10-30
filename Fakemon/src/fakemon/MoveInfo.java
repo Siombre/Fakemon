@@ -3,6 +3,8 @@ package fakemon;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import effects.Effect;
+
 
 public abstract class MoveInfo {
 	private static HashSet<MoveInfo> moves = new HashSet<MoveInfo>();
@@ -34,7 +36,7 @@ public abstract class MoveInfo {
 		this.maxPP = maxPP;
 		this.basePP = basePP;
 		this.cat = cat;
-
+		this.contact = contact;
 		moves.add(this);
 	}
 
@@ -103,18 +105,18 @@ public abstract class MoveInfo {
 		if(typeBonus < 0.00001)
 			battle.displayMessage(String.format("But it had no effect . (%.2fx)",typeBonus));
 		
-		double mod = stabBonus*typeBonus*critBonus;
+		double mod = stabBonus*typeBonus*critBonus * getDamMod();
 		
 		if(cat == Category.PHYSICAL){
-			int attack = user.getStats()[PokemonInfo.ATTACK];
-			int defense = target.getStats()[PokemonInfo.DEFENSE];
+			float attack = user.getStat(PokemonInfo.ATTACK);
+			float defense = target.getStat(PokemonInfo.DEFENSE);
 			int damage = (int) (((((2.0*user.getLevel()/5+2)*attack*power/defense)/50.0)+2)*mod*(Math.random()*.15 + .85));
 			battle.damage(target, damage);
 
 		} else if (cat == Category.SPECIAL){
 
-			int attack = user.getStats()[PokemonInfo.SPECIAL_ATTACK];
-			int defense = target.getStats()[PokemonInfo.SPECIAL_DEFENSE];
+			float attack = user.getStat(PokemonInfo.SPECIAL_ATTACK);
+			float defense = target.getStat(PokemonInfo.SPECIAL_DEFENSE);
 			int damage = (int) (((((2.0*user.getLevel()/5+2)*attack*power/defense)/50.0)+2)*mod*(Math.random()*.15 + .85));
 			battle.damage(target, damage);
 		}
@@ -134,7 +136,8 @@ public abstract class MoveInfo {
 	public void onMiss(Pokemon user, Pokemon target2, BattleScreen battle){}
 
 	public boolean doesHit(Pokemon user, Pokemon target, BattleScreen battle){
-		return Util.flip(accuracy/100f);
+		float hitChance = accuracy/100f * user.getStat(Effect.ACCURACY)/target.getStat(Effect.EVASION);
+		return Util.flip(hitChance);
 	}
 
 	public float getCritRateMod(){
@@ -143,5 +146,9 @@ public abstract class MoveInfo {
 	
 	public float getCritDamMod(){
 		return 1.5f;
+	}
+	
+	public float getDamMod(){
+		return 1;
 	}
 }

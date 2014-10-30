@@ -8,7 +8,6 @@ import static org.lwjgl.opengl.GL11.glColor3d;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glVertex2d;
 
-import java.awt.Font;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
@@ -101,7 +100,7 @@ public class BattleScreen extends Screen {
 		smallFont.drawString(mapX(x + .23), mapY(y + .0265), "Lv. " + pm.getLevel(), Color.black);
 
 		smallFont.drawString(mapX(x + .1), mapY(y + .11),
-				(" " + (int) (pm.getStats()[PokemonInfo.MAX_HP] * hpRatio[t][p] + .5) + "/" + pm.getStats()[PokemonInfo.MAX_HP]), Color.black);
+				(" " + (int) (pm.getStat(PokemonInfo.MAX_HP) * hpRatio[t][p] + .5) + "/" + (int)pm.getStat(PokemonInfo.MAX_HP)), Color.black);
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 	}
 
@@ -129,7 +128,6 @@ public class BattleScreen extends Screen {
 				
 				sortActions(actions);
 				
-				
 				for(BattleAction ba : actions)
 				{
 					if(ba.validate()){
@@ -156,8 +154,8 @@ public class BattleScreen extends Screen {
 			finished = battlers <= 1;
 			
 		}
-		int winner = 0;
-		for (int t = 1; t < trainers.length; t++) {
+		int winner = -1;
+		for (int t = 0; t < trainers.length; t++) {
 			boolean alive = false;
 			for (int p = 0; p < acPokemon[t].length; p++) {
 				if(acPokemon[t][p] != null)
@@ -182,12 +180,12 @@ public class BattleScreen extends Screen {
 		for(int i = 0;i<actions.size();i++)
 		{
 			int p = actions.get(i).getPriority();
-			int s = actions.get(i).getSpeed();
+			float s = actions.get(i).getSpeed();
 			int i2;
 			for(i2 = 0;i2< i;i2++)
 			{
 				int p2 = actions.get(i2).getPriority();
-				int s2 = actions.get(i2).getSpeed();
+				float s2 = actions.get(i2).getSpeed();
 				if(p>p2)
 					break;
 				if(p == p2 && s>s2)
@@ -202,12 +200,12 @@ public class BattleScreen extends Screen {
 		//Shuffle sets of actions of the same priority and speed
 		int start = 0;
 		int pPrev = actions.get(0).getPriority();
-		int sPrev = actions.get(0).getSpeed();
+		float sPrev = actions.get(0).getSpeed();
 		
 		for(int i = 1;i<actions.size();i++)
 		{
 			int p = actions.get(i).getPriority();
-			int s = actions.get(i).getSpeed();
+			float s = actions.get(i).getSpeed();
 			
 			if(p != pPrev || s != sPrev && i - start > 1){
 				//shuffle
@@ -227,7 +225,7 @@ public class BattleScreen extends Screen {
 		}
 		
 	}
-	
+
 	private void checkFainted(){
 		for (int t = 0; t < trainers.length; t++) {
 			for (int p = 0; p < acPokemon[t].length; p++) {
@@ -250,7 +248,7 @@ public class BattleScreen extends Screen {
 						if(acPokemon[t][p] != null)
 						{
 							displayMessage(String.format("%s sent out %s!", trainers[t].getName(),acPokemon[t][p].getName()));
-							hpRatio[t][p] = (double) acPokemon[t][p].getHealth() / acPokemon[t][p].getStats()[PokemonInfo.MAX_HP];
+							hpRatio[t][p] = (double) acPokemon[t][p].getHealth() / acPokemon[t][p].getStat(PokemonInfo.MAX_HP);
 						}
 						fainted++;
 					}
@@ -274,7 +272,7 @@ public class BattleScreen extends Screen {
 							if (alreadyOut)
 								continue;
 							acPokemon[t][p] = tPoke[p2];
-							hpRatio[t][p] = (double) tPoke[p2].getHealth() / tPoke[p2].getStats()[PokemonInfo.MAX_HP];
+							hpRatio[t][p] = (double) tPoke[p2].getHealth() / tPoke[p2].getStat(PokemonInfo.MAX_HP);
 							break;
 						}
 					}
@@ -301,7 +299,7 @@ public class BattleScreen extends Screen {
 		if (!found)
 			return;
 		int steps = 50;
-		double delta = ((double) damage / poke.getStats()[PokemonInfo.MAX_HP]) / steps;
+		double delta = ((double) damage / poke.getStat(PokemonInfo.MAX_HP)) / steps;
 		try {
 
 			for (int i = 0; i < steps; i++) {
@@ -316,7 +314,7 @@ public class BattleScreen extends Screen {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		hpRatio[t][p] = (double) poke.getHealth() / poke.getStats()[PokemonInfo.MAX_HP];
+		hpRatio[t][p] = (double) poke.getHealth() / poke.getStat(PokemonInfo.MAX_HP);
 
 	}
 

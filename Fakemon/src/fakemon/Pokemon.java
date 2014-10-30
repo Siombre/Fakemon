@@ -2,13 +2,15 @@ package fakemon;
 import java.util.ArrayList;
 import java.util.Random;
 
+import effects.Effect;
+
 public class Pokemon {
-	public int[] stats;
+	private int[] stats;
 	public int[] evs;
 	public int[] ivs;
 
 	private String name;
-	private Status statEffect;
+	private ArrayList<Effect> statEffects;
 	private PokemonInfo info;
 	private int exp;
 	private int level;
@@ -42,11 +44,17 @@ public class Pokemon {
 			this.hp = hp;
 
 		moves = new Move[4];
-
+		statEffects = new ArrayList<Effect>();
 	}
 
-	public boolean setStatusEffect(Status statEffect) {
-		return false;
+	public boolean addEffect(Effect statEffect) {
+		
+		for(Effect e : statEffects){
+			if(e.add(e))
+				return true;
+		}
+		statEffects.add(statEffect);
+		return true;
 	}
 
 	public boolean addMove(Move m) {
@@ -75,11 +83,6 @@ public class Pokemon {
 		exp += amt;
 		while(checkLevel());
 	}
-
-	public int[] getStats() {
-		return stats;
-	}
-
 	public int getHealth() {
 		return hp;
 	}
@@ -115,7 +118,7 @@ public class Pokemon {
 				m.setCurPP(m.getMaxPP());
 		}
 		hp = stats[PokemonInfo.MAX_HP];
-		statEffect = null;
+		statEffects.clear();
 	}
 	public String getName() {
 		return name;
@@ -130,5 +133,27 @@ public class Pokemon {
 	}
 	public PokemonInfo getInfo(){
 		return info;
+	}
+	public float getStat(int stat){
+		float mod = 1;
+		for(Effect e : statEffects)
+			mod *= e.getStatMod(stat);
+		if(stat < 6)
+			return (int)(stats[stat] * mod);
+		else
+			return mod;
+	}
+	public void checkEffects(){
+		ArrayList<Effect> removed = new ArrayList<Effect>();
+		for(Effect e : statEffects)
+			if(e.isOver())
+				removed.add(e);
+		statEffects.removeAll(removed);
+	}
+	public int getBaseStat(int stat){
+		return stats[stat];
+	}
+	public boolean isShiny(){
+		return shiny;
 	}
 }

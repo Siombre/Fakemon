@@ -11,7 +11,7 @@ public class AutumnStorm extends MoveInfo {
 	}
 	@Override
 	public float getCritRateMod(){
-		return 2.0f;
+		return 4.0f;
 	}
 }
 
