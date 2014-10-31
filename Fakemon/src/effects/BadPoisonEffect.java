@@ -4,6 +4,7 @@ import fakemon.BattleScreen;
 import fakemon.Pokemon;
 import fakemon.PokemonInfo;
 import fakemon.Screen;
+import fakemon.Type;
 
 public class BadPoisonEffect extends Effect{
 	
@@ -25,7 +26,14 @@ public class BadPoisonEffect extends Effect{
 		}
 		return false;
 	}
+	@Override
+	public boolean canBeApplied(Pokemon p,Screen screen)
+	{
+		boolean isPoison = p.getTypes().contains(Type.getByName("Poison"));
+		boolean isSteel = p.getTypes().contains(Type.getByName("Steel"));
 
+		return !isPoison && !isSteel;
+	}
 	@Override
 	public boolean conflicts(Effect e, Screen screen) {
 		return false;

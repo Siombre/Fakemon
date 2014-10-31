@@ -48,6 +48,8 @@ public class Pokemon {
 	}
 
 	public boolean addEffect(Effect statEffect,Pokemon user,Screen screen) {
+		if(!statEffect.canBeApplied(this, screen))
+			return false;
 		for(Effect e : statEffects){
 			if(e.prevents(statEffect, screen))
 				return false;
@@ -57,7 +59,7 @@ public class Pokemon {
 				return true;
 		}
 		statEffects.add(statEffect);
-		statEffect.onNewApply(screen,null,this);
+		statEffect.onNewApply(screen,user,this);
 		return true;
 	}
 
@@ -161,15 +163,28 @@ public class Pokemon {
 		return shiny;
 	}
 
-	public boolean canAttack(Screen screen) {
+	public boolean canAttack(Screen screen, Move m) {
 		boolean canAttack = true;
 		for(Effect e : statEffects)
-			if(!e.canAttack(screen))
+			if(!e.canAttack(screen,m))
 				canAttack = false;
 		return canAttack;
 	}
 	public void onTurnEnd(BattleScreen screen){
 		for(Effect e : statEffects)
 			e.onTurnEnd(screen);
+		 checkEffects();
+	}
+	public void onTurnStart(BattleScreen screen){
+		for(Effect e : statEffects)
+			e.onTurnStart(screen);
+		 checkEffects();
+	}
+	public float getDamMod()
+	{
+		float mod = 1;
+		for(Effect e : statEffects)
+			mod *= e.getDamMod();
+		return mod;
 	}
 }

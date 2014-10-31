@@ -70,7 +70,7 @@ public abstract class MoveInfo {
 		return priority;
 	}
 	public void hit(Pokemon user, Pokemon target, BattleScreen battle){
-		if(cat == Category.PHYSICAL){
+		if(cat == Category.STATUS){
 			return;
 		}
 		double critBonus;
@@ -107,7 +107,7 @@ public abstract class MoveInfo {
 		if(typeBonus < 0.00001)
 			battle.displayMessage(String.format("But it had no effect . (%.2fx)",typeBonus));
 		
-		double mod = stabBonus*typeBonus*critBonus * getDamMod();
+		double mod = stabBonus*typeBonus*critBonus * getDamMod()*user.getDamMod();
 		
 		if(cat == Category.PHYSICAL){
 			float attack = user.getStat(PokemonInfo.ATTACK);

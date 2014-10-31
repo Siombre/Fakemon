@@ -23,10 +23,10 @@ public class MoveBattleAction extends BattleAction {
 			m.onUse(user, target, bsc);
 			if(mi.doesHit(user, target, bsc)){
 				
-				mi.onHit(target, target, bsc);
+				mi.onHit(user, target, bsc);
 			}else{
 				bsc.displayMessage("But it missed...");
-				mi.onMiss(target, target, bsc);
+				mi.onMiss(user, target, bsc);
 			}
 		}
 	}
@@ -35,8 +35,8 @@ public class MoveBattleAction extends BattleAction {
 	}
 	@Override
 	public boolean validate(BattleScreen screen) {
-		
-		return user.getHealth() > 0 && m.isValid() && user.canAttack(screen);
+		user.onTurnStart(screen);
+		return user.getHealth() > 0 && m.isValid() && user.canAttack(screen,m);
 	}
 
 }

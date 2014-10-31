@@ -55,8 +55,8 @@ public class Fakemon {
 		p.addMove(new Move(moves[rand.nextInt(moves.length)]));
 		p.addMove(new Move(moves[rand.nextInt(moves.length)]));
 		p.addMove(new Move(moves[rand.nextInt(moves.length)]));
-		p.addMove(new Move(moves[rand.nextInt(moves.length)]));
-		//p.addMove(new Move(MoveInfo.getByName("Badly Poison")));
+		//p.addMove(new Move(moves[rand.nextInt(moves.length)]));
+		p.addMove(new Move(MoveInfo.getByName("Antibodies")));
 
 		return p;
 	}

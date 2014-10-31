@@ -1,11 +1,12 @@
 package effects;
 
+import fakemon.Move;
 import fakemon.Pokemon;
 import fakemon.Screen;
 import fakemon.Util;
 
 public class ParalyzeEffect extends Effect{
-	public boolean canAttack(Screen screen){
+	public boolean canAttack(Screen screen, Move m){
 		boolean canAttack = Util.flip(.75f);
 		if(!canAttack)
 			screen.displayMessage(target.getName() + " couldn't move!");

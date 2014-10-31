@@ -22,7 +22,7 @@ public abstract class Effect {
 	public void onAttack(){}
 	public void onBattleEnd(){}
 	public void onTurnEnd(BattleScreen screen){}
-	public boolean canAttack(Screen screen){
+	public boolean canAttack(Screen screen, Move m){
 		return true;
 	}
 	public boolean canBeAttacked(Move m,BattleScreen screen){
@@ -43,6 +43,10 @@ public abstract class Effect {
 	}
 	public abstract boolean add(Effect e,Screen screen);
 	public abstract boolean conflicts(Effect e,Screen screen);
+	public boolean canBeApplied(Pokemon p,Screen screen)
+	{
+		return true;
+	}
 	public final boolean isOver(){
 		return done;
 	}
@@ -54,4 +58,8 @@ public abstract class Effect {
 		this.user = user;
 		this.target = target;
 	}
+	public float getDamMod(){
+		return 1;
+	}
+	public void onTurnStart(BattleScreen screen){}
 }

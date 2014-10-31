@@ -108,7 +108,7 @@ public class StatModEffect extends Effect {
 				else if(diff <= 3)
 					message += " rose drastically!";
 			}
-			screen.displayMessage(message + diff);
+			screen.displayMessage(message);
 		}
 		for(int i = 0; i <= ACCURACY;i++)
 		{
