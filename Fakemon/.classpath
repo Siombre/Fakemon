@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="libs/lwjgl-2.8.4/jar/lwjgl.jar"/>
 	<classpathentry kind="lib" path="libs/slick-util.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="libs/gson-2.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,0 +1,17 @@
+{
+  "id": 2,
+  "name": "Wreckit",
+  "types": ["Fighting","Steel"],
+  "description": "Wreckit wrecks it.",
+  "base exp": 101,
+  "gender":[50,50,0],
+  "level type":"Fast",
+  "stats" : {
+    "Health": 78,
+    "Attack": 138,
+    "Defense": 112,
+    "Special Attack": 60,
+    "Special Defense":80,
+    "Speed":50
+  }
+}

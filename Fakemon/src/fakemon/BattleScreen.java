@@ -20,6 +20,7 @@ import org.newdawn.slick.TrueTypeFont;
 public class BattleScreen extends Screen {
 	Trainer[] trainers;
 	Pokemon[][] acPokemon;
+	BattleAction[][] actions;
 	double[][] hpRatio;
 	TrueTypeFont font = Fakemon.font;
 	TrueTypeFont smallFont = Fakemon.smallFont;
@@ -40,6 +41,7 @@ public class BattleScreen extends Screen {
 		
 
 		acPokemon = new Pokemon[trainers.length][];
+		actions = new BattleAction[trainers.length][];
 		hpRatio = new double[trainers.length][];
 
 		for (int i = 0; i < trainers.length; i++) {
@@ -49,6 +51,7 @@ public class BattleScreen extends Screen {
 			else
 				length = pokemonOut[i];
 			acPokemon[i] = new Pokemon[length];
+			actions[i] = new BattleAction[length];
 			hpRatio[i] = new double[length];
 		}
 		
@@ -118,8 +121,34 @@ public class BattleScreen extends Screen {
 			ArrayList<BattleAction> actions = new ArrayList<BattleAction>();
 			for (int t = 0; t < trainers.length; t++) {
 				for (int p = 0; p < acPokemon[t].length; p++) {
+					if(acPokemon[t][p] != null && this.actions[t][p] == null)
+						trainers[t].battleAI.requestBattleAction(this, t, p);
+				}
+			}
+			boolean missing = false;
+			do{
+				missing = false;
+				for (int t = 0; t < trainers.length; t++) {
+					for (int p = 0; p < acPokemon[t].length; p++) {
+						if(acPokemon[t][p] != null && this.actions[t][p] == null)
+							missing = true;
+					}
+				}
+				
+				try {
+					Thread.sleep(5);
+				} catch (InterruptedException e) {}
+			}while(missing);
+			
+			
+			
+			for (int t = 0; t < trainers.length; t++) {
+				for (int p = 0; p < acPokemon[t].length; p++) {
 					if(acPokemon[t][p] != null)
-						actions.add(trainers[t].getBattleAI().getAction(this, t, p));
+					{
+						actions.add(this.actions[t][p]);
+						this.actions[t][p] = null;
+					}
 				}
 			}
 			
@@ -354,6 +383,10 @@ public class BattleScreen extends Screen {
 				dialog2.onMousePress(scaleX, scaleY, Mouse.getEventButton(),this);
 			}
 		}
+	}
+
+	public void addAction(int trainer, int pokemon, BattleAction move) {
+		actions[trainer][pokemon] = move;
 	}	
 	
 }

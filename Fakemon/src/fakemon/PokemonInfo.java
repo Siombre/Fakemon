@@ -2,6 +2,9 @@ package fakemon;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 public class PokemonInfo {
 	
 	private static HashSet <PokemonInfo> pokemon = new HashSet <PokemonInfo>();
@@ -18,10 +21,33 @@ public class PokemonInfo {
 	public final int id;
 	public final int[] stats;
 	public final String name;
+	public final String description;
 	public final LevelType levelingType;
 	public final int baseExp;
-	
-	public PokemonInfo(String data) {
+	public PokemonInfo(JsonObject def){
+		id = def.get("id").getAsInt();
+		name = def.get("name").getAsString();
+		description = def.get("description").getAsString();
+		levelingType = LevelType.getByName(def.get("level type").getAsString());
+		baseExp = def.get("base exp").getAsInt();
+		stats = new int[6];
+		JsonObject statList = def.get("stats").getAsJsonObject();
+		stats[0] = statList.get("Health").getAsInt();
+		stats[1] = statList.get("Attack").getAsInt();
+		stats[2] = statList.get("Defense").getAsInt();
+		stats[3] = statList.get("Special Attack").getAsInt();
+		stats[4] = statList.get("Special Defense").getAsInt();
+		stats[5] = statList.get("Speed").getAsInt();
+		types = new ArrayList<Type>();
+		JsonArray typeList = def.get("types").getAsJsonArray();
+		for(int i = 0; i< typeList.size();i++)
+		{
+			types.add(Type.getByName(typeList.get(i).getAsString()));
+		}
+		pokemon.add(this);
+
+	}
+	/*public PokemonInfo(String data) {
 		// Species Name, Pokedex id, HP, Defense, Attack, Special Atk., Special
 		// Def., Speed, Leveling Type , Elemental Type(s)
 		String[] tokens = data.split(",");
@@ -55,8 +81,9 @@ public class PokemonInfo {
 		} catch (NumberFormatException e) {
 			throw new IllegalArgumentException("Invalid field value in \"" + name + "\".");
 		}
+		description = "";
 		pokemon.add(this);
-	}
+	}*/
 	public int[] getStatsForLevel(int level, Pokemon p){
 		
 		int[] newStats = new int[6];

@@ -15,4 +15,22 @@ public class Util {
 			return name + '\'';
 		return name + "\'s";
 	}
+	public static class Pair<T,U>{
+		private T first;
+		private U second;
+		public Pair(T first, U second){
+			this.first = first;
+			this.second = second;
+		}
+		
+		public T getFirst(){
+			return first;
+		}
+		public U getSecond(){
+			return second;
+		}
+	}
+	public static <T,U> Pair<T,U> o(T o1, U o2){
+		return new Pair<T,U>(o1,o2);
+	}
 }

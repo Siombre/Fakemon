@@ -17,6 +17,9 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
+
 public class Start {
 
 	public static void main(String[] args) {
@@ -36,7 +39,7 @@ public class Start {
 				game.start();
 			}
 		}.start();
-		
+
 		while (!Display.isCloseRequested()) {
 			game.render();
 			while(Mouse.next()) game.mouseEvent();
@@ -66,12 +69,14 @@ public class Start {
 			new Fast();
 			new MediumFast();
 			new MediumSlow();
-
+			new Fluctuating();
+			new Erratic();
 			double[] mods = {1,1,1,1,1,1}; 
 			new Nature("Default",mods);
 
 			loadTypes(base + "/res/Types.csv");	
-			loadPokemon(base + "/res/Pokemon/Test Dex.csv");
+			loadPokemon(base + "/res/Pokemon");
+			//loadPokemon(base + "/res/Pokemon/Test Dex.csv");
 			loadMoves(base + "/res/Moves");
 
 		} catch (URISyntaxException e) {
@@ -126,7 +131,7 @@ public class Start {
 		}
 	}
 
-	public static void loadPokemon(String path){
+/*	public static void loadPokemon(String path){
 		try {
 			Scanner scan = new Scanner(new FileReader(path));
 			scan.nextLine();
@@ -152,7 +157,48 @@ public class Start {
 		} catch (FileNotFoundException e) {
 			System.err.println("Type file not found");
 		}
+	}*/
+	public static void loadPokemon(String path){
+		Pattern p = Pattern.compile(".*\\.json");
+
+		ArrayList<File> files = new ArrayList<File>();
+		ArrayList<File> dirs = new ArrayList<File>();
+		dirs.add(new File(path));
+
+		while(dirs.size()>0){
+			File dir = dirs.get(0);
+			dirs.remove(0);
+			String[] possible = dir.list();
+			for(String s : possible){
+				File f = new File(dir.getAbsolutePath()+ "/" +s);
+				if(f.isDirectory()){
+					dirs.add(f); 
+				}else if(p.matcher(s).matches())
+				{
+					files.add(f);
+
+				}
+			}
+		}
+		//Gson gson = new Gson();
+		JsonParser parser = new JsonParser();
+		for(File f : files)
+		{
+			System.out.println(f.getName());
+			StringBuilder contents = new StringBuilder();
+			try {
+				Scanner s = new Scanner(new FileReader(f));
+				while(s.hasNextLine())
+					contents.append(s.nextLine());
+				
+				new PokemonInfo(parser.parse(contents.toString()).getAsJsonObject());
+				s.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
 	}
+
 	public static void loadMoves(String dirPath)
 	{
 		File dir = new File(dirPath);
