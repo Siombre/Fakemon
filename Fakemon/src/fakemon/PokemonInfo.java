@@ -5,6 +5,8 @@ import java.util.HashSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import fakemon.Util.Pair;
+
 public class PokemonInfo {
 	
 	private static HashSet <PokemonInfo> pokemon = new HashSet <PokemonInfo>();
@@ -24,6 +26,8 @@ public class PokemonInfo {
 	public final String description;
 	public final LevelType levelingType;
 	public final int baseExp;
+	public final ArrayList<Pair<Integer,MoveInfo>> moveList;
+	
 	public PokemonInfo(JsonObject def){
 		id = def.get("id").getAsInt();
 		name = def.get("name").getAsString();
@@ -44,6 +48,18 @@ public class PokemonInfo {
 		{
 			types.add(Type.getByName(typeList.get(i).getAsString()));
 		}
+		
+		
+		moveList = new ArrayList<Pair<Integer,MoveInfo>>();
+		JsonArray moves = def.get("moves").getAsJsonArray();
+		for(int i = 0;i< moves.size();i++){
+			int level = ((JsonObject)moves.get(i)).get("level").getAsInt();
+			String moveName = ((JsonObject)moves.get(i)).get("name").getAsString();
+			MoveInfo move = MoveInfo.getByName(moveName);
+			moveList.add(new Pair<Integer,MoveInfo>(level,move));
+		}
+		
+		
 		pokemon.add(this);
 
 	}

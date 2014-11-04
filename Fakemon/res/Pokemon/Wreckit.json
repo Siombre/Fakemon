@@ -1,5 +1,5 @@
 {
-  "id": 2,
+  "id": 999,
   "name": "Wreckit",
   "types": ["Fighting","Steel"],
   "description": "Wreckit wrecks it.",
@@ -13,5 +13,11 @@
     "Special Attack": 60,
     "Special Defense":80,
     "Speed":50
-  }
+  },
+  "moves": [
+    {"level" : 1, "name" : "Pound"},
+    {"level" : 4, "name" : "Sand Attack"},
+    {"level" : 8, "name" : "Double Kick"},
+    {"level" : 11, "name" : "Paralyze"}
+  ]
 }

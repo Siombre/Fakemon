@@ -66,11 +66,16 @@ public class Start {
 			}
 			base = new File(Start.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParent();
 			System.setProperty("org.lwjgl.librarypath", base + "/libs/lwjgl-2.8.4/native/"+osName);
+			
+			//Init leveling types
 			new Fast();
 			new MediumFast();
 			new MediumSlow();
+			new Slow();
 			new Fluctuating();
 			new Erratic();
+			
+			
 			double[] mods = {1,1,1,1,1,1}; 
 			new Nature("Default",mods);
 
