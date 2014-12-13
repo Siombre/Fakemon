@@ -91,11 +91,10 @@ public class StatModEffect extends Effect {
 					message += " fell!";
 				else if(diff == -2)
 					message += " harshly fell!";
-				else if(diff == -12)
-					message += " was minimized!";
 				else if(diff <= -3)
 					message += " severely fell!";
-
+				if(mods[i] == -12)
+					message += " " + Util.possessive(target.getName()) + " " + statNames[i] + " " + " was minimized!";
 			}
 			else if(diff > 0)
 			{
@@ -103,10 +102,10 @@ public class StatModEffect extends Effect {
 					message += " rose!";
 				else if(diff == 2)
 					message += " rose sharply!";
-				else if(diff == 12)
-					message += " was maximized!";
 				else if(diff <= 3)
 					message += " rose drastically!";
+				if(mods[i] == 12)
+					message += " " + Util.possessive(target.getName()) + " " + statNames[i] + " " + " was maximized!";
 			}
 			screen.displayMessage(message);
 		}
