@@ -71,6 +71,7 @@ public class Start {
 			} else if (os.startsWith("sunos")) {
 				osName = "solaris";
 			}
+			
 			basePath = new File(Start.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParent();
 			
 			System.setProperty("org.lwjgl.librarypath", getPath("/libs/lwjgl-2.8.4/native/"+osName));
@@ -88,9 +89,8 @@ public class Start {
 			new Nature("Default",mods);
 
 			loadTypes(basePath + "/res/Types.csv");	
-			loadPokemon(basePath + "/res/Pokemon");
-			//loadPokemon(base + "/res/Pokemon/Test Dex.csv");
 			loadMoves(basePath + "/res/Moves");
+			loadPokemon(basePath + "/res/Pokemon");
 
 		} catch (URISyntaxException e) {
 			e.printStackTrace();

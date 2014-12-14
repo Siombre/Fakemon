@@ -27,6 +27,7 @@ public class Fakemon {
 		if(this.started) return;
 		started = true;
 		setCurrentScreen(new BlankScreen());
+		
 		PokemonInfo[] pokedex = PokemonInfo.getList();
 		System.out.println(pokedex.length + " Pokemon loaded.");
 		
@@ -52,6 +53,7 @@ public class Fakemon {
 		while(true){
 			if(win != 0)
 				you.getPokemon()[0].fullHeal();
+			
 			enemy = new Trainer("Opponent");
 			enemy.addPokemon(generatePokemon(10));
 			enemy.addPokemon(generatePokemon(10));
@@ -64,11 +66,7 @@ public class Fakemon {
 			{
 				getCurrentScreen().doLogic();
 			}
-			win = s.getWinner();
-
-
-			
-			
+			win = s.getWinner();			
 		}
 	}
 	
@@ -76,15 +74,8 @@ public class Fakemon {
 		Random rand = new Random();
 
 		PokemonInfo[] pokedex = PokemonInfo.getList();
-		MoveInfo[] moves = MoveInfo.getList();
 		PokemonInfo s = pokedex[rand.nextInt(pokedex.length)];
 		Pokemon p = new Pokemon(s.name, s, s.levelingType.getExperience(level), level, false, -1);
-		p.addMove(new Move(moves[rand.nextInt(moves.length)]));
-		p.addMove(new Move(moves[rand.nextInt(moves.length)]));
-		p.addMove(new Move(moves[rand.nextInt(moves.length)]));
-		p.addMove(new Move(moves[rand.nextInt(moves.length)]));
-		//p.addMove(new Move(MoveInfo.getByName("Antibodies")));
-
 		return p;
 	}
 	

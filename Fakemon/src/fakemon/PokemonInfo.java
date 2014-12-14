@@ -51,6 +51,7 @@ public class PokemonInfo {
 		
 		
 		moveList = new ArrayList<Pair<Integer,MoveInfo>>();
+		
 		JsonArray moves = def.get("moves").getAsJsonArray();
 		for(int i = 0;i< moves.size();i++){
 			int level = ((JsonObject)moves.get(i)).get("level").getAsInt();

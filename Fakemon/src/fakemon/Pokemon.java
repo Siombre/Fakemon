@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import effects.Effect;
+import fakemon.Util.Pair;
 
 public class Pokemon {
 	private int[] stats;
@@ -36,6 +37,9 @@ public class Pokemon {
 		this.exp = exp;
 
 		this.level = level;
+		
+
+		
 		this.shiny = shiny;
 
 		if (hp < 0)
@@ -44,9 +48,13 @@ public class Pokemon {
 			this.hp = hp;
 
 		moves = new Move[4];
+		for(Pair<Integer,MoveInfo> p: info.moveList){
+			if(p.getFirst() <= level)
+				addMove(new Move(p.getSecond()));
+		}
 		statEffects = new ArrayList<Effect>();
 	}
-
+	
 	public boolean addEffect(Effect statEffect,Pokemon user,Screen screen) {
 		if(!statEffect.canBeApplied(this, screen))
 			return false;
@@ -79,6 +87,10 @@ public class Pokemon {
 
 	public void levelUp() {
 		level++;
+		for(Pair<Integer,MoveInfo> p: info.moveList){
+			if(p.getFirst() == level)
+				addMove(new Move(p.getSecond()));
+		}
 		double healthRatio = (double)hp/stats[PokemonInfo.MAX_HP];
 		stats = info.getStatsForLevel(level, this);
 		

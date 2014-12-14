@@ -49,6 +49,7 @@ public abstract class MoveInfo {
 		for(MoveInfo m : moves)
 			if(m.name.equalsIgnoreCase(name))
 				return m;
+		System.out.println("Move not found : " + name);
 		return null;
 
 	}
