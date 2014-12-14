@@ -76,6 +76,16 @@ public class BattleScreen extends Screen {
 		renderInfo(1, 0, .015, .01, true);
 		renderInfo(0, 0, .685, .54, true);
 	}
+	/**
+	 * 
+	 * Renders a basic info box for a pokemon.
+	 * 
+	 * @param t
+	 * @param p
+	 * @param x
+	 * @param y
+	 * @param renderXP
+	 */
 	public void renderInfo(int t, int p, double x, double y, boolean renderXP) {
 		Pokemon pm = acPokemon[t][p];
 		if (pm == null)
@@ -86,18 +96,20 @@ public class BattleScreen extends Screen {
 
 
 		glColor3d(.3 + .5 * (1 - hpRatio[t][p]), .3 + .5 * hpRatio[t][p], .3);
-
-		glVertex2d(mapX(x + .05), mapY(y + .10));
-		glVertex2d(mapX(x + .05), mapY(y + .105));
-		glVertex2d(mapX(x + .05 + (hpRatio[t][p] * .2)), mapY(y + .105));
-		glVertex2d(mapX(x + .05 + (hpRatio[t][p] * .2)), mapY(y + .10));
+		
+		final double hXOff = .05;
+		final double hYOff = .10;
+		glVertex2d(mapX(x + hXOff), mapY(y + hYOff));
+		glVertex2d(mapX(x + hXOff), mapY(y + hYOff+.005));
+		glVertex2d(mapX(x + hXOff + (hpRatio[t][p] * .2)), mapY(y + hYOff+.005));
+		glVertex2d(mapX(x + hXOff + (hpRatio[t][p] * .2)), mapY(y + hYOff));
 
 		glEnd();
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		font.drawString(mapX(x + .01), mapY(y + .01), pm.getName(), Color.black);
 		smallFont.drawString(mapX(x + .23), mapY(y + .0265), "Lv. " + pm.getLevel(), Color.black);
 
-		smallFont.drawString(mapX(x + .1), mapY(y + .11),
+		smallFont.drawString(mapX(x + hXOff+.05), mapY(y + hYOff + .01),
 				(" " + (int) (pm.getStat(PokemonInfo.MAX_HP) * hpRatio[t][p] + .5) + "/" + (int)pm.getStat(PokemonInfo.MAX_HP)), Color.black);
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 	}
@@ -271,7 +283,7 @@ public class BattleScreen extends Screen {
 			float s = actions.get(i).getSpeed();
 
 			if(p != pPrev || s != sPrev && i - start > 1){
-				//shuffle
+				//shuffle actions of same priority and speed
 
 				for(int i2 = start;i < i;i2++)
 				{

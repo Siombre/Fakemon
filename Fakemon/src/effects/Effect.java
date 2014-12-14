@@ -58,6 +58,11 @@ public abstract class Effect {
 		this.user = user;
 		this.target = target;
 	}
+	/**
+	 * 
+	 * 
+	 * @return The percent modifier for damage done.
+	 */
 	public float getDamMod(){
 		return 1;
 	}
