@@ -18,7 +18,7 @@ public class TrainerAI implements BattleAI{
 					if(p == p2)
 						found = true;
 				}
-			if(!found)
+			if(!found && p.getHealth() >0)
 				return p;
 		}
 		return null;

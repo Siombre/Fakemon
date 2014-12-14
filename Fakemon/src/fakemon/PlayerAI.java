@@ -10,6 +10,7 @@ public class PlayerAI implements BattleAI{
 		
 		return box.getMove();
 	}*/
+	
 	@Override
 	public Pokemon getNextPokemon(BattleScreen battle) {
 		

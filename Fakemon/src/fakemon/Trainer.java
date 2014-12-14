@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 
 public class Trainer {
+	private float x,y;
 	private ArrayList<Item> bag = new ArrayList<Item>();
 	private Pokemon[] pokemon = new Pokemon[6];
 	private String name;

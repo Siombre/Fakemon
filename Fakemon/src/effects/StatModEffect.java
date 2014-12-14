@@ -35,6 +35,7 @@ public class StatModEffect extends Effect {
 						message += " harshly fell!";
 					else if(diff <= -3)
 						message += " severely fell!";
+					
 					if(mods[i] == -12)
 					message += " " + Util.possessive(target.getName()) + " " + statNames[i] + " " + " was minimized!";
 				}
@@ -48,6 +49,7 @@ public class StatModEffect extends Effect {
 						message += " rose sharply!";
 					else if(diff <= 3)
 						message += " rose drastically!";
+					
 					if(mods[i] == 12)
 					message += " " + Util.possessive(target.getName()) + " " + statNames[i] + " " + " was maximized!";
 				}

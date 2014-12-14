@@ -1,9 +1,6 @@
 package fakemon;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glColor3d;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glVertex2d;
@@ -12,7 +9,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
@@ -24,8 +20,8 @@ public class BattleScreen extends Screen {
 	double[][] hpRatio;
 	TrueTypeFont font = Fakemon.font;
 	TrueTypeFont smallFont = Fakemon.smallFont;
-	
-
+	private int state = 0;
+	private int winner = 0;
 	DialogBox dialog;
 	DialogBox dialog2;
 
@@ -36,9 +32,9 @@ public class BattleScreen extends Screen {
 	BattleScreen(Trainer[] trainers, boolean wild, int[] pokemonOut) {
 		super.init();
 		this.trainers = trainers;
-		
 
-		
+
+
 
 		acPokemon = new Pokemon[trainers.length][];
 		actions = new BattleAction[trainers.length][];
@@ -54,13 +50,12 @@ public class BattleScreen extends Screen {
 			actions[i] = new BattleAction[length];
 			hpRatio[i] = new double[length];
 		}
-		
+
 		fillPokemon();
 
 	}
 
-	public void render() {
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear The Screen And The Depth Buffer
+	public void render(int delta) {
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 
 		glBegin(GL_QUADS);
@@ -71,13 +66,13 @@ public class BattleScreen extends Screen {
 		glVertex2d(mapX(1), mapY(1));
 		glColor3d(.99, .99, .99);
 		glVertex2d(mapX(1), 0);
-		
+
 		if(dialog != null)
 			dialog.render(this);
 		if(dialog2 != null)
 			dialog2.render(this);
 		glEnd();
-		
+
 		renderInfo(1, 0, .015, .01, true);
 		renderInfo(0, 0, .685, .54, true);
 	}
@@ -88,7 +83,7 @@ public class BattleScreen extends Screen {
 		renderBorder((float)x,(float)y,.3f,.15f);
 
 		glBegin(GL_QUADS);
-		
+
 
 		glColor3d(.3 + .5 * (1 - hpRatio[t][p]), .3 + .5 * hpRatio[t][p], .3);
 
@@ -107,41 +102,53 @@ public class BattleScreen extends Screen {
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 	}
 
-	public int doLogic() {
-		boolean finished = false;
+	
+	
+	
+	private static final int INIT_STATE = 0;
+	private static final int REQUEST_STATE = 1;
+	private static final int REQUEST_WAIT = 2;
+	private static final int DO_ACTION_STATE = 3;
+	private static final int FINISH = 4;
+	private static final int ENDED = 5;
 
-		fillPokemon();
-		
-		while (!Display.isCloseRequested() && !finished) {
+	public void doLogic() {
+		if(state == INIT_STATE){
+			fillPokemon();
+			state = REQUEST_STATE;
+		}
 
-			// For each Pokemon, check to see if a next move has been
-			// registered, and is valid (For multi-turn moves)
-			// For each trainer, get an action
-			
-			ArrayList<BattleAction> actions = new ArrayList<BattleAction>();
+		// For each Pokemon, check to see if a next move has been
+		// registered, and is valid (For multi-turn moves)
+		// For each trainer, get an action
+		if(state == REQUEST_STATE){
 			for (int t = 0; t < trainers.length; t++) {
 				for (int p = 0; p < acPokemon[t].length; p++) {
 					if(acPokemon[t][p] != null && this.actions[t][p] == null)
 						trainers[t].battleAI.requestBattleAction(this, t, p);
 				}
 			}
+			state = REQUEST_WAIT;
+		}
+		
+		if(state == REQUEST_WAIT){
+
 			boolean missing = false;
-			do{
-				missing = false;
-				for (int t = 0; t < trainers.length; t++) {
-					for (int p = 0; p < acPokemon[t].length; p++) {
-						if(acPokemon[t][p] != null && this.actions[t][p] == null)
-							missing = true;
-					}
+			for (int t = 0; t < trainers.length; t++) {
+				for (int p = 0; p < acPokemon[t].length; p++) {
+					if(acPokemon[t][p] != null && this.actions[t][p] == null)
+						missing = true;
 				}
-				
-				try {
-					Thread.sleep(5);
-				} catch (InterruptedException e) {}
-			}while(missing);
-			
-			
-			
+			}
+
+			if(!missing)
+				state = DO_ACTION_STATE;
+		}
+		
+		if(state == DO_ACTION_STATE){
+
+			ArrayList<BattleAction> actions = new ArrayList<BattleAction>();
+
 			for (int t = 0; t < trainers.length; t++) {
 				for (int p = 0; p < acPokemon[t].length; p++) {
 					if(acPokemon[t][p] != null)
@@ -151,12 +158,12 @@ public class BattleScreen extends Screen {
 					}
 				}
 			}
-			
-			
+
+
 			try {
-				
+
 				sortActions(actions);
-				
+
 				for(BattleAction ba : actions)
 				{
 					if(ba.validate(this)){
@@ -169,16 +176,18 @@ public class BattleScreen extends Screen {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+
 			for (int t = 0; t < trainers.length; t++) {
 				for (int p = 0; p < acPokemon[t].length; p++) {
 					if(acPokemon[t][p] != null)
 					{
 						acPokemon[t][p].onTurnEnd(this);
 						checkFainted();
-
+						
 					}
 				}
 			}
+
 			int battlers = 0;
 			for (int t = 0; t < trainers.length; t++) {
 				boolean alive = false;
@@ -188,33 +197,49 @@ public class BattleScreen extends Screen {
 				}
 				if(alive)
 					battlers++;
-			}
-			finished = battlers <= 1;
-			
-		}
-		int winner = -1;
-		for (int t = 0; t < trainers.length; t++) {
-			boolean alive = false;
-			for (int p = 0; p < acPokemon[t].length; p++) {
-				if(acPokemon[t][p] != null)
-					alive = true;
-			}
-			if(alive)
-			{
-				winner = t;
-				break;
-			}
-		}
-		if(winner == 0)
-			displayMessage("You win!");
-		else
-			displayMessage("You lose!");
 
+			}
+			if(battlers <= 1)
+				state = FINISH;
+			else
+				state = 1;
+
+
+		} 
+		
+		
+		if(state == FINISH)
+		{
+			winner = -1;
+			for (int t = 0; t < trainers.length; t++) {
+				boolean alive = false;
+				for (int p = 0; p < acPokemon[t].length; p++) {
+					if(acPokemon[t][p] != null)
+						alive = true;
+				}
+				if(alive)
+				{
+					winner = t;
+					break;
+				}
+			}
+			if(winner == 0)
+				displayMessage("You win!");
+			else
+				displayMessage("You lose!");
+			state = ENDED;
+		}
+		//System.out.println(state);
+	}
+	public boolean isFinished(){
+		return state == ENDED;
+	}
+	public int getWinner(){
 		return winner;
 	}
 	private void sortActions(ArrayList<BattleAction> actions){
 		//Insertion sort by priority then speed
-		
+
 		for(int i = 0;i<actions.size();i++)
 		{
 			int p = actions.get(i).getPriority();
@@ -234,20 +259,20 @@ public class BattleScreen extends Screen {
 				actions.add(i2, actions.remove(i));
 			}
 		}
-		
+
 		//Shuffle sets of actions of the same priority and speed
 		int start = 0;
 		int pPrev = actions.get(0).getPriority();
 		float sPrev = actions.get(0).getSpeed();
-		
+
 		for(int i = 1;i<actions.size();i++)
 		{
 			int p = actions.get(i).getPriority();
 			float s = actions.get(i).getSpeed();
-			
+
 			if(p != pPrev || s != sPrev && i - start > 1){
 				//shuffle
-				
+
 				for(int i2 = start;i < i;i2++)
 				{
 					BattleAction temp = actions.get(i2);
@@ -255,13 +280,13 @@ public class BattleScreen extends Screen {
 					actions.set(i2, actions.get(r));
 					actions.set(r, temp);		
 				}
-				
+
 				start = i;
 				pPrev = p;
 				sPrev = s;
 			}
 		}
-		
+
 	}
 
 	private void checkFainted(){
@@ -280,9 +305,9 @@ public class BattleScreen extends Screen {
 								acPokemon[t2][p2].addExp(exp);
 							}
 						}
-						
+
 						acPokemon[t][p] = trainers[t].getBattleAI().getNextPokemon(this);
-						
+
 						if(acPokemon[t][p] != null)
 						{
 							displayMessage(String.format("%s sent out %s!", trainers[t].getName(),acPokemon[t][p].getName()));
@@ -362,8 +387,8 @@ public class BattleScreen extends Screen {
 	}
 
 
-	
-	
+
+
 	public void processMouseEvent(double x, double y){
 		if (dialogLoc.contains(x, y))
 		{
@@ -388,5 +413,5 @@ public class BattleScreen extends Screen {
 	public void addAction(int trainer, int pokemon, BattleAction move) {
 		actions[trainer][pokemon] = move;
 	}	
-	
+
 }

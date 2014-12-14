@@ -14,34 +14,37 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 
-public class Start {
 
+
+public class Start {
+	private static long lastFrame;
+	private static String basePath;
 	public static void main(String[] args) {
 		init();
 
 
 		final Fakemon game = new Fakemon();
-		try {
-
-			game.init();
-		} catch (LWJGLException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
 		new Thread() {
 			public void run() {
-				game.start();
+				try {
+					game.start();
+				} catch (LWJGLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}.start();
-
+		while (!Display.isCreated());
 		while (!Display.isCloseRequested()) {
-			game.render();
+			
+			game.render(getDelta());
 			while(Mouse.next()) game.mouseEvent();
 			Display.update();
 			Display.sync(60);
@@ -50,8 +53,12 @@ public class Start {
 		System.exit(0);
 
 	}
+	public static String getPath(String s){
+		if(s.startsWith("/"))
+			s = "/" +s;
+		return basePath + s;
+	}
 	public static void init(){
-		String base;
 		try {
 			String os = System.getProperty("os.name").toLowerCase();
 			String osName = "";
@@ -64,8 +71,9 @@ public class Start {
 			} else if (os.startsWith("sunos")) {
 				osName = "solaris";
 			}
-			base = new File(Start.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParent();
-			System.setProperty("org.lwjgl.librarypath", base + "/libs/lwjgl-2.8.4/native/"+osName);
+			basePath = new File(Start.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParent();
+			
+			System.setProperty("org.lwjgl.librarypath", getPath("/libs/lwjgl-2.8.4/native/"+osName));
 			
 			//Init leveling types
 			new Fast();
@@ -79,14 +87,37 @@ public class Start {
 			double[] mods = {1,1,1,1,1,1}; 
 			new Nature("Default",mods);
 
-			loadTypes(base + "/res/Types.csv");	
-			loadPokemon(base + "/res/Pokemon");
+			loadTypes(basePath + "/res/Types.csv");	
+			loadPokemon(basePath + "/res/Pokemon");
 			//loadPokemon(base + "/res/Pokemon/Test Dex.csv");
-			loadMoves(base + "/res/Moves");
+			loadMoves(basePath + "/res/Moves");
 
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/** 
+	 * Calculate how many milliseconds have passed 
+	 * since last frame.
+	 * 
+	 * @return milliseconds passed since last frame 
+	 */
+	public static int getDelta() {
+	    long time = getTime();
+	    int delta = (int) (time - lastFrame);
+	    lastFrame = time;
+ 
+	    return delta;
+	}
+ 
+	/**
+	 * Get the accurate system time
+	 * 
+	 * @return The system time in milliseconds
+	 */
+	public static long getTime() {
+	    return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
 	public static void loadTypes(String path){
 		try {

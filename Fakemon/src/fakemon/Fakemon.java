@@ -1,5 +1,9 @@
 package fakemon;
 
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.glClear;
+
 import java.awt.Font;
 import java.util.Random;
 
@@ -8,30 +12,42 @@ import org.newdawn.slick.TrueTypeFont;
 
 
 public class Fakemon {
-	static Screen currentScreen;
+	private static Screen currentScreen;
 	static TrueTypeFont font;
 	static TrueTypeFont smallFont;
 	private boolean started;
-	public void start(){
+	public Fakemon(){
+		try {
+			init();
+		} catch (LWJGLException e) {
+			e.printStackTrace();
+		}
+	}
+	public void start() throws LWJGLException{
 		if(this.started) return;
 		started = true;
-		
+		setCurrentScreen(new BlankScreen());
 		PokemonInfo[] pokedex = PokemonInfo.getList();
 		System.out.println(pokedex.length + " Pokemon loaded.");
+		
 		MoveInfo[] moves = MoveInfo.getList();
 		System.out.println(moves.length + " Moves loaded.");
-
-		Trainer enemy = new Trainer("Opponent");
-		enemy.addPokemon(generatePokemon(10));
-		enemy.addPokemon(generatePokemon(10));
-
-
+		
 		Trainer you = new Trainer("Player");
 		you.addPokemon(generatePokemon(10));
 		you.battleAI = new PlayerAI();
-		Trainer[] t = { you, enemy };
+		
+		//setCurrentScreen(new OverworldScreen(you));
+
+		//while(!currentScreen.isFinished());
+		
+		
+		
+		Trainer[] t = { you, null};
+		Trainer enemy;
+		
 		int[] is = { 1 , 1 };
-		int win = new BattleScreen(t, false, is).start();
+		int win = 1;
 		
 		while(true){
 			if(win != 0)
@@ -41,7 +57,18 @@ public class Fakemon {
 			enemy.addPokemon(generatePokemon(10));
 
 			t[1] = enemy ;
-			win = new BattleScreen(t, false, is).start();
+			BattleScreen s = new BattleScreen(t, false, is);
+			FadeTransitionScreen ts = new FadeTransitionScreen(s);
+			setCurrentScreen(ts);
+			while(!s.isFinished())
+			{
+				getCurrentScreen().doLogic();
+			}
+			win = s.getWinner();
+
+
+			
+			
 		}
 	}
 	
@@ -55,15 +82,18 @@ public class Fakemon {
 		p.addMove(new Move(moves[rand.nextInt(moves.length)]));
 		p.addMove(new Move(moves[rand.nextInt(moves.length)]));
 		p.addMove(new Move(moves[rand.nextInt(moves.length)]));
-		//p.addMove(new Move(moves[rand.nextInt(moves.length)]));
-		p.addMove(new Move(MoveInfo.getByName("Antibodies")));
+		p.addMove(new Move(moves[rand.nextInt(moves.length)]));
+		//p.addMove(new Move(MoveInfo.getByName("Antibodies")));
 
 		return p;
 	}
 	
-	public void render(){
+	public void render(int delta){
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear The Screen And The Depth Buffer
+
 		if(currentScreen != null){
-			currentScreen.render();
+			
+			currentScreen.render(delta);
 		}
 	}
 
