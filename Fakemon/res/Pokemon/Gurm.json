@@ -1,0 +1,23 @@
+{
+	"id": 21,
+	"name": "Gurm",
+	"types": ["Common"],
+	"description": "No description.",
+	"base exp": 121,
+	"gender": [50,50,0],
+	"level type": "Medium Fast",
+	"stats": {
+		"Health": 80,
+		"Attack": 51,
+		"Defense": 46,
+		"Special Attack": 51,
+		"Special Defense": 49,
+		"Speed": 38
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

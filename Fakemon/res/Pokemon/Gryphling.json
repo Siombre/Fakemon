@@ -1,0 +1,23 @@
+{
+	"id": 16,
+	"name": "Gryphling",
+	"types": ["Normal","Flying"],
+	"description": "No description.",
+	"base exp": 49,
+	"gender": [50,50,0],
+	"level type": "Medium Fast",
+	"stats": {
+		"Health": 40,
+		"Attack": 48,
+		"Defense": 38,
+		"Special Attack": 30,
+		"Special Defense": 38,
+		"Speed": 51
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

@@ -1,0 +1,23 @@
+{
+	"id": 11,
+	"name": "Cacoulder",
+	"types": ["Bug","Rock"],
+	"description": "No description.",
+	"base exp": 101,
+	"gender": [50,50,0],
+	"level type": "Fast",
+	"stats": {
+		"Health": 30,
+		"Attack": 15,
+		"Defense": 70,
+		"Special Attack": 35,
+		"Special Defense": 35,
+		"Speed": 10
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

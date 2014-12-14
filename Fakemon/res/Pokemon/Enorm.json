@@ -1,0 +1,23 @@
+{
+	"id": 22,
+	"name": "Enorm",
+	"types": ["Common","Bug"],
+	"description": "No description.",
+	"base exp": 179,
+	"gender": [50,50,0],
+	"level type": "Medium Fast",
+	"stats": {
+		"Health": 107,
+		"Attack": 77,
+		"Defense": 72,
+		"Special Attack": 77,
+		"Special Defense": 72,
+		"Speed": 56
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

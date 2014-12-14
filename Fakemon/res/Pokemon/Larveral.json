@@ -1,0 +1,23 @@
+{
+	"id": 10,
+	"name": "Larveral",
+	"types": ["Bug"],
+	"description": "No description.",
+	"base exp": 41,
+	"gender": [50,50,0],
+	"level type": "Fast",
+	"stats": {
+		"Health": 30,
+		"Attack": 20,
+		"Defense": 50,
+		"Special Attack": 40,
+		"Special Defense": 35,
+		"Speed": 20
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

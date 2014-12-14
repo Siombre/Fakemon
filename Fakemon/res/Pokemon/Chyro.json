@@ -1,0 +1,23 @@
+{
+	"id": 7,
+	"name": "Chyro",
+	"types": ["Fire"],
+	"description": "No description.",
+	"base exp": 133,
+	"gender": [87.5,12.5,0],
+	"level type": "Medium Slow",
+	"stats": {
+		"Health": 40,
+		"Attack": 70,
+		"Defense": 40,
+		"Special Attack": 42,
+		"Special Defense": 54,
+		"Speed": 54
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

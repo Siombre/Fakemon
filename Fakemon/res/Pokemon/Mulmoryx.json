@@ -1,0 +1,23 @@
+{
+	"id": 15,
+	"name": "Mulmoryx",
+	"types": ["Bug"],
+	"description": "No description.",
+	"base exp": 159,
+	"gender": [50,50,0],
+	"level type": "Fast",
+	"stats": {
+		"Health": 55,
+		"Attack": 44,
+		"Defense": 72,
+		"Special Attack": 72,
+		"Special Defense": 55,
+		"Speed": 100
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

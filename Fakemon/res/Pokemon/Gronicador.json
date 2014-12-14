@@ -1,0 +1,23 @@
+{
+	"id": 18,
+	"name": "Gronicador",
+	"types": ["Normal","Flying"],
+	"description": "No description.",
+	"base exp": 189,
+	"gender": [50,50,0],
+	"level type": "Medium Fast",
+	"stats": {
+		"Health": 84,
+		"Attack": 104,
+		"Defense": 78,
+		"Special Attack": 75,
+		"Special Defense": 90,
+		"Speed": 104
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

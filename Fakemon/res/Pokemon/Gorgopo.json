@@ -1,0 +1,23 @@
+{
+	"id": 5,
+	"name": "Gorgopo",
+	"types": ["Water","Rock"],
+	"description": "No description.",
+	"base exp": 188,
+	"gender": [87.5,12.5,0],
+	"level type": "Medium Slow",
+	"stats": {
+		"Health": 80,
+		"Attack": 72,
+		"Defense": 86,
+		"Special Attack": 62,
+		"Special Defense": 58,
+		"Speed": 50
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

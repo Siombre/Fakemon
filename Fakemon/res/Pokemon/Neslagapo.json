@@ -1,0 +1,23 @@
+{
+	"id": 6,
+	"name": "Neslagapo",
+	"types": ["Water","Rock"],
+	"description": "No description.",
+	"base exp": 239,
+	"gender": [87.5,12.5,0],
+	"level type": "Medium Slow",
+	"stats": {
+		"Health": 100,
+		"Attack": 90,
+		"Defense": 113,
+		"Special Attack": 88,
+		"Special Defense": 80,
+		"Speed": 59
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

@@ -1,0 +1,23 @@
+{
+	"id": 20,
+	"name": "Pigalista",
+	"types": ["Ground"],
+	"description": "No description.",
+	"base exp": 159,
+	"gender": [50,50,0],
+	"level type": "Medium Slow",
+	"stats": {
+		"Health": 91,
+		"Attack": 65,
+		"Defense": 72,
+		"Special Attack": 59,
+		"Special Defense": 65,
+		"Speed": 78
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

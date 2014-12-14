@@ -1,0 +1,23 @@
+{
+	"id": 500,
+	"name": "Igaken",
+	"types": ["Normal"],
+	"description": "No description.",
+	"base exp": 91,
+	"gender": [50,50,0],
+	"level type": "Medium Fast",
+	"stats": {
+		"Health": 115,
+		"Attack": 30,
+		"Defense": 60,
+		"Special Attack": 45,
+		"Special Defense": 65,
+		"Speed": 45
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

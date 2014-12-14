@@ -1,0 +1,23 @@
+{
+	"id": 2,
+	"name": "Tyturnumn",
+	"types": ["Grass","Dark"],
+	"description": "No description.",
+	"base exp": 188,
+	"gender": [87.5,12.5,0],
+	"level type": "Medium Slow",
+	"stats": {
+		"Health": 60,
+		"Attack": 60,
+		"Defense": 59,
+		"Special Attack": 72,
+		"Special Defense": 72,
+		"Speed": 85
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

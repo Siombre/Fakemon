@@ -1,0 +1,23 @@
+{
+	"id": 24,
+	"name": "Noosis",
+	"types": ["Poison","Psychic"],
+	"description": "No description.",
+	"base exp": 171,
+	"gender": [50,50,0],
+	"level type": "Erratic",
+	"stats": {
+		"Health": 87,
+		"Attack": 72,
+		"Defense": 99,
+		"Special Attack": 68,
+		"Special Defense": 68,
+		"Speed": 68
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

@@ -1,0 +1,23 @@
+{
+	"id": 17,
+	"name": "Graerial",
+	"types": ["Normal","Flying"],
+	"description": "No description.",
+	"base exp": 118,
+	"gender": [50,50,0],
+	"level type": "Medium Fast",
+	"stats": {
+		"Health": 75,
+		"Attack": 88,
+		"Defense": 62,
+		"Special Attack": 65,
+		"Special Defense": 77,
+		"Speed": 88
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

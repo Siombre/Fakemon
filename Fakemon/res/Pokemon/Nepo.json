@@ -1,0 +1,23 @@
+{
+	"id": 4,
+	"name": "Nepo",
+	"types": ["Water"],
+	"description": "No description.",
+	"base exp": 133,
+	"gender": [87.5,12.5,0],
+	"level type": "Medium Slow",
+	"stats": {
+		"Health": 54,
+		"Attack": 54,
+		"Defense": 70,
+		"Special Attack": 40,
+		"Special Defense": 42,
+		"Speed": 40
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

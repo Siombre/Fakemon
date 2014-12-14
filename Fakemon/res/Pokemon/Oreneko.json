@@ -1,0 +1,23 @@
+{
+	"id": 25,
+	"name": "Oreneko",
+	"types": ["Psychic"],
+	"description": "No description.",
+	"base exp": 81,
+	"gender": [50,50,0],
+	"level type": "Medium Fast",
+	"stats": {
+		"Health": 58,
+		"Attack": 45,
+		"Defense": 50,
+		"Special Attack": 76,
+		"Special Defense": 50,
+		"Speed": 76
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

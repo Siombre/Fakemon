@@ -1,0 +1,23 @@
+{
+	"id": 26,
+	"name": "Nijuteri",
+	"types": ["Psychic"],
+	"description": "No description.",
+	"base exp": 179,
+	"gender": [50,50,0],
+	"level type": "Medium Fast",
+	"stats": {
+		"Health": 80,
+		"Attack": 63,
+		"Defense": 63,
+		"Special Attack": 114,
+		"Special Defense": 70,
+		"Speed": 110
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

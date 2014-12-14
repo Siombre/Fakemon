@@ -1,0 +1,23 @@
+{
+	"id": 14,
+	"name": "Mulegant",
+	"types": ["Bug"],
+	"description": "No description.",
+	"base exp": 101,
+	"gender": [50,50,0],
+	"level type": "Fast",
+	"stats": {
+		"Health": 20,
+		"Attack": 15,
+		"Defense": 55,
+		"Special Attack": 30,
+		"Special Defense": 35,
+		"Speed": 40
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

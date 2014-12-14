@@ -1,0 +1,23 @@
+{
+	"id": 23,
+	"name": "Sluck",
+	"types": ["Poison"],
+	"description": "No description.",
+	"base exp": 69,
+	"gender": [50,50,0],
+	"level type": "Erratic",
+	"stats": {
+		"Health": 66,
+		"Attack": 53,
+		"Defense": 73,
+		"Special Attack": 53,
+		"Special Defense": 49,
+		"Speed": 42
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

@@ -1,0 +1,23 @@
+{
+	"id": 9,
+	"name": "Tundraicha",
+	"types": ["Fire","Ice"],
+	"description": "No description.",
+	"base exp": 239,
+	"gender": [87.5,12.5,0],
+	"level type": "Medium Slow",
+	"stats": {
+		"Health": 70,
+		"Attack": 112,
+		"Defense": 68,
+		"Special Attack": 82,
+		"Special Defense": 90,
+		"Speed": 114
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

@@ -1,0 +1,23 @@
+{
+	"id": 8,
+	"name": "Fleetah",
+	"types": ["Fire"],
+	"description": "No description.",
+	"base exp": 188,
+	"gender": [87.5,12.5,0],
+	"level type": "Medium Slow",
+	"stats": {
+		"Health": 60,
+		"Attack": 85,
+		"Defense": 59,
+		"Special Attack": 60,
+		"Special Defense": 72,
+		"Speed": 72
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

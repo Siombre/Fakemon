@@ -1,0 +1,23 @@
+{
+	"id": 3,
+	"name": "Auturnal",
+	"types": ["Grass","Dark"],
+	"description": "No description.",
+	"base exp": 239,
+	"gender": [87.5,12.5,0],
+	"level type": "Medium Slow",
+	"stats": {
+		"Health": 70,
+		"Attack": 90,
+		"Defense": 68,
+		"Special Attack": 98,
+		"Special Defense": 90,
+		"Speed": 112
+	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}
