@@ -17,43 +17,12 @@ public class StatModEffect extends Effect {
 			for(int i = 0; i <= ACCURACY;i++)
 			{
 				int newMod = Math.min(6,Math.max(mods[i]+eff.mods[i],-6));
-				int diff = newMod -mods[i];
+				int diff = newMod - mods[i];
 				mods[i] = newMod;
 				
 				
 				if(eff.mods[i] == 0) continue;
-				
-				String message =  Util.possessive(target.getName()) + " " + statNames[i];
-
-				if(eff.mods[i] < 0)
-				{
-					if(diff == 0)
-						message += " could not go any lower!";
-					else if(diff == -1)
-						message += " fell!";
-					else if(diff == -2)
-						message += " harshly fell!";
-					else if(diff <= -3)
-						message += " severely fell!";
-					
-					if(mods[i] == -12)
-					message += " " + Util.possessive(target.getName()) + " " + statNames[i] + " " + " was minimized!";
-				}
-				else if(eff.mods[i] > 0)
-				{
-					if(diff == 0)
-						message += " could not go any higher!";
-					else if(diff == 1)
-						message += " rose!";
-					else if(diff == 2)
-						message += " rose sharply!";
-					else if(diff <= 3)
-						message += " rose drastically!";
-					
-					if(mods[i] == 12)
-					message += " " + Util.possessive(target.getName()) + " " + statNames[i] + " " + " was maximized!";
-				}
-				screen.displayMessage(message);
+				screen.displayMessage(getMessage(target,diff,mods[i],i));
 			}
 			return true;
 		}
@@ -81,39 +50,47 @@ public class StatModEffect extends Effect {
 		
 		for(int i = 0; i <= ACCURACY;i++)
 		{
-			int diff = mods[i];
+			int diff =  Math.min(6,Math.max(mods[i],-6));
 			if(diff == 0) continue;
-			
-			String message = Util.possessive(target.getName()) + " " + statNames[i];
-
-			if(diff < 0)
-			{
-				if(diff == -1)
-					message += " fell!";
-				else if(diff == -2)
-					message += " harshly fell!";
-				else if(diff <= -3)
-					message += " severely fell!";
-				if(mods[i] == -12)
-					message += " " + Util.possessive(target.getName()) + " " + statNames[i] + " " + " was minimized!";
-			}
-			else if(diff > 0)
-			{
-				if(diff == 1)
-					message += " rose!";
-				else if(diff == 2)
-					message += " rose sharply!";
-				else if(diff <= 3)
-					message += " rose drastically!";
-				if(mods[i] == 12)
-					message += " " + Util.possessive(target.getName()) + " " + statNames[i] + " " + " was maximized!";
-			}
-			screen.displayMessage(message);
+			screen.displayMessage(getMessage(target,diff,mods[i],i));
 		}
 		for(int i = 0; i <= ACCURACY;i++)
 		{
 			mods[i] = Math.min(6,Math.max(mods[i],-6));
 		}
 	}
- 
+	public String getMessage(Pokemon target, int diff , int baseDiff, int statNum){
+		
+		String message = Util.possessive(target.getName()) + " " + statNames[statNum];
+		
+		if(baseDiff <= -12) 
+			 message += " was minimized!";
+		else if (baseDiff >= 12) 
+			 message += " was maximized!";
+		else if(diff < 0)
+		{
+			if(diff == -1)
+				message += " fell!";
+			else if(diff == -2)
+				message += " harshly fell!";
+			else if(diff <= -3)
+				message += " severely fell!";
+		}
+		else if(diff > 0)
+		{
+			if(diff == 1)
+				message += " rose!";
+			else if(diff == 2)
+				message += " rose sharply!";
+			else if(diff <= 3)
+				message += " rose drastically!";
+		}
+		
+		else if(baseDiff < 0 && diff == 0)
+			message += " cannot go any lower!";
+		else if(baseDiff > 0 && diff == 0)
+			message += " cannot go any higher!";
+		
+		return message;
+	}
 }
