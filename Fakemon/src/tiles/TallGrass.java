@@ -15,7 +15,7 @@ public class TallGrass extends Tile{
 	public void render(){
 		if(texture == null)
 			try {
-				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/world/Tall_Grass_1.png"));
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/world/tallGrass.png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
