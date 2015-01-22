@@ -33,9 +33,6 @@ public class BattleScreen extends Screen {
 		super.init();
 		this.trainers = trainers;
 
-
-
-
 		acPokemon = new Pokemon[trainers.length][];
 		actions = new BattleAction[trainers.length][];
 		hpRatio = new double[trainers.length][];
@@ -54,7 +51,6 @@ public class BattleScreen extends Screen {
 		fillPokemon();
 
 	}
-
 	public void render(int delta) {
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 
@@ -62,10 +58,10 @@ public class BattleScreen extends Screen {
 		glColor3d(.99, .99, .99);
 		glVertex2d(0, 0);
 		glColor3d(.85, .85, .85);
-		glVertex2d(0, mapY(1));
-		glVertex2d(mapX(1), mapY(1));
+		glVertex2d(0, 1);
+		glVertex2d(1, 1);
 		glColor3d(.99, .99, .99);
-		glVertex2d(mapX(1), 0);
+		glVertex2d(1, 0);
 
 		if(dialog != null)
 			dialog.render(this);
@@ -99,41 +95,40 @@ public class BattleScreen extends Screen {
 		
 		final double hXOff = .05;
 		final double hYOff = .10;
-		glVertex2d(mapX(x + hXOff), mapY(y + hYOff));
-		glVertex2d(mapX(x + hXOff), mapY(y + hYOff+.005));
-		glVertex2d(mapX(x + hXOff + (hpRatio[t][p] * .2)), mapY(y + hYOff+.005));
-		glVertex2d(mapX(x + hXOff + (hpRatio[t][p] * .2)), mapY(y + hYOff));
+		glVertex2d(x + hXOff, y + hYOff);
+		glVertex2d(x + hXOff, y + hYOff+.005);
+		glVertex2d(x + hXOff + (hpRatio[t][p] * .2), y + hYOff+.005);
+		glVertex2d(x + hXOff + (hpRatio[t][p] * .2), y + hYOff);
 
 		glEnd();
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		font.drawString(mapX(x + .01), mapY(y + .01), pm.getName(), Color.black);
-		smallFont.drawString(mapX(x + .23), mapY(y + .0265), "Lv. " + pm.getLevel(), Color.black);
+		drawString(font,(float) (x + .01), (float) (y + .01), pm.getName(), Color.black);
+		drawString( smallFont,(float) (x + .23f), (float)(y + .0265f), "Lv. " + pm.getLevel(), Color.black);
 
-		smallFont.drawString(mapX(x + hXOff+.05), mapY(y + hYOff + .01),
+		drawString( smallFont, (float)(x + hXOff+.05), (float)(y + hYOff + .01),
 				(" " + (int) (pm.getStat(PokemonInfo.MAX_HP) * hpRatio[t][p] + .5) + "/" + (int)pm.getStat(PokemonInfo.MAX_HP)), Color.black);
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 	}
 
-	
-	
-	
-	private static final int INIT_STATE = 0;
-	private static final int REQUEST_STATE = 1;
+	private static final int INIT = 0;
+	private static final int REQUEST = 1;
 	private static final int REQUEST_WAIT = 2;
-	private static final int DO_ACTION_STATE = 3;
+	private static final int DO_ACTION = 3;
 	private static final int FINISH = 4;
 	private static final int ENDED = 5;
 
 	public void doLogic() {
-		if(state == INIT_STATE){
+		if(state == INIT){
 			fillPokemon();
-			state = REQUEST_STATE;
+			state = REQUEST;
 		}
 
 		// For each Pokemon, check to see if a next move has been
 		// registered, and is valid (For multi-turn moves)
 		// For each trainer, get an action
-		if(state == REQUEST_STATE){
+		if(state == REQUEST){
+			//TODO allow for serial AI (Player input) with multiple pokemon
+			
 			for (int t = 0; t < trainers.length; t++) {
 				for (int p = 0; p < acPokemon[t].length; p++) {
 					if(acPokemon[t][p] != null && this.actions[t][p] == null)
@@ -154,10 +149,10 @@ public class BattleScreen extends Screen {
 			}
 
 			if(!missing)
-				state = DO_ACTION_STATE;
+				state = DO_ACTION;
 		}
 		
-		if(state == DO_ACTION_STATE){
+		if(state == DO_ACTION){
 
 			ArrayList<BattleAction> actions = new ArrayList<BattleAction>();
 
@@ -240,6 +235,9 @@ public class BattleScreen extends Screen {
 			else
 				displayMessage("You lose!");
 			state = ENDED;
+		}
+		if(state == ENDED){
+			new FadeTransitionScreen(null,FadeTransitionScreen.POP);
 		}
 		//System.out.println(state);
 	}

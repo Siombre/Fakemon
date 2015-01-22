@@ -8,15 +8,24 @@ import org.lwjgl.opengl.GL11;
 
 public class FadeTransitionScreen extends Screen {
 	private Screen to, from;
-	int time;
-	int totalTime = 3000;
-	
+	private int time;
+	private int totalTime = 3000;
+	private int endBehavior;
+	public static final int POP = -1;
+	public static final int SWITCH = 0;
+	public static final int PUSH = 1;
+	private boolean finished;
 	public FadeTransitionScreen(Screen to){
+		this(to, SWITCH);
+	}
+	public FadeTransitionScreen(Screen to, int behavior){
 		super.init();
 		this.to = to;
 		this.from = Fakemon.getCurrentScreen();
+		endBehavior = behavior;
+		if(behavior == POP)
+			to = Fakemon.peek(-1);
 	}
-	
 	@Override
 	public void processMouseEvent(double x, double y) {}
 
@@ -35,16 +44,14 @@ public class FadeTransitionScreen extends Screen {
 		//System.out.printf("%.2f\n",alpha);
 		if(alpha > 1)
 			alpha = 1;
-		//GL11.glDisable(GL11.GL_TEXTURE_2D);
-		GL11.glColor4f(0f,0f,0f,alpha);
-
-		glBegin(GL_QUADS);
-
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		
-		glVertex2f(mapX(0),mapY(0));
-		glVertex2f(mapX(1),mapY(0));
-		glVertex2f(mapX(1),mapY(1));
-		glVertex2f(mapX(0),mapY(1));
+		GL11.glColor4f(0f,0f,0f,alpha);
+		glBegin(GL_QUADS);
+		glVertex2f(0,0);
+		glVertex2f(1,0);
+		glVertex2f(1,1);
+		glVertex2f(0,1);
 		
 		GL11.glEnd();
 
@@ -57,12 +64,35 @@ public class FadeTransitionScreen extends Screen {
 
 	@Override
 	public void doLogic() {
-		if(time < totalTime/2)
+		/*if(time < totalTime/2)
 			from.doLogic();
 		else
-			to.doLogic();
-		if(time > totalTime)
-			Fakemon.setCurrentScreen(to);
+			to.doLogic();*/
+		if(time > totalTime && !finished)
+		{
+			switch(endBehavior){
+				case POP:
+					Fakemon.popScreen();     //pop self
+					Fakemon.popScreen();     //pop originator
+					break;
+				case PUSH:
+					System.out.println("Push");
+					Fakemon.popScreen();     
+					Fakemon.pushScreen(to);
+					break;
+				default:
+					Fakemon.popScreen();
+					Fakemon.popScreen();
+					Fakemon.pushScreen(to);
+					
+			}
+			finished = true;
+		}
+	}
+
+	@Override
+	public boolean isFinished() {
+		return finished;
 	}
 
 }

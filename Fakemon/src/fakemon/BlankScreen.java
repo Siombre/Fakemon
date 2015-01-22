@@ -10,24 +10,29 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 import org.lwjgl.opengl.GL11;
 
 public class BlankScreen extends Screen {
-
+	private float r,g,b;
 	public BlankScreen(){
+		this(0,0,0);
+	}
+	public BlankScreen(float r, float g, float b){
 		super.init();
+		this.r = r;
+		this.b = b;
+		this.g = g;
 	}
 	@Override
 	public void processMouseEvent(double x, double y) {}
 
 	@Override
 	public void render(int delta) {
-		GL11.glDisable(GL11.GL_TEXTURE_2D);
 
 		glBegin(GL_QUADS);
-		GL11.glColor3f(0f,0f,0f);
+		GL11.glColor3f(r,g,b);
 
-		glVertex2f(mapX(0),mapY(0));
-		glVertex2f(mapX(1),mapY(0));
-		glVertex2f(mapX(1),mapY(1));
-		glVertex2f(mapX(0),mapY(1));
+		glVertex2f(0,0);
+		glVertex2f(1,0);
+		glVertex2f(1,1);
+		glVertex2f(0,1);
 		glEnd();
 
 	}
@@ -37,5 +42,9 @@ public class BlankScreen extends Screen {
 
 	@Override
 	public void doLogic() {}
+	@Override
+	public boolean isFinished() {
+		return true;
+	}
 
 }

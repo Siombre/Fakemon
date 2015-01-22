@@ -22,6 +22,7 @@ public class OverworldScreen extends Screen{
 	int totalTime;
 	Trainer anchor;
 	float scale = 1f/32;
+	
 	public OverworldScreen(Trainer t){
 		init();
 		anchor = t;
@@ -50,11 +51,12 @@ public class OverworldScreen extends Screen{
 	}
 	@Override
 	public void processMouseEvent(double x, double y) {
-
+		
 	}
 
 	@Override
 	public void render(int delta) {
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
 
 		totalTime+=delta;
 		if(Keyboard.isKeyDown(Keyboard.KEY_UP))
@@ -69,34 +71,13 @@ public class OverworldScreen extends Screen{
 			scale *= 1.05;
 		if(Keyboard.isKeyDown(Keyboard.KEY_E))
 			scale /= 1.05;
-
-		if(texture == null) //TODO Replace with texture manager
-			try {
-				// load texture from PNG file
-				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/trainer/Trainer.png"));
-
-				System.out.println("Texture loaded: "+texture);
-				System.out.println(">> Image width: "+texture.getImageWidth());
-				System.out.println(">> Image height: "+texture.getImageHeight());
-				System.out.println(">> Texture width: "+texture.getTextureWidth());
-				System.out.println(">> Texture height: "+texture.getTextureHeight());
-				System.out.println(">> Texture ID: "+texture.getTextureID());
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		
 		GL11.glPushMatrix();
-		GL11.glTranslated(width/2f,height/2f, 0);
-		//GL11.glTranslated(10,10, 0);
-
-		GL11.glScaled(height, height, 1);
-		//GL11.glTranslated(.5,.5, 0);
+		GL11.glTranslated(.5,.5, 0);
 
 		GL11.glPushMatrix();
-		//GL11.glRotated(1, 1, 0, 0);
 		GL11.glScalef(scale, scale, 1);
 		GL11.glTranslated(x, y, 0);
-		//	GL11.glRotated(-Math.PI, 1, 0, 0);
 		for(int l = 0; l< map.length;l++){
 
 			for(int i = 0; i<map[l].length;i++)
@@ -118,29 +99,13 @@ public class OverworldScreen extends Screen{
 
 		GL11.glPopMatrix();
 		GL11.glPopMatrix();
-
-		/*Color.white.bind();
-		texture.bind(); // or GL11.glBind(texture.getTextureID());
-
-		GL11.glBegin(GL11.GL_QUADS);
-		GL11.glTexCoord2f(0,0);
-		GL11.glVertex2f(100,100);
-		GL11.glTexCoord2f(124f/128,0);
-		GL11.glVertex2f(100+texture.getTextureWidth(),100);
-		GL11.glTexCoord2f(124f/128,254/256f);
-		GL11.glVertex2f(100+texture.getTextureWidth(),100+texture.getTextureHeight());
-		GL11.glTexCoord2f(0,254/256f);
-		GL11.glVertex2f(100,100+texture.getTextureHeight());
-		GL11.glEnd();*/
 	}
 	@Override
-	public void displayMessage(String s) {
-
-	}
+	public void displayMessage(String s) {}
 
 	@Override
 	public void doLogic() {
-
+		
 	}
 	public boolean isFinished(){
 		return false;

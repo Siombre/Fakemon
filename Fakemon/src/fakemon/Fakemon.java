@@ -5,14 +5,16 @@ import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
 
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.TrueTypeFont;
 
 
 public class Fakemon {
-	private static Screen currentScreen;
+	private static ArrayList<Screen> screenStack;
 	static TrueTypeFont font;
 	static TrueTypeFont smallFont;
 	private boolean started;
@@ -26,47 +28,16 @@ public class Fakemon {
 	public void start() throws LWJGLException{
 		if(this.started) return;
 		started = true;
-		setCurrentScreen(new BlankScreen());
-		
-		PokemonInfo[] pokedex = PokemonInfo.getList();
-		System.out.println(pokedex.length + " Pokemon loaded.");
-		
-		MoveInfo[] moves = MoveInfo.getList();
-		System.out.println(moves.length + " Moves loaded.");
-		
-		Trainer you = new Trainer("Player");
-		you.addPokemon(generatePokemon(10));
-		you.battleAI = new PlayerAI();
-		
-		//setCurrentScreen(new OverworldScreen(you));
-
-		//while(!currentScreen.isFinished());
-		
-		
-		
-		Trainer[] t = { you, null};
-		Trainer enemy;
-		
-		int[] is = { 1 , 1 };
-		int win = 1;
-		
-		while(true){
-			if(win != 0)
-				you.getPokemon()[0].fullHeal();
-			
-			enemy = new Trainer("Opponent");
-			enemy.addPokemon(generatePokemon(10));
-			enemy.addPokemon(generatePokemon(10));
-
-			t[1] = enemy ;
-			BattleScreen s = new BattleScreen(t, false, is);
-			FadeTransitionScreen ts = new FadeTransitionScreen(s);
-			setCurrentScreen(ts);
-			while(!s.isFinished())
-			{
-				getCurrentScreen().doLogic();
+		pushScreen(new BlankScreen());
+		pushScreen(new SplashScreen());
+		while(true)
+		{
+			getCurrentScreen().doLogic();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
-			win = s.getWinner();			
 		}
 	}
 	
@@ -82,15 +53,18 @@ public class Fakemon {
 	public void render(int delta){
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear The Screen And The Depth Buffer
 
-		if(currentScreen != null){
-			
-			currentScreen.render(delta);
+		if(getCurrentScreen() != null){
+			GL11.glPushMatrix();
+			GL11.glTranslatef((getCurrentScreen().width-getCurrentScreen().height)/2f,0,0);
+			GL11.glScaled(getCurrentScreen().height, getCurrentScreen().height, 1);
+			getCurrentScreen().renderScreen(delta);
+			GL11.glPopMatrix();
 		}
 	}
 
 	public void mouseEvent() {
-		if(currentScreen != null){
-			currentScreen.mouseEvent();
+		if(getCurrentScreen() != null){
+			getCurrentScreen().mouseEvent();
 		}
 	}
 
@@ -102,13 +76,31 @@ public class Fakemon {
 		
 		Font awtFont2 = new Font("Times New Roman", Font.BOLD, 12); // name, style (PLAIN, BOLD, or ITALIC), size
 		smallFont = new TrueTypeFont(awtFont2, true);
+		
+		screenStack = new ArrayList<Screen>();
 	}
 
 	public static Screen getCurrentScreen() {
-		return currentScreen;
+		return screenStack.get(screenStack.size()-1);
 	}
 
-	public static void setCurrentScreen(Screen screen) {
-		currentScreen = screen;
+	/*public static void setCurrentScreen(Screen screen) {
+		screenStack.set(screenStack.size()-1,screen);
+	}*/
+	public static void pushScreen(Screen screen){
+		screenStack.add(screen);
+	}
+	public static void popScreen(){
+		screenStack.remove(screenStack.size()-1);
+	}
+	public static Screen peek(int rIndex){
+		return screenStack.get(screenStack.size()-1 + rIndex);
+	}
+	public static void printScreenStack(){
+		String s = "";
+		for(Screen sc : screenStack){
+			s += sc.getClass().getSimpleName() + " ";
+		}
+		System.out.println(s);
 	}
 }
