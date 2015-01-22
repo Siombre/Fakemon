@@ -37,12 +37,12 @@ public class MoveMenuDialogBox extends DialogBox {
 				double x = bounds.getMinX() + .03 * bounds.getWidth() + (i%2)*.5*bounds.getWidth();
 				double y = bounds.getMinY() + .05 * bounds.getHeight() + (i/2)*.5*bounds.getHeight();
 
-				screen.font.drawString(screen.mapX(x), screen.mapY(y), moves[i].getInfo().getName(), Color.black);
+				screen.drawString(screen.font, screen.mapX(x), screen.mapY(y), moves[i].getInfo().getName(), Color.black);
 				
 				x = bounds.getMinX() + .03 * bounds.getWidth() + (i%2)*.5*bounds.getWidth();
 				y = bounds.getMinY() + .20 * bounds.getHeight() + (i/2)*.5*bounds.getHeight();
 				
-				screen.font.drawString(screen.mapX(x), screen.mapY(y), moves[i].getCurPP() + " / " + moves[i].getMaxPP(), Color.black);
+				screen.drawString(screen.font, screen.mapX(x), screen.mapY(y), moves[i].getCurPP() + " / " + moves[i].getMaxPP(), Color.black);
 
 			}
 		}

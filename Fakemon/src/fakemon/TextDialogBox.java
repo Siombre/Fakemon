@@ -24,7 +24,7 @@ public class TextDialogBox extends DialogBox{
 		Rectangle2D bounds = getBounds();
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		
-		screen.font.drawString(screen.mapX(bounds.getMinX() + .01), screen.mapY(bounds.getMinY() + .01), message, Color.black);
+		screen.drawString(screen.font,screen.mapX(bounds.getMinX() + .01), screen.mapY(bounds.getMinY() + .01), message, Color.black);
 
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 	}

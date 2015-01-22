@@ -166,34 +166,6 @@ public class Start {
 			System.err.println("Type file not found");
 		}
 	}
-
-/*	public static void loadPokemon(String path){
-		try {
-			Scanner scan = new Scanner(new FileReader(path));
-			scan.nextLine();
-			scan.nextLine();
-
-			String line;
-			while(scan.hasNextLine())
-			{
-				line = scan.nextLine();
-				if(line.startsWith("#")) continue;
-
-				if(line.replace(',', ' ').trim().isEmpty())
-					continue;
-				try{
-					new PokemonInfo(line);
-				}catch(Exception e){
-					System.err.println(e.getLocalizedMessage());
-				}
-			}
-
-			scan.close();
-
-		} catch (FileNotFoundException e) {
-			System.err.println("Type file not found");
-		}
-	}*/
 	public static void loadPokemon(String path){
 		Pattern p = Pattern.compile(".*\\.json");
 
@@ -216,7 +188,6 @@ public class Start {
 				}
 			}
 		}
-		//Gson gson = new Gson();
 		JsonParser parser = new JsonParser();
 		for(File f : files)
 		{

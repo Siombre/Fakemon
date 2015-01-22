@@ -1,34 +1,18 @@
 package fakemon;
 
-import static org.lwjgl.opengl.GL11.GL_BLEND;
-import static org.lwjgl.opengl.GL11.GL_LINE_SMOOTH;
-import static org.lwjgl.opengl.GL11.GL_LINE_SMOOTH_HINT;
-import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
-import static org.lwjgl.opengl.GL11.GL_NICEST;
-import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.GL_PERSPECTIVE_CORRECTION_HINT;
-import static org.lwjgl.opengl.GL11.GL_POLYGON_SMOOTH_HINT;
-import static org.lwjgl.opengl.GL11.GL_PROJECTION;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
 import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glBlendFunc;
 import static org.lwjgl.opengl.GL11.glColor3d;
-import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glHint;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glMatrixMode;
-import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.opengl.GL11.glVertex2f;
-import static org.lwjgl.opengl.GL11.glViewport;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.GLU;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.TrueTypeFont;
 
 public abstract class Screen {
 	protected int width;
@@ -39,6 +23,8 @@ public abstract class Screen {
 		Display.setDisplayMode(new DisplayMode(640, 480));
 		Display.setTitle("Fakemon");
 		Display.create();
+
+		Display.setResizable(true);
 
 		int width = Display.getDisplayMode().getWidth();
 		int height = Display.getDisplayMode().getHeight();
@@ -79,7 +65,7 @@ public abstract class Screen {
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		System.out.println("Done Initializing OpenGL Context");
 
-	/*	GL11.glViewport(0, 0, width, height); // Reset The Current Viewport
+		/*	GL11.glViewport(0, 0, width, height); // Reset The Current Viewport
 		GL11.glMatrixMode(GL11.GL_PROJECTION); // Select The Projection Matrix
 		GL11.glLoadIdentity(); // Reset The Projection Matrix
 		GLU.gluPerspective(45.0f, ((float) width / (float) height), 0.1f, 300.0f); // Calculate The Aspect Ratio Of The Window
@@ -143,33 +129,45 @@ public abstract class Screen {
 		height = Display.getDisplayMode().getHeight();
 	}
 	float mapX(double x) {
-		return (float) (x * width);
+		//return (float) (x * width);
+		return (float) x;
 	}
 	float mapY(double y) {
-		return (float) (y * height);
+		//return (float) (y * height);
+		return (float) y;
 	}
 	void mouseEvent(){
-		double x = (double)Mouse.getEventX()/width;
-		double y = 1-(double)Mouse.getEventY()/height;
-		processMouseEvent(x,y);
+		if (Mouse.getEventButton() > -1){
+			double x = (double)Mouse.getEventX()/width;
+			double y = 1-(double)Mouse.getEventY()/height;
+			processMouseEvent(x,y);
+		}
 	}	
 	public abstract void processMouseEvent(double x, double y);
+	public void renderScreen(int delta){
+		if(width != Display.getWidth() || height != Display.getHeight())
+		{
+			width = Display.getWidth();
+			height = Display.getHeight();
+			System.out.println("Resolution changed to " + width + "x" + height);
+		}
+
+		render(delta);
+	}
 	public abstract void render(int delta);
 	public abstract void displayMessage(String s);
 
 	public abstract void doLogic();
 
-	public void start(){
-		Screen s = Fakemon.getCurrentScreen();
-		Fakemon.setCurrentScreen(this);
-		while(!isFinished())
-			doLogic();
-		Fakemon.setCurrentScreen(s);
-	}
-	public boolean isFinished() {
-		return true;
-	}
+	public abstract boolean isFinished();
+	public void drawString(TrueTypeFont f, float x, float y, String s, Color c){
+		GL11.glPushMatrix();
+		GL11.glTranslated(x, y, 0);
+		GL11.glScalef(1f/height, 1f/height, 1);
+		f.drawString(x,y,s, Color.black);
 
+		GL11.glPopMatrix();
+	}
 
 
 }
