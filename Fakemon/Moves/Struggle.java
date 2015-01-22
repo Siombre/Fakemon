@@ -7,8 +7,10 @@ import fakemon.MoveInfo.Category;
 
 
 public class Struggle extends MoveInfo {
-
-	public void hit(Pokemon user, Pokemon target, BattleScreen battle){
+	public Struggle(){
+		setName("Struggle");
+	}
+	public void hit(Pokemon user, Pokemon target, BattleScreen battle){		
 		double critBonus;
 		if(isCritical()){
 			critBonus = getCritDamMod();
@@ -34,7 +36,7 @@ public class Struggle extends MoveInfo {
 		battle.damage(target, damage);
 		battle.displayMessage(target.getName() + " hurt itself in its struggle");
 
-		battle.damage(target,(int) ((1f/4) * target.getStat(PokemonInfo.MAX_HP)));
+		battle.damage(target,(int) ((1.0f/4) * target.getStat(PokemonInfo.MAX_HP)));
 
 	}
 }
