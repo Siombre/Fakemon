@@ -22,28 +22,13 @@ public abstract class Screen {
 		System.out.println("Initializing OpenGL Context");
 		Display.setDisplayMode(new DisplayMode(640, 480));
 		Display.setTitle("Fakemon");
+		Display.setResizable(true);
 		Display.create();
 
-		Display.setResizable(true);
 
 		int width = Display.getDisplayMode().getWidth();
 		int height = Display.getDisplayMode().getHeight();
-		/*glViewport(0, 0, width, height); // Reset The Current Viewport
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity(); // Resets any previous projection matrices
-		glOrtho(0, 640, 480, 0, 1, -1);
-		GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);          
 
-		glMatrixMode(GL_MODELVIEW);
-		glEnable(GL_LINE_SMOOTH);
-		glEnable(GL11.GL_ALPHA);
-
-		glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-		glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
-		glEnable(GL_BLEND);
-		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);*/
 		GL11.glEnable(GL11.GL_TEXTURE_2D);               
 
 		GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);          
@@ -53,7 +38,6 @@ public abstract class Screen {
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
 		GL11.glViewport(0,0,width,height);
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
@@ -64,22 +48,6 @@ public abstract class Screen {
 		GL11.glOrtho(0, width, height, 0, 1, -1);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		System.out.println("Done Initializing OpenGL Context");
-
-		/*	GL11.glViewport(0, 0, width, height); // Reset The Current Viewport
-		GL11.glMatrixMode(GL11.GL_PROJECTION); // Select The Projection Matrix
-		GL11.glLoadIdentity(); // Reset The Projection Matrix
-		GLU.gluPerspective(45.0f, ((float) width / (float) height), 0.1f, 300.0f); // Calculate The Aspect Ratio Of The Window
-		GL11.glMatrixMode(GL11.GL_MODELVIEW); // Select The Modelview Matrix
-		GL11.glLoadIdentity(); // Reset The Modelview Matrix
-
-		GL11.glShadeModel(GL11.GL_SMOOTH); // Enables Smooth Shading
-		GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black Background
-		GL11.glClearDepth(1.0f); // Depth Buffer Setup
-		GL11.glEnable(GL11.GL_DEPTH_TEST); // Enables Depth Testing
-		GL11.glDepthFunc(GL11.GL_LEQUAL); // The Type Of Depth Test To Do
-		GL11.glHint(GL11.GL_PERSPECTIVE_CORRECTION_HINT, GL11.GL_NICEST); // Really Nice Perspective Calculations
-		GL11.glEnable(GL11.GL_TEXTURE_2D);*/
-
 
 	}
 	public void renderBorder(double x, double y, double width, double height) {
@@ -145,14 +113,23 @@ public abstract class Screen {
 	}	
 	public abstract void processMouseEvent(double x, double y);
 	public void renderScreen(int delta){
+		
 		if(width != Display.getWidth() || height != Display.getHeight())
 		{
 			width = Display.getWidth();
 			height = Display.getHeight();
+			GL11.glViewport(0, 0, width, height); //NEW
+			GL11.glMatrixMode(GL11.GL_PROJECTION);
+			GL11.glLoadIdentity();
+			GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
 			System.out.println("Resolution changed to " + width + "x" + height);
 		}
-
+		GL11.glPushMatrix();
+		GL11.glTranslatef((width-height)/2f,0,0);
+		GL11.glScaled(height, height, 1);
 		render(delta);
+		GL11.glPopMatrix();
+
 	}
 	public abstract void render(int delta);
 	public abstract void displayMessage(String s);
@@ -163,7 +140,7 @@ public abstract class Screen {
 	public void drawString(TrueTypeFont f, float x, float y, String s, Color c){
 		GL11.glPushMatrix();
 		GL11.glTranslated(x, y, 0);
-		GL11.glScalef(1f/height, 1f/height, 1);
+		GL11.glScalef(1f/512, 1f/512, 1);
 		f.drawString(x,y,s, Color.black);
 
 		GL11.glPopMatrix();
