@@ -17,6 +17,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
@@ -43,7 +44,7 @@ public class Start {
 		}.start();
 		while (!Display.isCreated());
 		while (!Display.isCloseRequested()) {
-			
+
 			game.render(getDelta());
 			while(Mouse.next()) game.mouseEvent();
 			Display.update();
@@ -88,9 +89,9 @@ public class Start {
 			double[] mods = {1,1,1,1,1,1}; 
 			new Nature("Default",mods);
 
-			loadTypes(basePath + "/res/Types.csv");	
-			loadMoves(basePath + "/res/Moves");
-			loadPokemon(basePath + "/res/Pokemon");
+			loadTypes(getPath("/res/Types.csv"));	
+			loadMoves(getPath("/res/Moves"));
+			loadPokemon(getPath("/res/Pokemon"));
 
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
