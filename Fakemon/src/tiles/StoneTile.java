@@ -8,14 +8,15 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
+import fakemon.Start;
 import fakemon.Trainer;
 
 public class StoneTile extends Tile{
 	private static Texture texture;
-	public void render(){
+	public void render(int delta){
 		if(texture == null)
 			try {
-				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/world/stone.png"));
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(Start.getPath("res/world/stone.png")));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

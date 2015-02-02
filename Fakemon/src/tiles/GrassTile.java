@@ -8,14 +8,15 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
+import fakemon.Start;
 import fakemon.Trainer;
 
 public class GrassTile extends Tile{
 	private static Texture texture;
-	public void render(){
+	public void render(int delta){
 		if(texture == null)
 			try {
-				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("res/world/grass.png"));
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(Start.getPath("res/world/grass.png")));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

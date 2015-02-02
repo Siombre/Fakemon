@@ -76,14 +76,13 @@ public class FadeTransitionScreen extends Screen {
 					Fakemon.popScreen();     //pop originator
 					break;
 				case PUSH:
-					System.out.println("Push");
-					Fakemon.popScreen();     
-					Fakemon.pushScreen(to);
+					Fakemon.popScreen();     //pop self
+					Fakemon.pushScreen(to);  //push destination
 					break;
 				default:
-					Fakemon.popScreen();
-					Fakemon.popScreen();
-					Fakemon.pushScreen(to);
+					Fakemon.popScreen();     //pop self
+					Fakemon.popScreen();     //pop originator
+					Fakemon.pushScreen(to);  //push destination
 					
 			}
 			finished = true;
