@@ -82,7 +82,6 @@ public class BattleLoopScreen extends Screen{
 
 	@Override
 	public boolean isFinished() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
