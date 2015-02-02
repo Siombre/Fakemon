@@ -55,7 +55,7 @@ public class Start {
 
 	}
 	public static String getPath(String s){
-		if(s.startsWith("/"))
+		if(!s.startsWith("/"))
 			s = "/" +s;
 		return basePath + s;
 	}
