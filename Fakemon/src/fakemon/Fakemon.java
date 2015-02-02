@@ -29,10 +29,12 @@ public class Fakemon {
 		if(this.started) return;
 		started = true;
 		pushScreen(new BlankScreen());
-		pushScreen(new SplashScreen());
+		pushScreen(new MainMenuScreen());
+	//	pushScreen(new OverworldScreen(null));
 		while(true)
 		{
-			getCurrentScreen().doLogic();
+			if(getCurrentScreen() != null)
+				getCurrentScreen().doLogic();
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
@@ -54,11 +56,8 @@ public class Fakemon {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear The Screen And The Depth Buffer
 
 		if(getCurrentScreen() != null){
-			GL11.glPushMatrix();
-			GL11.glTranslatef((getCurrentScreen().width-getCurrentScreen().height)/2f,0,0);
-			GL11.glScaled(getCurrentScreen().height, getCurrentScreen().height, 1);
+
 			getCurrentScreen().renderScreen(delta);
-			GL11.glPopMatrix();
 		}
 	}
 
