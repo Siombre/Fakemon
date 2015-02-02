@@ -42,11 +42,13 @@ public abstract class Screen {
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
 		GL11.glClearDepth(1.0f); // Depth Buffer Setup
-		GL11.glEnable(GL11.GL_DEPTH_TEST); // Enables Depth Testing
+		
 		GL11.glDepthFunc(GL11.GL_LEQUAL); // The Type Of Depth Test To Do
 		GL11.glHint(GL11.GL_PERSPECTIVE_CORRECTION_HINT, GL11.GL_NICEST); // Really Nice Perspective Calculations
-		GL11.glOrtho(0, width, height, 0, 1, -1);
+		GL11.glOrtho(0, width, height, 0, -10, 10);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		GL11.glEnable(GL11.GL_DEPTH_TEST); // Enables Depth Testing
+
 		System.out.println("Done Initializing OpenGL Context");
 
 	}
@@ -141,7 +143,7 @@ public abstract class Screen {
 		GL11.glPushMatrix();
 		GL11.glTranslated(x, y, 0);
 		GL11.glScalef(1f/512, 1f/512, 1);
-		f.drawString(x,y,s, Color.black);
+		f.drawString(x,y,s, c);
 
 		GL11.glPopMatrix();
 	}
