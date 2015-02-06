@@ -45,7 +45,7 @@ public abstract class Screen {
 		
 		GL11.glDepthFunc(GL11.GL_LEQUAL); // The Type Of Depth Test To Do
 		GL11.glHint(GL11.GL_PERSPECTIVE_CORRECTION_HINT, GL11.GL_NICEST); // Really Nice Perspective Calculations
-		GL11.glOrtho(0, width, height, 0, -10, 10);
+		GL11.glOrtho(0, width, height, 0, -40, 0);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		GL11.glEnable(GL11.GL_DEPTH_TEST); // Enables Depth Testing
 
@@ -123,7 +123,7 @@ public abstract class Screen {
 			GL11.glViewport(0, 0, width, height); //NEW
 			GL11.glMatrixMode(GL11.GL_PROJECTION);
 			GL11.glLoadIdentity();
-			GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
+			GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, -40, 0);
 			System.out.println("Resolution changed to " + width + "x" + height);
 		}
 		GL11.glPushMatrix();
