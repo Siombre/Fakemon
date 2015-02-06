@@ -9,7 +9,7 @@ import fakemon.Trainer;
 public class HealTile extends Tile {
 	int timer = 0;
 	@Override
-	public void render(int delta) {
+	public void render(int delta, int x, int y, int z) {
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 
 		timer+= delta;
