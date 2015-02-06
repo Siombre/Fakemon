@@ -9,7 +9,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -17,9 +16,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 
 
@@ -37,7 +34,6 @@ public class Start {
 				try {
 					game.start();
 				} catch (LWJGLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -61,7 +57,10 @@ public class Start {
 	}
 	public static void init(){
 		try {
+			basePath = new File(Start.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParent();
 			String os = System.getProperty("os.name").toLowerCase();
+			Logger.log("System : " + os);
+			
 			String osName = "";
 			if(os.startsWith("linux")){
 				osName = "linux";
