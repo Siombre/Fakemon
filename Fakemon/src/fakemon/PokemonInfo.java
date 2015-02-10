@@ -64,43 +64,6 @@ public class PokemonInfo {
 		pokemon.add(this);
 
 	}
-	/*public PokemonInfo(String data) {
-		// Species Name, Pokedex id, HP, Defense, Attack, Special Atk., Special
-		// Def., Speed, Leveling Type , Elemental Type(s)
-		String[] tokens = data.split(",");
-		//if (tokens.length != 9)
-		//	throw new IllegalArgumentException("Wrong number of fields in Pokemon Definition.");
-		name = tokens[1];
-		System.out.println(name);
-		try {
-			//TODO add other sanity checks
-			id = Integer.parseInt(tokens[0]);
-			stats = new int[6];
-			for(int i = 0;i< 6;i++)
-			{
-				stats[i] = Integer.parseInt(tokens[i+9]);
-				if(stats[i] < 0)
-					throw new IllegalArgumentException("Base stat must be > 0 in \"" + name + "\".");
-			}
-			levelingType = LevelType.getByName(tokens[8].replace('_',' '));
-			if(levelingType == null)
-				throw new IllegalArgumentException("Invalid Leveling type in \"" + name + "\".");
-			this.types = new ArrayList<Type>();
-			
-			//String[] typeList = tokens[2].split("(\\\\|/)");
-			String[] typeList = {tokens[2],tokens[3]};
-			for(String t:typeList)
-				if(!t.equalsIgnoreCase("None"))
-					types.add(Type.getByName(t));
-			
-			baseExp = Integer.parseInt(tokens[16]);
-
-		} catch (NumberFormatException e) {
-			throw new IllegalArgumentException("Invalid field value in \"" + name + "\".");
-		}
-		description = "";
-		pokemon.add(this);
-	}*/
 	public int[] getStatsForLevel(int level, Pokemon p){
 		
 		int[] newStats = new int[6];
