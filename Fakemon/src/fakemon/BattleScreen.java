@@ -24,19 +24,19 @@ public class BattleScreen extends Screen {
 	private int winner = 0;
 	DialogBox dialog;
 	DialogBox dialog2;
-
+	boolean wild;
 	int fainted = 0;
 	Rectangle2D dialogLoc = new Rectangle2D.Float(.01f, .7f, .68f, .29f);
 	Rectangle2D dialog2Loc = new Rectangle2D.Float(.69f, .7f, .28f, .29f);
 
-	BattleScreen(Trainer[] trainers, boolean wild, int[] pokemonOut) {
+	public BattleScreen(Trainer[] trainers, boolean wild, int[] pokemonOut) {
 		super.init();
 		this.trainers = trainers;
 
 		acPokemon = new Pokemon[trainers.length][];
 		actions = new BattleAction[trainers.length][];
 		hpRatio = new double[trainers.length][];
-
+		this.wild = wild;
 		for (int i = 0; i < trainers.length; i++) {
 			int length;
 			if (pokemonOut.length <= i)
@@ -117,7 +117,7 @@ public class BattleScreen extends Screen {
 	private static final int FINISH = 4;
 	private static final int ENDED = 5;
 
-	public void doLogic() {
+	public void doLogic(int delta) {
 		if(state == INIT){
 			fillPokemon();
 			state = REQUEST;
@@ -234,10 +234,11 @@ public class BattleScreen extends Screen {
 				displayMessage("You win!");
 			else
 				displayMessage("You lose!");
+			Fakemon.pushScreen(new FadeTransitionScreen(null,FadeTransitionScreen.POP));
+
 			state = ENDED;
 		}
 		if(state == ENDED){
-			new FadeTransitionScreen(null,FadeTransitionScreen.POP);
 		}
 		//System.out.println(state);
 	}
@@ -422,6 +423,10 @@ public class BattleScreen extends Screen {
 
 	public void addAction(int trainer, int pokemon, BattleAction move) {
 		actions[trainer][pokemon] = move;
+	}
+	@Override
+	public int getLogicDelay() {
+		return 100;
 	}	
 
 }

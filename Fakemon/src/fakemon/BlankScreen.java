@@ -41,10 +41,14 @@ public class BlankScreen extends Screen {
 	public void displayMessage(String s) {}
 
 	@Override
-	public void doLogic() {}
+	public void doLogic(int delta) {}
 	@Override
 	public boolean isFinished() {
 		return true;
+	}
+	@Override
+	public int getLogicDelay() {
+		return 500;
 	}
 
 }

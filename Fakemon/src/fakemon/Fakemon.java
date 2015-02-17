@@ -25,21 +25,35 @@ public class Fakemon {
 			e.printStackTrace();
 		}
 	}
-	public void start() throws LWJGLException{
+	public void start(){
 		if(this.started) return;
 		started = true;
 		pushScreen(new BlankScreen());
 		pushScreen(new MainMenuScreen());
 		//	pushScreen(new OverworldScreen(null));
+		long time;
+		int dT = 0;
 		while(true)
 		{
+			time = System.currentTimeMillis();
+			long delay = 100;
+
 			if(getCurrentScreen() != null)
-				getCurrentScreen().doLogic();
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			{
+				getCurrentScreen().doLogic(dT);
+				delay = getCurrentScreen().getLogicDelay();
+			} 
+			delay -= System.currentTimeMillis() - time;
+			if(delay > 0)
+			{
+				try {
+					Thread.sleep(delay);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+			dT = (int) (System.currentTimeMillis() - time);
 		}
 	}
 
@@ -83,10 +97,6 @@ public class Fakemon {
 		if(screenStack.size() <= 0) return null;
 		return screenStack.get(screenStack.size()-1);
 	}
-
-	/*public static void setCurrentScreen(Screen screen) {
-		screenStack.set(screenStack.size()-1,screen);
-	}*/
 	public static void pushScreen(Screen screen){
 		screenStack.add(screen);
 	}

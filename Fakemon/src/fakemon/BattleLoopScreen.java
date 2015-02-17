@@ -20,6 +20,12 @@ public class BattleLoopScreen extends Screen{
 	private Trainer you;
 	private boolean won;
 	private int[] is = { 1 , 1 };
+	
+	public BattleLoopScreen(Trainer t){
+		you = t;
+		this.t[0] = t;
+	}
+	
 	@Override
 	public void processMouseEvent(double x, double y) {
 		if(state == READY)
@@ -49,15 +55,9 @@ public class BattleLoopScreen extends Screen{
 	public void displayMessage(String s) {}
 
 	@Override
-	public void doLogic(){
+	public void doLogic(int delta){
 		switch(state){
 			case INIT:
-				
-				you = new Trainer("Player");
-				you.addPokemon(Fakemon.generatePokemon(10));
-				you.battleAI = new PlayerAI();
-				
-				t[0] = you;
 			case PREP:
 				if(!won)
 					you.getPokemon()[0].fullHeal();
@@ -83,6 +83,11 @@ public class BattleLoopScreen extends Screen{
 	@Override
 	public boolean isFinished() {
 		return false;
+	}
+
+	@Override
+	public int getLogicDelay() {
+		return 100;
 	}
 
 }

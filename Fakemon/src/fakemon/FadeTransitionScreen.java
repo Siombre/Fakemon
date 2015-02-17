@@ -24,7 +24,7 @@ public class FadeTransitionScreen extends Screen {
 		this.from = Fakemon.getCurrentScreen();
 		endBehavior = behavior;
 		if(behavior == POP)
-			to = Fakemon.peek(-1);
+			this.to = Fakemon.peek(-1);
 	}
 	@Override
 	public void processMouseEvent(double x, double y) {}
@@ -63,7 +63,7 @@ public class FadeTransitionScreen extends Screen {
 	}
 
 	@Override
-	public void doLogic() {
+	public void doLogic(int delta) {
 		/*if(time < totalTime/2)
 			from.doLogic();
 		else
@@ -92,6 +92,10 @@ public class FadeTransitionScreen extends Screen {
 	@Override
 	public boolean isFinished() {
 		return finished;
+	}
+	@Override
+	public int getLogicDelay() {
+		return 10;
 	}
 
 }

@@ -74,7 +74,7 @@ public class SplashScreen extends Screen {
 	public void displayMessage(String s) {}
 
 	@Override
-	public void doLogic() {
+	public void doLogic(int delta) {
 		if(state == PRE)
 		{
 			start = System.currentTimeMillis();
@@ -91,6 +91,10 @@ public class SplashScreen extends Screen {
 	@Override
 	public boolean isFinished() {
 		return state == FINISHED;
+	}
+	@Override
+	public int getLogicDelay() {
+		return 10;
 	}
 
 }

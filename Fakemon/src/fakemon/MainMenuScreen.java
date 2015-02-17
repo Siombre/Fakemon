@@ -14,11 +14,15 @@ public class MainMenuScreen extends Screen {
 	public void processMouseEvent(double x, double y) {
 		if(running)
 		{
+			Trainer you;
+			you = new Trainer("Player");
+			you.addPokemon(Fakemon.generatePokemon(50));
+			you.battleAI = new PlayerAI();
 			if(y > .5)
 			{
-				Fakemon.pushScreen(new FadeTransitionScreen(new OverworldScreen(null)));
+				Fakemon.pushScreen(new FadeTransitionScreen(new OverworldScreen(you)));
 			} else{
-				Fakemon.pushScreen(new FadeTransitionScreen(new BattleLoopScreen()));
+				Fakemon.pushScreen(new FadeTransitionScreen(new BattleLoopScreen(you)));
 			}
 			running = false;
 		}
@@ -49,7 +53,7 @@ public class MainMenuScreen extends Screen {
 	}
 
 	@Override
-	public void doLogic() {
+	public void doLogic(int delta) {
 		// TODO Auto-generated method stub
 
 	}
@@ -58,6 +62,12 @@ public class MainMenuScreen extends Screen {
 	public boolean isFinished() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public int getLogicDelay() {
+		// TODO Auto-generated method stub
+		return 10;
 	}
 
 }
