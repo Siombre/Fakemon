@@ -7,8 +7,8 @@ public class Util {
 	public static int rand(int min, int max){
 		return rand.nextInt(max-min+1) + min;
 	}
-	public static boolean flip(float odds){
-		return rand.nextFloat() < odds;
+	public static boolean flip(double d){
+		return rand.nextFloat() < d;
 	}
 	public static String possessive(String name){
 		if(name.endsWith("s"))
