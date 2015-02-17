@@ -31,11 +31,7 @@ public class Start {
 		final Fakemon game = new Fakemon();
 		new Thread() {
 			public void run() {
-				try {
-					game.start();
-				} catch (LWJGLException e) {
-					e.printStackTrace();
-				}
+				game.start();
 			}
 		}.start();
 		while (!Display.isCreated());
