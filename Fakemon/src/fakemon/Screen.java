@@ -125,6 +125,7 @@ public abstract class Screen {
 			GL11.glLoadIdentity();
 			GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, -40, 0);
 			System.out.println("Resolution changed to " + width + "x" + height);
+			GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		}
 		GL11.glPushMatrix();
 		GL11.glTranslatef((width-height)/2f,0,0);
@@ -136,17 +137,16 @@ public abstract class Screen {
 	public abstract void render(int delta);
 	public abstract void displayMessage(String s);
 
-	public abstract void doLogic();
-
+	public abstract void doLogic(int delta);
+	public abstract int getLogicDelay();
 	public abstract boolean isFinished();
 	public void drawString(TrueTypeFont f, float x, float y, String s, Color c){
 		GL11.glPushMatrix();
+		
 		GL11.glTranslated(x, y, 0);
 		GL11.glScalef(1f/512, 1f/512, 1);
 		f.drawString(x,y,s, c);
 
 		GL11.glPopMatrix();
 	}
-
-
 }
