@@ -28,7 +28,7 @@ public class TreeTile extends Tile {
 	@Override
 	public void tick() {}
 	@Override
-	public void onStep(Trainer t) {}
+	public void onStep(Trainer t, int delta) {}
 	@Override
 	public boolean isPassable() {
 		return false;

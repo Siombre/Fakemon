@@ -34,7 +34,7 @@ public class HealTile extends Tile {
 	}
 
 	@Override
-	public void onStep(Trainer t) {
+	public void onStep(Trainer t, int delta) {
 		if(timer == 3000)
 		{
 			if(t!= null)

@@ -8,9 +8,14 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
+import fakemon.BattleScreen;
+import fakemon.FadeTransitionScreen;
+import fakemon.Fakemon;
+import fakemon.OverworldScreen;
 import fakemon.RenderManager;
 import fakemon.Start;
 import fakemon.Trainer;
+import fakemon.Util;
 
 public class TallGrass extends Tile{
 	private static Texture texture;
@@ -31,7 +36,16 @@ public class TallGrass extends Tile{
 	@Override
 	public void tick() {}
 	@Override
-	public void onStep(Trainer t) {}
+	public void onStep(Trainer t, int delta) {
+		if(t.isAlive() && Util.flip(.1*delta/1000f) && Fakemon.getCurrentScreen().getClass() == OverworldScreen.class){
+			Trainer enemy = new Trainer("Opponent");
+			enemy.addPokemon(Fakemon.generatePokemon(10));
+			Trainer[] trainers = {t, enemy};
+			int[] is = { 1 , 1 };
+			BattleScreen battle = new BattleScreen(trainers, false, is);
+			Fakemon.pushScreen(new FadeTransitionScreen(battle,FadeTransitionScreen.PUSH));
+		}
+	}
 	@Override
 	public boolean isPassable() {
 		return true;

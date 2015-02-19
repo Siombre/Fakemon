@@ -31,7 +31,7 @@ public class FlowerTile extends Tile {
 	}
 
 	@Override
-	public void onStep(Trainer t) {
+	public void onStep(Trainer t, int delta) {
 		// TODO Auto-generated method stub
 
 	}
