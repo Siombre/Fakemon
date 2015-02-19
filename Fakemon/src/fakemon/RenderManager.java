@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
 public class RenderManager {
 	private static int boundText;
 	private static ArrayList<double[]> objects = new ArrayList<double[]>();
@@ -38,7 +36,6 @@ public class RenderManager {
 	}
 	private static int partition(int start, int end){
 		int pI = (start + end) / 2;
-		//int pI = end;
 		double[] pV = objects.get(pI);
 		int r = end;
 		int l = start;
