@@ -215,7 +215,6 @@ public class Start {
 			URL url;
 			try {
 				url = new URL("file:" + dir.getAbsolutePath()+"/");
-				// file:/c:/myclasses/
 
 
 				// Create a new class loader with the directory
