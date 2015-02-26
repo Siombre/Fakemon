@@ -7,7 +7,7 @@ import java.io.IOException;
 public class Logger {
 	
 	private static FileWriter f;
-	private static boolean enabled = true;
+	private static boolean enabled = false;
 	public static void log(String s){
 		if(!enabled) return;
 		try {
@@ -24,7 +24,7 @@ public class Logger {
 		}
 	}
 	private static void openLog() {
-		
+		if(!enabled) return;
 		new File(Start.getPath("log")).mkdir();
 		File file = new File(Start.getPath("log"+"/"+System.currentTimeMillis()+".log"));
 		try {
