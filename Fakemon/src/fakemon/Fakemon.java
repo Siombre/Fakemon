@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import org.lwjgl.LWJGLException;
-import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.TrueTypeFont;
 
 

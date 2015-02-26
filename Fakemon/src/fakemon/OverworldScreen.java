@@ -54,6 +54,7 @@ public class OverworldScreen extends Screen{
 					mapData[i2][i] = st.charAt(i2);
 				}
 			}
+			s.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

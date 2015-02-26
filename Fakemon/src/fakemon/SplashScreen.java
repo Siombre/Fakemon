@@ -8,10 +8,6 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
-import tiles.GrassTile;
-import tiles.StoneTile;
-import tiles.TallGrass;
-
 public class SplashScreen extends Screen {
 
 	private static Texture texture;
@@ -60,14 +56,6 @@ public class SplashScreen extends Screen {
 		GL11.glEnd();
 
 		GL11.glPopMatrix();  
-		int scale = 100;
-		//GL11.glScalef(scale, scale, 1);
-
-		GL11.glPushMatrix();
-	//	new GrassTile().render();
-		//new TallGrass().render();
-
-		GL11.glPopMatrix();
 	}
 
 	@Override

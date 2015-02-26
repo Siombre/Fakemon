@@ -3,8 +3,6 @@ package fakemon;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
-import org.newdawn.slick.opengl.Texture;
-
 public abstract class Entity {
 	private double[] vx;
 	private double[] vy;
