@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -43,7 +42,8 @@ public class Start {
 			while(Mouse.next()) game.mouseEvent();
 			Display.sync(60);
 		}
-		logic.stop();
+		game.requestStop();
+		while(logic.isAlive());
 		Display.destroy();
 		System.exit(0);
 

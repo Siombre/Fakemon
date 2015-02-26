@@ -18,6 +18,7 @@ public class Fakemon {
 	static TrueTypeFont font;
 	static TrueTypeFont smallFont;
 	private boolean started;
+	private boolean stopRequested;
 	public Fakemon(){
 		try {
 			init();
@@ -33,7 +34,7 @@ public class Fakemon {
 		//	pushScreen(new OverworldScreen(null));
 		long time;
 		int dT = 0;
-		while(true)
+		while(!stopRequested)
 		{
 			time = System.currentTimeMillis();
 			long delay = 100;
@@ -49,7 +50,6 @@ public class Fakemon {
 				try {
 					Thread.sleep(delay);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -114,5 +114,8 @@ public class Fakemon {
 			s += sc.getClass().getSimpleName() + " ";
 		}
 		System.out.println(s);
+	}
+	public void requestStop(){
+		stopRequested = true;
 	}
 }
