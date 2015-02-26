@@ -25,22 +25,18 @@ import tiles.TreeTile;
 
 public class OverworldScreen extends Screen{
 
-	private Texture texture;
-	private Tile[][][] map;
+	private World world;
 	int mapNum;
-	float x,y;
 	int totalTime;
 	Trainer anchor;
-	double scale = 1f/32;
-	int direction;
-	int animTime;
+	double scale = 1f/8;
 	
 	
 	public OverworldScreen(Trainer t){
-		init();
 		anchor = t;
+		init();
 	}
-	private void loadMap(String name){
+	private World loadMap(String name){
 
 		char[][] mapData = null;
 		File f = new File(Start.getPath("res/maps/"+name+".txt"));
@@ -68,7 +64,7 @@ public class OverworldScreen extends Screen{
 			e.printStackTrace();
 		}
 
-		map = new Tile[3][mapData.length][mapData[0].length];
+		Tile[][][] map = new Tile[3][mapData.length][mapData[0].length];
 
 		for(int i = 0; i<mapData.length;i++)
 			for(int i2 = 0; i2<mapData[i].length;i2++)
@@ -93,12 +89,14 @@ public class OverworldScreen extends Screen{
 					break;
 				}
 			}
+		return new World(map);
 	}
 	public void init(){
 		super.init();
-		y=5;
-		x=5;
-		loadMap("map1");
+		double y=5;
+		double x=5;
+		world = loadMap("map1");
+		world.addEntity(anchor, x, y);
 	}
 	@Override
 	public void processMouseEvent(double x, double y) {
@@ -107,135 +105,56 @@ public class OverworldScreen extends Screen{
 
 	@Override
 	public void render(int delta) {
-		Tile[][][] map = this.map;
-		animTime += delta;
-		if(texture == null)
-			try {
-				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(Start.getPath("res/trainer/Trainer.png")));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		
+		frameCopy(Entity.PREV,Entity.RENDER);
+		double x = anchor.getX(Entity.RENDER);
+		double y = anchor.getY(Entity.RENDER);
+
+		World world = this.world;
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
-
-		if(Keyboard.isKeyDown(Keyboard.KEY_1) && mapNum != 1)
-		{
-			loadMap("map1");
-			y=5;
-			x=5;
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_2) && mapNum != 2)
-		{
-			loadMap("map2");
-			y=5;
-			x=5;
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_3) && mapNum != 3)
-		{
-			loadMap("map3");
-			y=10;
-			x=10;
-		}
-		boolean moving = false;
-		Rectangle2D bounds = new Rectangle();
-		double d = 4*delta/1000f;
-		if(Keyboard.isKeyDown(Keyboard.KEY_W))
-		{
-			y += d;
-			direction = 0;
-			bounds.setFrame(x, y, 1, 1);
-			if(doesCollide(bounds)){
-				y = (int) y;
-			}else
-				moving = true;
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_S))
-		{
-			y -= d;
-			direction = 1;
-			bounds.setFrame(x, y, 1, 1);
-			if(doesCollide(bounds)){
-				y = (int) (y+.75);
-			}else
-				moving = true;
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_D))
-		{
-			x += d;
-			direction = 3;
-			bounds.setFrame(x, y, 1, 1);
-			if(doesCollide(bounds)){
-				x = (int) x;
-			}else
-				moving = true;
-		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_A))
-		{
-			x -= d;
-			direction = 2;
-			bounds.setFrame(x, y, 1, 1);
-			if(doesCollide(bounds)){
-				x = (int) (x+.75);
-			}else 
-				moving = true;
-		}
-
-		if(!moving)
-			animTime = 0;
-		if(Keyboard.isKeyDown(Keyboard.KEY_Q))
-			scale *= 1 + delta/1000f;
-		if(Keyboard.isKeyDown(Keyboard.KEY_E))
-			scale /= 1 + delta/1000f;
-	
-		for(int l = 0; l< map.length;l++){
-			if(map[l][(int)(x+.5)][(int)(y+.5)]!= null)
-				map[l][(int)(x+.5)][(int)(y+.5)].onStep(anchor, delta);
-		}
-		totalTime+=delta;
 
 
 		GL11.glPushMatrix();
 		GL11.glTranslated(.5,.5, 0);
-		// TODO Auto-generated method stub
 
 		GL11.glPushMatrix();
 		GL11.glScaled(scale, scale, 1);		
 		GL11.glTranslated(-x-.5,y-.5, 0);
 
 		GL11.glPushMatrix();
-		for(int l = 0; l< map.length;l++){
-			GL11.glTranslatef(0, -map[l].length, 0);
-			for(int i = map[l][0].length-1; i>=0;i--)
+		int drawSize = 10;
+		int midX = (int) x;
+		int midY = (int) y;
+		Tile t;
+		for(int l = 0; l < 3;l++){
+			GL11.glTranslatef(0, -2*drawSize, 0);
+			for(int i = midY-drawSize; i<midY+drawSize;i++)
 			{
-				GL11.glTranslatef(map[l][0].length, 1, 0);
+				GL11.glTranslatef(2*drawSize, 1, 0);
 
-				for(int i2 = map[l].length-1; i2>= 0;i2--)
+				for(int i2 = midX-drawSize; i2< midX+drawSize;i2++)
 				{
 					GL11.glTranslatef(-1, 0, 0);
 
-					if(map[l][i2][i] != null){
+					if((t=world.getTile(i2, i, l)) != null){
 						GL11.glPushMatrix();
-						map[l][i2][i].render(delta,i2,i,l);
+						t.render(delta,i2,i,l);
 						GL11.glPopMatrix();
 					}
 				}
 			}
 		}
 		GL11.glPopMatrix();
-
-		double texX = (animTime%500)/125/4.0;
-		double texY = direction/4.0;
-		double texX2 = texX +.25;
-		double texY2 = texY +.25;
-		double over = 0;
-
-		double[] player = {x-over,-y,x+1+over,-y+1+over+over,texX,texY,texX2,texY2,1,texture.getTextureID()};
-		RenderManager.register(player);
+		for(Entity e : world.getEntityList())
+		{
+			e.render();
+		}
+		
 		RenderManager.render();
 		GL11.glPopMatrix();
 		
 		GL11.glPopMatrix();
 
-		texture.bind();
 		drawString( Fakemon.smallFont,.23f,.0265f, "(" + x+','+y+')', Color.gray);
 
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
@@ -245,31 +164,80 @@ public class OverworldScreen extends Screen{
 
 
 	}
-	public boolean doesCollide(Rectangle2D r){
-		for(int x = (int)r.getMinX(); x <= (int)(r.getMaxX());x++)
-			for(int y = (int)r.getMinY(); y <= (int)r.getMaxY();y++)
-				for(int l = 0; l< map.length;l++){
-					if(map[l][x][y] != null && !map[l][x][y].isPassable())
-					{
-						Rectangle r2 = new Rectangle(x,y,1,1);
-						if(r.intersects(r2))
-							return true;
-					}
-				}
-		return false;
-	}
 	@Override
 	public void displayMessage(String s) {}
 
 	@Override
-	public void doLogic(int delta) {}
+	public void doLogic(int delta) {
+
+		if(Keyboard.isKeyDown(Keyboard.KEY_1) && mapNum != 1)
+		{
+			world.removeEntity(anchor);
+			world = loadMap("map1");
+			world.addEntity(anchor, 5, 5);
+		}else if(Keyboard.isKeyDown(Keyboard.KEY_2) && mapNum != 2)
+		{
+			world.removeEntity(anchor);
+			world = loadMap("map2");
+			world.addEntity(anchor, 5, 5);
+		}else if(Keyboard.isKeyDown(Keyboard.KEY_3) && mapNum != 3)
+		{
+			world.removeEntity(anchor);
+			world = loadMap("map3");
+			world.addEntity(anchor, 10, 10);
+		}
+		
+		double d = 4/1000f;
+		double vx = 0, vy = 0;
+		if(Keyboard.isKeyDown(Keyboard.KEY_W))
+		{
+			vy += d;
+		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_S))
+		{
+			vy -= d;
+		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_D))
+		{
+			vx += d;
+		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_A))
+		{
+			vx -= d;
+		}
+		anchor.setVelocity(vx, vy);
+
+		if(Keyboard.isKeyDown(Keyboard.KEY_Q))
+			scale *= 1 + delta/1000f;
+		if(Keyboard.isKeyDown(Keyboard.KEY_E))
+			scale /= 1 + delta/1000f;
+		
+		for(int l = 0; l< 3;l++){
+			if(world.getTile(l,(int)(anchor.getX(Entity.PREV)+.5),(int)(anchor.getY(Entity.PREV)+.5))!= null)
+				world.getTile(l,(int)(anchor.getX(Entity.PREV)+.5),(int)(anchor.getY(Entity.PREV)+.5)).onStep(anchor, delta);
+		}
+		for(Entity e : world.getEntityList())
+		{
+			e.tick(delta);
+		}
+		totalTime+=delta;
+		
+		
+		frameCopy(Entity.CURR,Entity.PREV);
+	}
 	@Override
 	public int getLogicDelay() {
-		return 100;
+		return 5;
 	}
 	public boolean isFinished(){
 		return false;
 	}
 
-
+	private synchronized void frameCopy(int a, int b){
+		ArrayList<Entity> entities = world.getEntityList();
+		for(int i = 0;i<entities.size();i++)
+		{
+			entities.get(i).frameCopy(a, b);
+		}
+	}
 }
