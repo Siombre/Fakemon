@@ -29,19 +29,21 @@ public class Start {
 
 
 		final Fakemon game = new Fakemon();
-		new Thread() {
+		Thread logic = new Thread() {
 			public void run() {
 				game.start();
 			}
-		}.start();
+		};
+		logic.start();
 		while (!Display.isCreated());
 		while (!Display.isCloseRequested()) {
 
 			game.render(getDelta());
-			while(Mouse.next()) game.mouseEvent();
 			Display.update();
+			while(Mouse.next()) game.mouseEvent();
 			Display.sync(60);
 		}
+		logic.stop();
 		Display.destroy();
 		System.exit(0);
 
