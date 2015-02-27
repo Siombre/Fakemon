@@ -57,11 +57,14 @@ public class Fakemon {
 	}
 
 	public static Pokemon generatePokemon(int level){
-		Random rand = new Random();
 
 		PokemonInfo[] pokedex = PokemonInfo.getList();
-		PokemonInfo s = pokedex[rand.nextInt(pokedex.length)];
-		Pokemon p = new Pokemon(s.name, s, s.levelingType.getExperience(level), level, false, -1);
+		PokemonInfo s = pokedex[Util.rand(0,pokedex.length-1)];
+		
+		Nature[] natures = Nature.getList();
+		Nature n = natures[Util.rand(0,natures.length-1)];
+
+		Pokemon p = new Pokemon(s.name, s, s.levelingType.getExperience(level), level, false, -1,n);
 		return p;
 	}
 

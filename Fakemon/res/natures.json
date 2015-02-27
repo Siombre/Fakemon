@@ -1,0 +1,29 @@
+{
+	"natures":[
+		{"name":"Bashful","mods":[1,1,1,1,1,1]},
+		{"name":"Lonely" ,"mods":[1,1.1,0.9,1,1,1]},
+		{"name":"Adament","mods":[1,1.1,1,0.9,1,1]},
+		{"name":"Naughty","mods":[1,1.1,1,1,0.9,1]},
+		{"name":"Brave"  ,"mods":[1,1.1,1,1,1,0.9]},
+		{"name":"Bold"   ,"mods":[1,0.9,1.1,1,1,1]},
+		{"name":"Docile" ,"mods":[1,1,1,1,1,1]},
+		{"name":"Impish" ,"mods":[1,1,1.1,0.9,1,1]},
+		{"name":"Lax"    ,"mods":[1,1,1.1,1,0.9,1]},
+		{"name":"Relaxed","mods":[1,1,1.1,1,1,0.9]},
+		{"name":"Modest" ,"mods":[1,0.9,1,1.1,1,1]},
+		{"name":"Mild"   ,"mods":[1,1,0.9,1.1,1,1]},
+		{"name":"Hardy"  ,"mods":[1,1,1,1,1,1]},
+		{"name":"Rash"   ,"mods":[1,1,1,1.1,0.9,1]},
+		{"name":"Quiet"  ,"mods":[1,1,1,1.1,1,0.9]},
+		{"name":"Calm"   ,"mods":[1,0.9,1,1,1.1,1]},
+		{"name":"Gentle" ,"mods":[1,1,0.9,1,1.1,1]},
+		{"name":"Careful","mods":[1,1,1,0.9,1.1,1]},
+		{"name":"Quirky" ,"mods":[1,1,1,1,1,1]},
+		{"name":"Sassy"  ,"mods":[1,1,1,1,1.1,0.9]},
+		{"name":"Timid"  ,"mods":[1,0.9,1,1,1,1.1]},
+		{"name":"Hasty"  ,"mods":[1,1,0.9,1,1,1.1]},
+		{"name":"Jolly"  ,"mods":[1,1,1,0.9,1,1.1]},
+		{"name":"Naive"  ,"mods":[1,1,1,1,0.9,1.1]},
+		{"name":"Serious","mods":[1,1,1,1,1,1]}
+	]
+}

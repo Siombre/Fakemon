@@ -20,7 +20,7 @@ public class Pokemon {
 	private int hp;
 	private Nature nature;
 
-	public Pokemon(String name, PokemonInfo info, int exp, int level, boolean shiny, int hp) {
+	public Pokemon(String name, PokemonInfo info, int exp, int level, boolean shiny, int hp, Nature n) {
 		evs = new int[6];
 		ivs = new int[6];
 		Random rand = new Random();
@@ -28,7 +28,7 @@ public class Pokemon {
 		{
 			ivs[i] = rand.nextInt(32);
 		}
-		nature = Nature.getByName("default");
+		nature = n;
 
 		this.stats = info.getStatsForLevel(level, this);
 
@@ -145,7 +145,7 @@ public class Pokemon {
 	public Nature getNature() {
 		return nature;
 	}
-
+	
 	public ArrayList<Type> getTypes() {
 		return info.getTypes();
 	}

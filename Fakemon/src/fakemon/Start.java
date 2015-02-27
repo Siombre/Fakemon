@@ -16,6 +16,9 @@ import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 
@@ -58,7 +61,7 @@ public class Start {
 			basePath = new File(Start.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParent();
 			String os = System.getProperty("os.name").toLowerCase();
 			Logger.log("System : " + os);
-			
+
 			String osName = "";
 			if(os.startsWith("linux")){
 				osName = "linux";
@@ -69,11 +72,11 @@ public class Start {
 			} else if (os.startsWith("sunos")) {
 				osName = "solaris";
 			}
-			
+
 			basePath = new File(Start.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParent();
-			
+
 			System.setProperty("org.lwjgl.librarypath", getPath("/libs/lwjgl-2.8.4/native/"+osName));
-			
+
 			//Init leveling types
 			new Fast();
 			new MediumFast();
@@ -81,19 +84,16 @@ public class Start {
 			new Slow();
 			new Fluctuating();
 			new Erratic();
-			
-			
-			double[] mods = {1,1,1,1,1,1}; 
-			new Nature("Default",mods);
 
 			loadTypes(getPath("/res/Types.csv"));	
 			loadMoves(getPath("/res/Moves"));
 			loadPokemon(getPath("/res/Pokemon"));
-
+			loadNatures(getPath("/res/natures.json"));
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
 	}
+
 
 	/** 
 	 * Calculate how many milliseconds have passed 
@@ -102,20 +102,20 @@ public class Start {
 	 * @return milliseconds passed since last frame 
 	 */
 	public static int getDelta() {
-	    long time = getTime();
-	    int delta = (int) (time - lastFrame);
-	    lastFrame = time;
- 
-	    return delta;
+		long time = getTime();
+		int delta = (int) (time - lastFrame);
+		lastFrame = time;
+
+		return delta;
 	}
- 
+
 	/**
 	 * Get the accurate system time
 	 * 
 	 * @return The system time in milliseconds
 	 */
 	public static long getTime() {
-	    return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
 	public static void loadTypes(String path){
 		try {
@@ -135,7 +135,6 @@ public class Start {
 			for(String s: types)
 			{
 				new Type(s);
-				System.out.println(s);
 			}
 
 			while(scan.hasNextLine()){
@@ -163,6 +162,34 @@ public class Start {
 		} catch (FileNotFoundException e) {
 			System.err.println("Type file not found");
 		}
+		if(Type.getList().length == 0)
+		{
+			System.err.println("No types found");
+		} else {
+			System.out.println(Type.getList().length + " types loaded.");
+		}
+	}
+	private static void loadNatures(String path) {
+		JsonParser parser = new JsonParser();
+		JsonObject file = parser.parse(loadFile(new File(path))).getAsJsonObject();
+		JsonArray list = file.get("natures").getAsJsonArray();
+		for(JsonElement a : list){
+			JsonObject def = a.getAsJsonObject();
+			String name = def.get("name").getAsString();
+			JsonArray jmods = def.get("mods").getAsJsonArray();
+			double[] mods = new double[6];
+			for(int i = 0;i<6;i++)
+			{
+				mods[i] = jmods.get(i).getAsDouble();
+			}
+			new Nature(name, mods);
+		}
+		if(Nature.getList().length == 0)
+		{
+			System.err.println("No natures found");
+		} else {
+			System.out.println(Nature.getList().length + " natures loaded.");
+		}
 	}
 	public static void loadPokemon(String path){
 		Pattern p = Pattern.compile(".*\\.json");
@@ -189,21 +216,28 @@ public class Start {
 		JsonParser parser = new JsonParser();
 		for(File f : files)
 		{
-			System.out.println(f.getName());
-			StringBuilder contents = new StringBuilder();
-			try {
-				Scanner s = new Scanner(new FileReader(f));
-				while(s.hasNextLine())
-					contents.append(s.nextLine());
-				
-				new PokemonInfo(parser.parse(contents.toString()).getAsJsonObject());
-				s.close();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
+			new PokemonInfo(parser.parse(loadFile(f)).getAsJsonObject());
+		}
+		if(PokemonInfo.getList().length == 0)
+		{
+			System.err.println("No Pokemon found");
+		} else {
+			System.out.println(PokemonInfo.getList().length + " Pokemon loaded.");
 		}
 	}
+	public static String loadFile(File f){
+		StringBuilder contents = new StringBuilder();
+		Scanner s;
+		try {
+			s = new Scanner(new FileReader(f));
+			while(s.hasNextLine())
+				contents.append(s.nextLine());
+			s.close();
+		} catch (FileNotFoundException e) {}
 
+		return contents.toString();
+
+	}
 	public static void loadMoves(String dirPath)
 	{
 		File dir = new File(dirPath);
@@ -213,34 +247,39 @@ public class Start {
 			public boolean accept(File arg0, String arg1) {
 				return p.matcher(arg1).matches();
 			}};
-			File[] moves = dir.listFiles(filter);
-			URL url;
-			try {
-				url = new URL("file:" + dir.getAbsolutePath()+"/");
+		File[] moves = dir.listFiles(filter);
+		URL url;
+		try {
+			url = new URL("file:" + dir.getAbsolutePath()+"/");
 
 
-				// Create a new class loader with the directory
-				ClassLoader cl = URLClassLoader.newInstance(new URL[]{url});
+			// Create a new class loader with the directory
+			ClassLoader cl = URLClassLoader.newInstance(new URL[]{url});
 
-				for(File f : moves)
-				{
-					try {
+			for(File f : moves)
+			{
+				try {
 
-						MoveInfo m = (MoveInfo) cl.loadClass(f.getName().replace(".class", "")).newInstance();
-						System.out.println("Move \"" + m.getName() + "\" loaded");
-					} catch (ClassNotFoundException e) {
-						System.err.println("Loading move " + f.getName() + " failed.");
-						e.printStackTrace();
-					} catch (InstantiationException e) {
-						System.err.println("Initializing move " + f.getName() + " failed.");
-					} catch (IllegalAccessException e) {
-						e.printStackTrace();
-					}
+					MoveInfo m = (MoveInfo) cl.loadClass(f.getName().replace(".class", "")).newInstance();
+				} catch (ClassNotFoundException e) {
+					System.err.println("Loading move " + f.getName() + " failed.");
+					e.printStackTrace();
+				} catch (InstantiationException e) {
+					System.err.println("Initializing move " + f.getName() + " failed.");
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
 				}
+			}
 
-			} catch (MalformedURLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}         
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		}
+		if(MoveInfo.getList().length == 0)
+		{
+			System.err.println("No moves found");
+		} else {
+			System.out.println(MoveInfo.getList().length + " moves loaded.");
+		}
 	}
+	
 }
