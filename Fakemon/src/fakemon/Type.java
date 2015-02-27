@@ -36,6 +36,10 @@ public class Type {
 			return effectiveness.get(t);
 		return 1;
 	}
+	public static Type[] getList() {
+		Type[] t = new Type[types.size()]; 
+		return types.toArray(t);		
+	}
 	
 
 }

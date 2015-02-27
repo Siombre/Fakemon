@@ -28,4 +28,9 @@ public class Nature {
 				return n;
 		return null;
 	}
+	public static Nature[] getList()
+	{
+		Nature[] t = new Nature[natures.size()]; 
+		return natures.toArray(t);			
+	}
 }
