@@ -1,0 +1,21 @@
+{
+	"id": 13,
+	"name": "Fuirrel",	
+	"types": ["Normal"],
+	"description": "No description.",
+	"base exp": 50,		"gender": [50,50,0],
+	"level type": "Medium Fast",
+	"stats": {
+		"Health": 44,
+		"Attack": 45,
+		"Defense": 45,
+		"Special Attack": 43,
+		"Special Defense": 46,
+		"Speed": 47	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

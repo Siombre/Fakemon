@@ -1,0 +1,32 @@
+{
+	"id": 1,
+	"name": "Monkeaf",
+	"types": ["Grass"],
+	"description": "No description.",
+	"base exp": 62,	
+	"gender": [87.5,12.5,0],
+	"level type": "Medium Slow",
+	"stats": {
+		"Health": 55,
+		"Attack": 51,
+		"Defense": 56,
+		"Special Attack": 44,
+		"Special Defense": 42,
+		"Speed": 58	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	],
+	"evolution":[{
+		"id":"2",
+		"name":"Gorileaf",
+		"time":"Battle End",
+		"triggers":[{
+			"level":16,
+			"type":">="},
+			{"weather":"sunny"}
+		]}
+	]
+}

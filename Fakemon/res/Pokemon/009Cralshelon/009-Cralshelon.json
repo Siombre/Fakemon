@@ -1,0 +1,22 @@
+{
+	"id": 9,
+	"name": "Cralshelon",	
+	"types": ["Water"],
+	"description": "No description.",
+	"base exp": 220,
+	"gender": [87.5,12.5,0],
+	"level type": "Medium Slow",
+	"stats": {
+		"Health": 98,
+		"Attack": 82,
+		"Defense": 114,
+		"Special Attack": 98,
+		"Special Defense": 84,
+		"Speed": 75	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

@@ -1,0 +1,21 @@
+{
+	"id": 7,
+	"name": "Sheltle",	
+	"types": ["Water"],
+	"description": "No description.",
+	"base exp": 62,		"gender": [87.5,12.5,0],
+	"level type": "Medium Slow",
+	"stats": {
+		"Health": 50,
+		"Attack": 45,
+		"Defense": 62,
+		"Special Attack": 52,
+		"Special Defense": 55,
+		"Speed": 42	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

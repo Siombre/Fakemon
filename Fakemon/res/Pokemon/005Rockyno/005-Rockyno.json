@@ -1,0 +1,21 @@
+{
+	"id": 5,
+	"name": "Rockyno",	
+	"types": ["Fire","Rock"],
+	"description": "No description.",
+	"base exp": 145,		"gender": [87.5,12.5,0],
+	"level type": "Medium Slow",
+	"stats": {
+		"Health": 75,
+		"Attack": 71,
+		"Defense": 75,
+		"Special Attack": 65,
+		"Special Defense": 60,
+		"Speed": 59	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

@@ -1,0 +1,21 @@
+{
+	"id": 14,
+	"name": "Squake",	
+	"types": ["Normal","Ground"],
+		"description": "No description.",
+	"base exp": 141,		"gender": [50,50,0],
+	"level type": "Medium Fast",
+	"stats": {
+		"Health": 84,
+		"Attack": 105,
+		"Defense": 95,
+		"Special Attack": 53,
+		"Special Defense": 66,
+		"Speed": 57	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

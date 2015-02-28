@@ -1,0 +1,21 @@
+{
+	"id": 15,
+	"name": "Qairell",	
+	"types": ["Normal","Flying"],
+		"description": "No description.",
+	"base exp": 141,	"gender": [50,50,0],
+	"level type": "Medium Fast",
+	"stats": {
+		"Health": 66,
+		"Attack": 95,
+		"Defense": 57,
+		"Special Attack": 53,
+		"Special Defense": 84,
+		"Speed": 105	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

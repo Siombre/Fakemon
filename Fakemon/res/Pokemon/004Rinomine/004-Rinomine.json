@@ -1,0 +1,21 @@
+{
+	"id": 4,
+	"name": "Rinomine",	
+	"types": ["Fire"],
+	"description": "No description.",
+	"base exp": 62,		"gender": [87.5,12.5,0],
+	"level type": "Medium Slow",
+	"stats": {
+		"Health": 56,
+		"Attack": 56,
+		"Defense": 52,
+		"Special Attack": 50,
+		"Special Defense": 46,
+		"Speed": 46	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}

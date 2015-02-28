@@ -1,0 +1,21 @@
+{
+	"id": 8,
+	"name": "Carrymet",	
+	"types": ["Water"],
+	"description": "No description.",
+	"base exp": 145,		"gender": [87.5,12.5,0],
+	"level type": "Medium Slow",
+	"stats": {
+		"Health": 69,
+		"Attack": 54,
+		"Defense": 88,
+		"Special Attack": 75,
+		"Special Defense": 65,
+		"Speed": 54	},
+	"moves": [
+		{"level" : 1, "name" : "Pound"},
+		{"level" : 4, "name" : "Sand Attack"},
+		{"level" : 8, "name" : "Double Kick"},
+		{"level" : 11, "name" : "Paralyze"}
+	]
+}
