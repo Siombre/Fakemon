@@ -208,8 +208,8 @@ public class OverworldScreen extends Screen{
 			scale /= 1 + delta/1000f;
 		
 		for(int l = 0; l< 3;l++){
-			if(world.getTile(l,(int)(anchor.getX(Entity.PREV)+.5),(int)(anchor.getY(Entity.PREV)+.5))!= null)
-				world.getTile(l,(int)(anchor.getX(Entity.PREV)+.5),(int)(anchor.getY(Entity.PREV)+.5)).onStep(anchor, delta);
+			if(world.getTile((int)(anchor.getX(Entity.PREV)+.5),(int)(anchor.getY(Entity.PREV)+.5),l)!= null)
+				world.getTile((int)(anchor.getX(Entity.PREV)+.5),(int)(anchor.getY(Entity.PREV)+.5),l).onStep(anchor, delta);
 		}
 		for(Entity e : world.getEntityList())
 		{
