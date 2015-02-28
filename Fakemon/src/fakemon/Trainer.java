@@ -14,7 +14,7 @@ public class Trainer extends Entity{
 	private int id;
 	BattleAI battleAI;
 	OverworldAI overAI;
-	Texture texture;
+	static Texture texture;
 	
 	public Trainer(String name) {
 		super();
