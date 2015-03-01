@@ -21,7 +21,7 @@ public class RenderManager {
 		renderNum++;
 		if(debug && renderNum%100 == 0)
 			System.out.println("Sorted in " + (-time + (time = System.currentTimeMillis()))/1000f + "s");
-		
+
 		for(double[] data : objects)
 		{
 			renderPolygon(data);
@@ -32,7 +32,8 @@ public class RenderManager {
 		objects.clear();
 	}
 	private static void sort(){
-		quickSort(0,objects.size()-1);
+		if(objects.size() != 0)
+			quickSort(0,objects.size()-1);
 	}
 	private static int partition(int start, int end){
 		int pI = (start + end) / 2;
