@@ -1,6 +1,12 @@
 package fakemon;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -27,8 +33,11 @@ public class PokemonInfo {
 	public final LevelType levelingType;
 	public final int baseExp;
 	public final ArrayList<Pair<Integer,MoveInfo>> moveList;
-	
-	public PokemonInfo(JsonObject def){
+	private File resources;
+	private Texture sprite;
+	public PokemonInfo(JsonObject def,File dir){
+		
+		resources = dir;
 		id = def.get("id").getAsInt();
 		name = def.get("name").getAsString();
 		description = def.get("description").getAsString();
@@ -92,4 +101,15 @@ public class PokemonInfo {
 		PokemonInfo[] t = new PokemonInfo[pokemon.size()]; 
 		return pokemon.toArray(t);			
 	}
+	public int getTextureID(){
+		if(sprite == null)
+			try {
+				sprite = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(resources.getAbsolutePath()+ "/"+name + ".png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		return sprite.getTextureID();
+	} 
 }

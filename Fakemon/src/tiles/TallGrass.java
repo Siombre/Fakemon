@@ -35,7 +35,7 @@ public class TallGrass extends Tile{
 	public void tick() {}
 	@Override
 	public void onStep(Trainer t, int delta) {
-		if(t.isAlive() && Util.flip(.1*delta/1000f) && Fakemon.getCurrentScreen().getClass() == OverworldScreen.class){
+		if(t.isAlive() && Util.flip(delta/1000f) && Fakemon.getCurrentScreen().getClass() == OverworldScreen.class){
 			Trainer enemy = new Trainer("Opponent");
 			enemy.addPokemon(Fakemon.generatePokemon(10));
 			Trainer[] trainers = {t, enemy};

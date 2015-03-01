@@ -68,9 +68,16 @@ public class BattleScreen extends Screen {
 		if(dialog2 != null)
 			dialog2.render(this);
 		glEnd();
-
+		
 		renderInfo(1, 0, .015, .01, true);
 		renderInfo(0, 0, .685, .54, true);
+		int id = acPokemon[1][0].getInfo().getTextureID();
+		double[] data = {.5,.05,.8,.35,0,0,1,1,1,id};
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		RenderManager.register(data);
+		RenderManager.render();
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
+
 	}
 	/**
 	 * 

@@ -216,7 +216,7 @@ public class Start {
 		JsonParser parser = new JsonParser();
 		for(File f : files)
 		{
-			new PokemonInfo(parser.parse(loadFile(f)).getAsJsonObject());
+			new PokemonInfo(parser.parse(loadFile(f)).getAsJsonObject(),f.getParentFile());
 		}
 		if(PokemonInfo.getList().length == 0)
 		{
@@ -260,7 +260,7 @@ public class Start {
 			{
 				try {
 
-					MoveInfo m = (MoveInfo) cl.loadClass(f.getName().replace(".class", "")).newInstance();
+					cl.loadClass(f.getName().replace(".class", "")).newInstance();
 				} catch (ClassNotFoundException e) {
 					System.err.println("Loading move " + f.getName() + " failed.");
 					e.printStackTrace();
