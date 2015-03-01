@@ -68,13 +68,15 @@ public class BattleScreen extends Screen {
 		if(dialog2 != null)
 			dialog2.render(this);
 		glEnd();
-		
+
 		renderInfo(1, 0, .015, .01, true);
 		renderInfo(0, 0, .685, .54, true);
-		int id = acPokemon[1][0].getInfo().getTextureID();
-		double[] data = {.5,.05,.8,.35,0,0,1,1,1,id};
+		if(acPokemon[1][0] != null){
+			int id = acPokemon[1][0].getInfo().getTextureID();
+			double[] data = {.5,.05,.8,.35,0,0,1,1,1,id};
+			RenderManager.register(data);
+		}
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		RenderManager.register(data);
 		RenderManager.render();
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 
@@ -99,7 +101,7 @@ public class BattleScreen extends Screen {
 
 
 		glColor3d(.3 + .5 * (1 - hpRatio[t][p]), .3 + .5 * hpRatio[t][p], .3);
-		
+
 		final double hXOff = .05;
 		final double hYOff = .10;
 		glVertex2d(x + hXOff, y + hYOff);
@@ -135,7 +137,7 @@ public class BattleScreen extends Screen {
 		// For each trainer, get an action
 		if(state == REQUEST){
 			//TODO allow for serial AI (Player input) with multiple pokemon
-			
+
 			for (int t = 0; t < trainers.length; t++) {
 				for (int p = 0; p < acPokemon[t].length; p++) {
 					if(acPokemon[t][p] != null && this.actions[t][p] == null)
@@ -144,7 +146,7 @@ public class BattleScreen extends Screen {
 			}
 			state = REQUEST_WAIT;
 		}
-		
+
 		if(state == REQUEST_WAIT){
 
 			boolean missing = false;
@@ -158,7 +160,7 @@ public class BattleScreen extends Screen {
 			if(!missing)
 				state = DO_ACTION;
 		}
-		
+
 		if(state == DO_ACTION){
 
 			ArrayList<BattleAction> actions = new ArrayList<BattleAction>();
@@ -197,7 +199,7 @@ public class BattleScreen extends Screen {
 					{
 						acPokemon[t][p].onTurnEnd(this);
 						checkFainted();
-						
+
 					}
 				}
 			}
@@ -220,8 +222,8 @@ public class BattleScreen extends Screen {
 
 
 		} 
-		
-		
+
+
 		if(state == FINISH)
 		{
 			winner = -1;
