@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -39,7 +40,6 @@ public class Start {
 		logic.start();
 		while (!Display.isCreated());
 		while (!Display.isCloseRequested()) {
-
 			game.render(getDelta());
 			Display.update();
 			while(Mouse.next()) game.mouseEvent();
@@ -58,6 +58,7 @@ public class Start {
 	}
 	public static void init(){
 		try {
+
 			basePath = new File(Start.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParent();
 			String os = System.getProperty("os.name").toLowerCase();
 			Logger.log("System : " + os);
