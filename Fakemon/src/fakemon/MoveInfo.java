@@ -132,7 +132,14 @@ public abstract class MoveInfo {
 		return Util.flip(.0625f * getCritRateMod());
 	}
 
-	public void onUse(Pokemon user, Pokemon target, BattleScreen battle){}
+	public void onUse(Pokemon user, Pokemon target, BattleScreen battle){
+		if(doesHit(user, target, battle)){
+			onHit(user, target, battle);
+		}else{
+			battle.displayMessage("But it missed...");
+			onMiss(user, target, battle);
+		}
+	}
 
 	public boolean onHit(Pokemon user, Pokemon target, BattleScreen battle){
 		hit(user, target, battle);

@@ -21,13 +21,6 @@ public class MoveBattleAction extends BattleAction {
 		{
 			bsc.displayMessage(user.getName() + " used " + mi.getName() + ".");
 			m.onUse(user, target, bsc);
-			if(mi.doesHit(user, target, bsc)){
-				
-				mi.onHit(user, target, bsc);
-			}else{
-				bsc.displayMessage("But it missed...");
-				mi.onMiss(user, target, bsc);
-			}
 		}
 	}
 	public int getPriority(){

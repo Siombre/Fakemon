@@ -13,8 +13,20 @@ public class DoubleKick extends MoveInfo {
 	}
 	public void onUse(Pokemon user, Pokemon target, BattleScreen battle){
 		battle.displayMessage(user.getName() + " used " + getName() + ".");
-		hit(user, target, battle);
-		hit(user, target, battle);
+		int hits = 0;
+		for(int i = 0; i<2 ;i++)
+		{
+			if(target.getHealth() <= 0) continue;
+			if(doesHit(user, target, battle)){
+				onHit(user, target, battle);
+				hits++;
+			}else{
+				onMiss(user, target, battle);
+				
+			}
+		}
+		
+		battle.displayMessage("It hit " + hits + ((hits!=1)?" times.":" time."));
 
 	}
 }
