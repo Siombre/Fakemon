@@ -52,6 +52,16 @@ public class BattleScreen extends Screen {
 
 	}
 	public void render(int delta) {
+		if(acPokemon[1][0] != null){
+			int id = acPokemon[1][0].getInfo().getTextureID();
+			double[] data = {.5,.05,.8,.35,0,0,1,1,1,id};
+			RenderManager.register(data);
+		}
+		if(acPokemon[0][0] != null){
+			int id = acPokemon[0][0].getInfo().getTextureID();
+			double[] data = {.55,.325,.05,.7,0,0,1,.75,1,id};
+			RenderManager.register(data);
+		}
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 
 		glBegin(GL_QUADS);
@@ -62,23 +72,23 @@ public class BattleScreen extends Screen {
 		glVertex2d(1, 1);
 		glColor3d(.99, .99, .99);
 		glVertex2d(1, 0);
+		glEnd();
+
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		RenderManager.render();
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
+		glBegin(GL_QUADS);
 
 		if(dialog != null)
 			dialog.render(this);
 		if(dialog2 != null)
 			dialog2.render(this);
 		glEnd();
+		
 
 		renderInfo(1, 0, .015, .01, true);
 		renderInfo(0, 0, .685, .54, true);
-		if(acPokemon[1][0] != null){
-			int id = acPokemon[1][0].getInfo().getTextureID();
-			double[] data = {.5,.05,.8,.35,0,0,1,1,1,id};
-			RenderManager.register(data);
-		}
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		RenderManager.render();
-		GL11.glDisable(GL11.GL_TEXTURE_2D);
+
 
 	}
 	/**

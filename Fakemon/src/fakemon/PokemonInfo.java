@@ -106,7 +106,7 @@ public class PokemonInfo {
 			try {
 				sprite = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(resources.getAbsolutePath()+ "/"+name + ".png"));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				System.err.println(resources.getAbsolutePath()+ "/"+name + ".png");
 				e.printStackTrace();
 			}
 			
