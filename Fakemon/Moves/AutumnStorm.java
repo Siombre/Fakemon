@@ -1,7 +1,12 @@
 
 
+import effects.Effect;
+import effects.StatModEffect;
+import fakemon.BattleScreen;
 import fakemon.MoveInfo;
+import fakemon.Pokemon;
 import fakemon.Type;
+import fakemon.Util;
 
 
 public class AutumnStorm extends MoveInfo {
@@ -13,6 +18,12 @@ public class AutumnStorm extends MoveInfo {
 	@Override
 	public float getCritRateMod(){
 		return 4.0f;
+	}
+	public boolean onHit(Pokemon user, Pokemon target, BattleScreen battle){
+		hit(user, target, battle);
+		if(Util.flip(.5))
+			user.addEffect(new StatModEffect(Effect.EVASION,1), user, battle);
+		return true;
 	}
 }
 
