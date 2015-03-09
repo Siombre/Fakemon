@@ -23,9 +23,8 @@ public class Struggle extends MoveInfo {
 
 		if(target == null || user == null) return;
 
-		double stabBonus = 1;
 
-		double mod = stabBonus*critBonus * getDamMod()*user.getDamMod();
+		double mod = critBonus * getDamMod()*user.getDamMod();
 
 		int power = 50;
 		
